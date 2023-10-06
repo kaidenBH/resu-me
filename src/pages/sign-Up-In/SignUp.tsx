@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {  Grid } from '@mui/material';
 import { Container, Paper } from '@mui/material';
-import { MainButton, CustomTextField } from './styles';
+import { MainButton, CustomTextField, CustomTypography } from './styles';
 
 interface SignUpProps {
   onSubmit: (formData: SignUpFormData) => void;
@@ -39,8 +39,9 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
     };
 
     return (
-        <Container maxWidth="xs" sx={{ margin: 0, padding: 0 }} >
-            <Paper style={{ padding: '20px', background: '#F9F9F9' }}>
+        <Container style={{ padding: 0 }} maxWidth="xs" sx={{ margin: 0, padding: 0 }} >
+            <Paper style={{ padding: '20px', background: '#F9F9F9' }} sx={{ height:{ sm: '30rem' } }}>
+                <CustomTypography variant='h4'>Sign Up</CustomTypography>
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>

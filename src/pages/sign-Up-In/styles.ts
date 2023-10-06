@@ -27,3 +27,16 @@ export const CustomTextField = styled(TextField)({
       },
     },
   });
+
+export const CustomTypography = styled(Typography)(({ theme }) => ({
+    fontFamily: theme.typography.fontFamily,
+    animation: 'pop 0.5s ease',
+    '@keyframes pop': {
+      '0%': { transform: 'scale(1)' },
+      '50%': { transform: 'scale(1.1)' },
+      '100%': { transform: 'scale(1)' },
+    },
+    fontWeight: 'bold',
+    color: "#03001C",
+    margin: "1rem 0",
+  }));
