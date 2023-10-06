@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Typography, Link } from '@mui/material';
+import {  Grid } from '@mui/material';
 import { Container, Paper } from '@mui/material';
 import { MainButton, CustomTextField } from './styles';
 
@@ -39,7 +39,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
     };
 
     return (
-        <Container maxWidth="xs">
+        <Container maxWidth="xs" sx={{ margin: 0, padding: 0 }} >
             <Paper style={{ padding: '20px', background: '#F9F9F9' }}>
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
@@ -105,12 +105,6 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
                             <MainButton variant="contained" type="submit" sx={{ margin:'0 0 1rem 0' }}>
                                 Sign Up
                             </MainButton>
-                            <Typography variant="h6" >
-                                Already have an account? 
-                                <Link href="#" color="#ff9900">
-                                    Sign in
-                                </Link>
-                            </Typography>
                         </Grid>
                     </Grid>
                 </form>

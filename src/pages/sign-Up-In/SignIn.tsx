@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Typography, Link } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Container, Paper } from '@mui/material';
 import { MainButton, CustomTextField } from './styles';
 
@@ -18,7 +18,6 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
         password: '',
     });
 
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -30,10 +29,10 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSubmit(formData);
-    };
+    }
 
     return (
-        <Container maxWidth="xs">
+        <Container maxWidth="xs" sx={{ margin: 0, padding: 0 }} >
             <Paper style={{ padding: '20px', background: '#F9F9F9' }}>
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
