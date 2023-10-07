@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Button, Typography, TextField } from '@mui/material';
+import { Button, Typography, TextField, Paper } from '@mui/material';
 
 export const MainButton = styled(Button)({
   background: '#ffcc00',
@@ -7,6 +7,12 @@ export const MainButton = styled(Button)({
   '&:hover': {
     background: '#ff9900',
   },
+});
+
+export const CustomPaper = styled(Paper)({
+  height: '30rem', 
+  padding: '20px', 
+  background: '#F9F9F9', 
 });
 
 export const CustomTextField = styled(TextField)({
