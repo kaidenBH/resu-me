@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import {  Grid } from '@mui/material';
-import { Container } from '@mui/material';
+import {  Grid, IconButton, InputAdornment, Container } from '@mui/material';
+import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { MainButton, CustomTextField, CustomTypography, CustomPaper } from './styles';
 
 interface SignUpProps {
@@ -10,20 +10,22 @@ interface SignUpProps {
 interface SignUpFormData {
   email: string;
   password: string;
-  repeatPassword: string;
-  firstName: string;
-  lastName: string;
+  confirmPassword: string;
+  first_name: string;
+  last_name: string;
 }
 
 const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
     const [formData, setFormData] = useState<SignUpFormData>({
         email: '',
         password: '',
-        repeatPassword: '',
-        firstName: '',
-        lastName: '',
+        confirmPassword: '',
+        first_name: '',
+        last_name: '',
     });
-
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -40,17 +42,17 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 
     return (
         <Container style={{ padding: 0 }} maxWidth="xs" >
-            <CustomPaper sx={{ borderRadius: '0 15px 15px 0' }}>
-                <CustomTypography variant='h4'>Sign Up</CustomTypography>
+            <CustomPaper sx={{ borderRadius: '0 15px 15px 0', display: 'flex', alignItems: 'center' }}>
                 <form onSubmit={handleSubmit}>
+                    <CustomTypography variant='h4'>Sign Up</CustomTypography>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                         <CustomTextField
                             fullWidth
                             label="First Name"
                             variant="outlined"
-                            name="firstName"
-                            value={formData.firstName}
+                            name="first_name"
+                            value={formData.first_name}
                             onChange={handleChange}
                             required
                         />
@@ -60,8 +62,8 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
                             fullWidth
                             label="Last Name"
                             variant="outlined"
-                            name="lastName"
-                            value={formData.lastName}
+                            name="last_name"
+                            value={formData.last_name}
                             onChange={handleChange}
                             required
                         />
@@ -83,11 +85,23 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
                             fullWidth
                             label="Password"
                             variant="outlined"
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
                             required
+                            InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      onClick={handleClickShowPassword}
+                                      edge="end"
+                                    >
+                                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                  </InputAdornment>
+                                ),
+                            }}
                         />
                         </Grid>
                         <Grid item xs={12}>
@@ -96,8 +110,8 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
                             label="Repeat Password"
                             variant="outlined"
                             type="password"
-                            name="repeatPassword"
-                            value={formData.repeatPassword}
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
                             onChange={handleChange}
                             required
                         />

@@ -2,10 +2,12 @@ import { styled } from '@mui/material/styles';
 import { Button, Typography, TextField, Paper } from '@mui/material';
 
 export const MainButton = styled(Button)({
-  background: '#ffcc00',
+  background: '#F58840',
   color: 'white',
+  borderRadius: '50px',
+  fontWeight: 600,
   '&:hover': {
-    background: '#ff9900',
+    background: '#F5A962',
   },
 });
 
@@ -16,23 +18,18 @@ export const CustomPaper = styled(Paper)({
 });
 
 export const CustomTextField = styled(TextField)({
-    '& .MuiInputLabel-root': {
-      color: '#ff4400', // Adjust the label color
-    },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
-        borderColor: '#ff4400', // Adjust the border color
+        borderColor: '#61677A', // Adjust the border color
       },
       '&:hover fieldset': {
         borderColor: '#646cffaa', // Adjust the hover border color
-        color: '#646cffaa',
       },
       '&.Mui-focused fieldset': {
         borderColor: '#646cffaa', // Adjust the focused border color
-        color: '#646cffaa',
       },
     },
-  });
+});
 
 export const CustomTypography = styled(Typography)(({ theme }) => ({
     fontFamily: theme.typography.fontFamily,
@@ -42,7 +39,7 @@ export const CustomTypography = styled(Typography)(({ theme }) => ({
       '50%': { transform: 'scale(1.1)' },
       '100%': { transform: 'scale(1)' },
     },
-    fontWeight: 'bold',
-    color: "#03001C",
-    margin: "1rem 0",
+    fontWeight: 800,
+    color: "#272829",
+    margin: "2rem 0",
   }));

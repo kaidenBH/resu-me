@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Grid } from '@mui/material';
-import { Container } from '@mui/material';
+import { Grid, IconButton, InputAdornment, Container } from '@mui/material';
+import { VisibilityOff, Visibility } from '@mui/icons-material';
 import { MainButton, CustomTextField, CustomTypography, CustomPaper } from './styles';
 
 interface SignInProps {
@@ -13,6 +13,9 @@ interface SignInFormData {
 }
 
 const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
     const [formData, setFormData] = useState<SignInFormData>({
         email: '',
         password: '',
@@ -33,10 +36,10 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
 
     return (
         <Container style={{ padding: 0 }} maxWidth="xs" >
-            <CustomPaper sx={{ borderRadius: '15px 0 0 15px' }}>
+            <CustomPaper sx={{ borderRadius: '15px 0 0 15px', display: 'flex', alignItems: 'center' }}>
                 <form onSubmit={handleSubmit}>
                     <CustomTypography variant="h4" >Sign In</CustomTypography>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={4}>
                         <Grid item xs={12}>
                         <CustomTextField
                             fullWidth
@@ -54,11 +57,23 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
                             fullWidth
                             label="Password"
                             variant="outlined"
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
                             required
+                            InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      onClick={handleClickShowPassword}
+                                      edge="end"
+                                    >
+                                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                  </InputAdornment>
+                                ),
+                            }}
                         />
                         </Grid>
                         <Grid item xs={12}>

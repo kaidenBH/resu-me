@@ -1,16 +1,18 @@
 import React from 'react';
 import { Box } from '@mui/material';
+import { useAuth } from '../../components/context/AuthContext';
 import SignUp, { SignUpFormData } from "./SignUp";
 import SignIn, { SignInFormData } from "./SignIn";
 
 const Sign = () => {
-  const SignUpFormData = (formData: SignUpFormData) => {
-    // Handle form submission logic here
-    console.log(formData);
+  const { signIn, signUp } = useAuth();
+
+  const SignUpFormData = async (formData: SignUpFormData) => {
+    await signUp(formData);
   };
-  const SignInFormData = (formData: SignInFormData) => {
+  const SignInFormData = async (formData: SignInFormData) => {
     // Handle form submission logic here
-    console.log(formData);
+    await signIn(formData);
   };
 
   return (
