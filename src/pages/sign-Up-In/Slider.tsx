@@ -10,7 +10,7 @@ interface SliderProps {
 const Slider: React.FC<SliderProps> = ({ onSubmit, haveAccount }) => {
   return (
     <Container style={{ padding: 0 }} maxWidth="xs">
-      <CustomSlidePaper sx={{ borderRadius: '15px 0 0 15px', display: 'flex', alignItems: 'center' }}>
+      <CustomSlidePaper sx={{ borderRadius: `${haveAccount ? '15px 0 0 15px' : '0 15px 15px 0'}`, display: 'flex', alignItems: 'center' }} >
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <CustomSlidingTypography variant="h4">{haveAccount? "Don't Have an account!": "Have an account!"}</CustomSlidingTypography>
