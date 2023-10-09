@@ -57,6 +57,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   return (
     <UserContext.Provider value={{ 
         user,
+        checkUser,
         signIn, 
         signUp, 
         signOut,
