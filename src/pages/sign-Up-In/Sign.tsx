@@ -22,15 +22,14 @@ const Sign = () => {
   };
   return (
     <Box sx={{ display: 'flex', padding: 0 }} >
+      <Slider onSubmit={() => SlideEffect()} haveAccount={haveAccount} />
       {haveAccount ? (
         <>
-          <Slider onSubmit={() => SlideEffect()} haveAccount={haveAccount} />
           <SignIn onSubmit={SignInFormData} />
         </>
       ) : (
         <>
           <SignUp onSubmit={SignUpFormData} />
-          <Slider onSubmit={() => SlideEffect()} haveAccount={haveAccount} />
         </>
       )}
     </Box>

@@ -42,7 +42,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 
     return (
         <Container style={{ padding: 0 }} maxWidth="xs" >
-            <CustomPaper sx={{ borderRadius: '15px 0 0 15px', display: 'flex', alignItems: 'center' }}>
+            <CustomPaper sx={{ borderRadius: '0 15px 15px 0', display: 'flex', alignItems: 'center' }}>
                 <form onSubmit={handleSubmit}>
                     <CustomTypography variant='h4'>Sign Up</CustomTypography>
                     <Grid container spacing={2}>
