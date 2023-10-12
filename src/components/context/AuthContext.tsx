@@ -16,6 +16,7 @@ interface UserContextType {
   signIn: (userData: object) => Promise<void>;
   signUp: (userData: object) => Promise<void>;
   signOut: () => void;
+  checkUser: () => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -51,7 +52,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const checkUser = () => {
     const existUser = getItem("user");
-    if (existUser) setUser(existUser);
+    if (existUser) {
+      const parsedUser = JSON.parse(existUser);
+      setUser(parsedUser);
+    }
   };
   
   return (

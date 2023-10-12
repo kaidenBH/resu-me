@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, Slide } from '@mui/material';
 import { useAuth } from '../../components/context/AuthContext';
 import SignUp, { SignUpFormData } from "./SignUp";
 import SignIn, { SignInFormData } from "./SignIn";
@@ -21,18 +21,20 @@ const Sign = () => {
     console.log("Button clicked", haveAccount);
   };
   return (
-    <Box sx={{ display: 'flex', padding: 0 }} >
-      <Slider onSubmit={() => SlideEffect()} haveAccount={haveAccount} />
-      {haveAccount ? (
-        <>
-          <SignIn onSubmit={SignInFormData} />
-        </>
-      ) : (
-        <>
-          <SignUp onSubmit={SignUpFormData} />
-        </>
-      )}
-    </Box>
+    <Slide direction="right" in={true} timeout={600}>
+      <Box sx={{ display: 'flex', padding: 0 }} >
+        <Slider onSubmit={() => SlideEffect()} haveAccount={haveAccount} />
+        {haveAccount ? (
+          <>
+            <SignIn onSubmit={SignInFormData} />
+          </>
+        ) : (
+          <>
+            <SignUp onSubmit={SignUpFormData} />
+          </>
+        )}
+      </Box>
+    </Slide>
   );
 };
 
