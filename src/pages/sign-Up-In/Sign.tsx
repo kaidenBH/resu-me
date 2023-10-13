@@ -13,7 +13,6 @@ const Sign = () => {
     await signUp(formData);
   };
   const SignInFormData = async (formData: SignInFormData) => {
-    // Handle form submission logic here
     await signIn(formData);
   };
   const SlideEffect = () => {

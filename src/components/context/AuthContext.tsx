@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { useNavigate } from 'react-router-dom';
 import * as API from "../../apis/Apis";
 
 interface User {
@@ -24,12 +25,14 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | object | null>(null);
   const { getItem, setItem, removeItem } = useLocalStorage();
-  
+  const navigate = useNavigate ();
+
   const signIn = async (userData: object) => {
     try {
         const { data } = await API.signIn(userData);
         setUser(data);
         setItem("user", JSON.stringify(data));
+        navigate('/');
       } catch (error) {
         console.error("Error signing in:", error);
       }
@@ -40,6 +43,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const { data } = await API.signUp(userData);
         setUser(data);
         setItem("user", JSON.stringify(data));
+        navigate('/');
       } catch (error) {
         console.error("Error signing in:", error);
       }
@@ -48,6 +52,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signOut = () => {
     setUser(null);
     removeItem("user");
+    navigate('/auth');
   };
 
   const checkUser = () => {
@@ -55,6 +60,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (existUser) {
       const parsedUser = JSON.parse(existUser);
       setUser(parsedUser);
+    } 
+    else { 
+      navigate('/auth');
     }
   };
   

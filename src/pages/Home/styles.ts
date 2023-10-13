@@ -47,7 +47,7 @@ export const CustomTypography = styled(Typography)(({ theme }) => ({
     margin: "2rem 0",
   }));
 
-export const CustomSlidingTypography = styled(Typography)(({ theme }) => ({
+export const ProType = styled(Typography)(({ theme }) => ({
     fontFamily: theme.typography.fontFamily,
     animation: 'pop 0.5s ease',
     '@keyframes pop': {
@@ -55,7 +55,36 @@ export const CustomSlidingTypography = styled(Typography)(({ theme }) => ({
       '50%': { transform: 'scale(1.1)' },
       '100%': { transform: 'scale(1)' },
     },
-    fontWeight: 800,
-    color: 'white',
+    fontWeight: 1000,
+    fontSize: "1rem",
+    color: '#687EFF',
+    margin: "2rem 0",
+  }));
+
+export const PlusType = styled(Typography)(({ theme }) => ({
+    fontFamily: theme.typography.fontFamily,
+    animation: 'pop 0.5s ease',
+    '@keyframes pop': {
+      '0%': { transform: 'scale(1)' },
+      '50%': { transform: 'scale(1.1)' },
+      '100%': { transform: 'scale(1)' },
+    },
+    fontWeight: 1000,
+    fontSize: "1rem",
+    color: '#03C988',
+    margin: "2rem 0",
+  }));
+
+export const BasicType = styled(Typography)(({ theme }) => ({
+    fontFamily: theme.typography.fontFamily,
+    animation: 'pop 0.5s ease',
+    '@keyframes pop': {
+      '0%': { transform: 'scale(1)' },
+      '50%': { transform: 'scale(1.1)' },
+      '100%': { transform: 'scale(1)' },
+    },
+    fontWeight: 1000,
+    fontSize: "1rem",
+    color: '#A76F6F',
     margin: "2rem 0",
   }));
