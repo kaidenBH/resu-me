@@ -1,11 +1,20 @@
-import React, { useEffect } from 'react';
-import { Avatar, Box, Grow } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import {  Box, Grow } from '@mui/material';
 import { useAuth } from '../../components/context/AuthContext';
-import { CustomSideBar, CustomTypography, ProType, BasicType, PlusType } from './styles';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { CustomSideBar, CustomTypography, ProType, BasicType, PlusType, CustomAvatar, CustomAddImage } from './styles';
+import * as API from '../../apis/Apis';
 
 const Profile: React.FC = () => {
   const { checkUser, user } = useAuth();
+  const [imageChangeActive, setImageChangeActive] = useState(false);
+
+  const handleChangeImage = () => {
+    setImageChangeActive(true);
+    setTimeout(() => {
+      setImageChangeActive(false);
+    }, 200);
+
+  };
 
   useEffect(() => {
     checkUser();
@@ -15,8 +24,8 @@ const Profile: React.FC = () => {
     <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={1000}>
       <CustomSideBar>
         <Box>
-          <Avatar alt={user?.first_name} src={user?.image} sx={{ width: 100, height: 100, margin: '3rem 0' }} />
-          <AddPhotoAlternateIcon sx={{ color: "#576CBC" }}/>
+          <CustomAvatar alt={user?.first_name} src={user?.image} >{user?.first_name.charAt(0)}</CustomAvatar>
+          <CustomAddImage isActive={imageChangeActive} onClick={handleChangeImage}/>
         </Box>
         <CustomTypography variant="h6">{user?.first_name} {user?.last_name}</CustomTypography>
         <CustomTypography variant="body1">{user?.email}</CustomTypography>
