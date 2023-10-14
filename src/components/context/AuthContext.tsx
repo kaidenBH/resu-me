@@ -18,6 +18,7 @@ interface UserContextType {
   signUp: (userData: object) => Promise<void>;
   signOut: () => void;
   checkUser: () => void;
+  refreshUserToken: (newUser: object) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -65,7 +66,11 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       navigate('/auth');
     }
   };
-  
+  const refreshUserToken = (newUser: object) => {
+    setUser(newUser);
+    setItem("user", JSON.stringify(newUser));
+    navigate('/');
+  };
   return (
     <UserContext.Provider value={{ 
         user,
@@ -73,6 +78,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         signIn, 
         signUp, 
         signOut,
+        refreshUserToken,
     }}>
       {children}
     </UserContext.Provider>

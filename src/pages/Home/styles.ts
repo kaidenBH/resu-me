@@ -1,15 +1,5 @@
 import { styled } from '@mui/material/styles';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { Avatar, Box, Typography, TextField, Paper } from '@mui/material';
-
-export const CustomAddImage = styled(AddPhotoAlternateIcon)(({ isActive }) => ({
-  color: isActive ? "#FF5733" : "#6499E9",
-  position: 'absolute',
-  right: 125,
-  top: 125,
-  cursor: 'pointer',
-  transition: 'color 0.2s', // Add a transition effect for color change
-}));
 
 export const CustomAvatar = styled(Avatar)(({ theme }) => ({
   color: theme.palette.getContrastText("#363062"),
