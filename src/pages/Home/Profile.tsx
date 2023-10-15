@@ -3,7 +3,8 @@ import {  Box, Grow, IconButton } from '@mui/material';
 import { useAuth } from '../../components/context/AuthContext';
 import FileBase from 'react-file-base64';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { CustomSideBar, CustomTypography, ProType, BasicType, PlusType, CustomAvatar, CustomAddImage } from './styles';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import { CustomSideBar, CustomTypography, ProType, BasicType, PlusType, CustomAvatar } from './styles';
 import * as API from '../../apis/Apis';
 
 interface ProfileFormData {
@@ -18,6 +19,8 @@ const Profile: React.FC = () => {
   const { user, refreshUserToken } = useAuth();
   const [imageChangeActive, setImageChangeActive] = useState(false);
   const [imageChangeLoading, setImageChangeLoading] = useState(false);
+  const [editData, setEditData] = useState(false);
+  const [editDataActive, setEditDataActive] = useState(false);
   const [profielImage, setProfileImage] = useState('');
   const [formData, setFormData] = useState<ProfileFormData>({
     email: user?.email || '',
@@ -31,7 +34,14 @@ const Profile: React.FC = () => {
     setTimeout(() => {
       setImageChangeActive(false);
     }, 200);
+  };
 
+  const handleActiveEditData = () => {
+    setEditData(!editData);
+    setEditDataActive(true);
+    setTimeout(() => {
+      setEditDataActive(false);
+    }, 200);
   };
 
   useEffect(() => {
@@ -50,6 +60,13 @@ const Profile: React.FC = () => {
     <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={1000}>
       <CustomSideBar>
         <Box>
+          <EditNoteIcon sx={{ 
+            color: editDataActive ? "#FF5733" : "#6499E9", 
+            position: 'absolute', 
+            right: 20, 
+            top: 20, 
+            fontSize: 40, 
+            cursor: "pointer" }} onClick={handleActiveEditData} />
           <CustomAvatar alt={user?.first_name} src={user?.image} >{user?.first_name.charAt(0)}</CustomAvatar>
           <IconButton aria-label="upload picture" component="label" sx={{  position: 'absolute', right: 125, top: 125 }}>
             { imageChangeLoading? 
