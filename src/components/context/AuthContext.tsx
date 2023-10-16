@@ -16,6 +16,8 @@ interface UserContextType {
   user: User | object | null;
   signIn: (userData: object) => Promise<void>;
   signUp: (userData: object) => Promise<void>;
+  updateUserImage: (userData: object) => void;
+  updateUser: (userData: object) => void;
   signOut: () => void;
   checkUser: () => void;
   refreshUserToken: (newUser: object) => void;
@@ -31,9 +33,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signIn = async (userData: object) => {
     try {
         const { data } = await API.signIn(userData);
-        setUser(data);
-        setItem("user", JSON.stringify(data));
-        navigate('/');
+        refreshUserToken(data);
       } catch (error) {
         console.error("Error signing in:", error);
       }
@@ -42,9 +42,25 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signUp = async (userData: object) => {
     try {
         const { data } = await API.signUp(userData);
-        setUser(data);
-        setItem("user", JSON.stringify(data));
-        navigate('/');
+        refreshUserToken(data);
+      } catch (error) {
+        console.error("Error signing in:", error);
+      }
+  };
+
+  const updateUserImage = async (userData: object) => {
+    try {
+        const { data } = await API.updateUserImage(userData);
+        refreshUserToken(data);
+      } catch (error) {
+        console.error("Error signing in:", error);
+      }
+  };
+
+  const updateUser = async (userData: object) => {
+    try {
+        const { data } = await API.updateUser(userData);
+        refreshUserToken(data);
       } catch (error) {
         console.error("Error signing in:", error);
       }
@@ -79,6 +95,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         signUp, 
         signOut,
         refreshUserToken,
+        updateUserImage,
+        updateUser,
     }}>
       {children}
     </UserContext.Provider>
