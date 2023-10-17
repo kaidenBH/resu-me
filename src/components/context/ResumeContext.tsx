@@ -6,12 +6,14 @@ import * as API from '../../apis/Apis';
 interface Resume {
 	title: string;
 	template: string;
+	owner: boolean;
 	fields: [object];
 }
 
 interface ResumeContextType {
 	resume: Resume | object | null;
 	allResumes: [Resume] | [object] | null;
+	activeTemplate: string;
 	getAllResumes: () => Promise<void>;
 	getResume: (resumeId: string) => Promise<void>;
 	navigateResume: (resumeId: string) => void;
@@ -22,6 +24,7 @@ const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 	const [resume, setResume] = useState<Resume | object | null>(null);
 	const [allResumes, setAllResumes] = useState<[Resume] | [object] | null>(null);
+	const [activeTemplate, setActiveTemplate] = useState<string | null>('Simple');
 	const navigate = useNavigate();
 
 	const getAllResumes = async () => {
@@ -42,6 +45,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			const { data } = await API.get_resume(resumeId);
 			console.log(data);
 			setResume(data);
+			setActiveTemplate(data.template);
 		} catch (error) {
 			console.error('Error signing in:', error);
 		}
@@ -55,6 +59,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 				getResume,
 				getAllResumes,
 				navigateResume,
+				activeTemplate,
 			}}
 		>
 			{children}

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Grow, Paper, Typography, Button, Grid, Box } from '@mui/material';
 import { useResume } from '../../components/context/ResumeContext';
 import { useParams } from 'react-router-dom';
+import ResumeEditPage from './resumeComponents/ResumeEditPage';
+import * as Templates from './resumeTemplates/index';
 
 const Resume: React.FC = () => {
 	const { resume, getResume } = useResume();
@@ -22,7 +24,12 @@ const Resume: React.FC = () => {
 			{resumeLoading ? (
 				<img src={'/loading.svg'} alt="My SVG" style={{ height: '15rem' }} />
 			) : (
-				<Typography variant="h1">HELLO</Typography>
+				<Box sx={{ display: 'flex', padding: 0 }}>
+					{resume?.owner? (
+						<ResumeEditPage />
+					):( null )}
+					<Templates.Simple />
+				</Box>
 			)}
 		</Grow>
 	);
