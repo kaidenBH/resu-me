@@ -13,7 +13,7 @@ interface Resume {
 interface ResumeContextType {
 	resume: Resume | object | null;
 	allResumes: [Resume] | [object] | null;
-	activeTemplate: string;
+	activeTemplate: string | null;
 	getAllResumes: () => Promise<void>;
 	getResume: (resumeId: string) => Promise<void>;
 	navigateResume: (resumeId: string) => void;

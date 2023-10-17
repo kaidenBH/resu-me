@@ -6,7 +6,7 @@ import ResumeEditPage from './resumeComponents/ResumeEditPage';
 import * as Templates from './resumeTemplates/index';
 
 const Resume: React.FC = () => {
-	const { resume, getResume } = useResume();
+	const { resume, getResume, activeTemplate } = useResume();
 	const [resumeLoading, setResumeLoading] = useState(false);
 	const { resumeId } = useParams();
 
@@ -28,7 +28,9 @@ const Resume: React.FC = () => {
 					{resume?.owner? (
 						<ResumeEditPage />
 					):( null )}
-					<Templates.Simple />
+					{resume?.template === 'Simple'? (
+						<Templates.Simple />
+					) : (null)}
 				</Box>
 			)}
 		</Grow>

@@ -38,6 +38,7 @@ export const CustomSlidePaper = styled(Paper)({
 });
 
 export const CustomTextField = styled(TextField)({
+	background: '#DDE6ED',
 	'& .MuiOutlinedInput-root': {
 		'& fieldset': {
 			borderColor: '#61677A', // Adjust the border color

@@ -29,7 +29,7 @@ const ResumesPage: React.FC = () => {
 				<Grid container spacing={2} sx={{ marginLeft: '320px', marginTop: '16px' }}>
 					{allResumes &&
 						allResumes.map((resume) => (
-							<Grid item key={resume._id} sm={8} md={12}>
+							<Grid item key={resume._id} sm={8} md={6}>
 								<Paper style={{ padding: '16px', marginBottom: '16px' }}>
 									<Typography variant="h5">{resume.title}</Typography>
 									<Button

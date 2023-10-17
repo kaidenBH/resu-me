@@ -2,12 +2,12 @@ import { styled } from '@mui/material/styles';
 import { Button, Typography, TextField, Paper } from '@mui/material';
 
 export const CustomPaper = styled(Paper)({
-	height: '30rem',
 	padding: '20px',
-	background: '#F9F9F9',
+	background: '#DDE6ED',
 });
 
 export const CustomTextField = styled(TextField)({
+	background: 'white',
 	'& .MuiOutlinedInput-root': {
 		'& fieldset': {
 			borderColor: '#61677A', // Adjust the border color
@@ -31,5 +31,5 @@ export const CustomTypography = styled(Typography)(({ theme }) => ({
 	},
 	fontWeight: 800,
 	color: '#272829',
-	margin: '2rem 0',
+	margin: '1rem',
 }));
