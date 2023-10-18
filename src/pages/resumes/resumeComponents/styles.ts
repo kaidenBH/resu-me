@@ -3,11 +3,12 @@ import { Button, Typography, TextField, Paper } from '@mui/material';
 
 export const CustomPaper = styled(Paper)({
 	padding: '20px',
-	background: '#DDE6ED',
+	border: 'solid 3px #DDE6ED',
+	boxShadow: 'none',
 });
 
 export const CustomTextField = styled(TextField)({
-	background: 'white',
+	background: '#DDE6ED',
 	'& .MuiOutlinedInput-root': {
 		'& fieldset': {
 			borderColor: '#61677A', // Adjust the border color

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import * as API from '../../apis/Apis';
 
 interface Resume {
+	_id: string,
 	title: string;
 	template: string;
 	owner: boolean;
@@ -17,6 +18,7 @@ interface ResumeContextType {
 	getAllResumes: () => Promise<void>;
 	getResume: (resumeId: string) => Promise<void>;
 	navigateResume: (resumeId: string) => void;
+	updatePersonalSection: (resumeId: string, PeronalSectionData: object) => Promise<void>;
 }
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
@@ -43,9 +45,18 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 	const getResume = async (resumeId: string) => {
 		try {
 			const { data } = await API.get_resume(resumeId);
-			console.log(data);
 			setResume(data);
 			setActiveTemplate(data.template);
+		} catch (error) {
+			console.error('Error signing in:', error);
+		}
+	};
+
+	const updatePersonalSection = async (resumeId: string, PeronalSectionData: object) => {
+		try {
+			const {data} = await API.updatePersonalSection(resumeId, PeronalSectionData);
+			console.log(data.personal_section);
+			getResume(resumeId);
 		} catch (error) {
 			console.error('Error signing in:', error);
 		}
@@ -60,6 +71,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 				getAllResumes,
 				navigateResume,
 				activeTemplate,
+				updatePersonalSection,
 			}}
 		>
 			{children}

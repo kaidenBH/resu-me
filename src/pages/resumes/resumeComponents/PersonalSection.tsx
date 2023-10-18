@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, IconButton, Container } from '@mui/material';
+import { Grid, Box, Container } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomPaper } from './styles';
+import { useResume } from '../../../components/context/ResumeContext';
+import EditIcon from '@mui/icons-material/Edit';
+import CheckIcon from '@mui/icons-material/Check';
 
 interface personalSectionForm {
-    type: string;
     _id: string;
     resumeId: string;
     field_name: string;
@@ -15,7 +17,7 @@ interface personalSectionForm {
     phone: string;
     country: string;
     city: string;
-    summary: [string, string | null];
+	summary: [string, string];
 }
 
 interface PersonalSectionProps {
@@ -23,8 +25,15 @@ interface PersonalSectionProps {
 }
 
 const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) => {
+	const { updatePersonalSection } = useResume();
+	const [editPersonalField, setEditPersonalField] = useState(false);
+	const [PersonalFieldLoading, setPersonalFieldLoading] = useState(false);
+	const [editSummaryField, setEditSummaryField] = useState(false);
+	const [summaryFieldLoading, setSummaryFieldLoading] = useState(false);
+	const [editingPhase, setEditingPhase] = useState(false);
+	const [seconds, setSeconds] = useState(2);
+
     const [personalData, setPersonalData] = useState<personalSectionForm>({
-        type: personal_section.type || '',
         _id: personal_section._id || '',
         resumeId: personal_section.resumeId || '',
         field_name: personal_section.field_name || 'Personal Details',
@@ -36,19 +45,64 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
         phone: personal_section.phone || '',
         country: personal_section.country || '',
         city: personal_section.city || '',
-        summary: [
-            personal_section.summary[0] || 'Professional Summary', 
-            personal_section.summary[1] || ''
-        ],
+		summary: [
+			personal_section.summary[0],
+			personal_section.summary[1]
+		],
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setPersonalData({
-			...personalData,
-			[name]: value,
-		});
+		if (name.startsWith("summary")) {
+			const index = parseInt(name.split(';-;')[1], 10);
+			setPersonalData({
+				...personalData,
+				summary: [
+					...personalData.summary.slice(0, index),
+					value,
+					...personalData.summary.slice(index + 1)
+				],
+			});
+		} else {
+			setPersonalData({
+				...personalData,
+				[name]: value,
+			});
+		}
+		setEditingPhase(true);
+		setSeconds(2);
+	};	
+	
+	const personalSectionUpdate = async () => {
+		await updatePersonalSection(personalData.resumeId, personalData);
+		setEditingPhase(false);
 	};
+
+	const handleChangeFieldName = async () =>{
+		setPersonalFieldLoading(true);
+		await personalSectionUpdate();
+		setEditPersonalField(false);
+		setPersonalFieldLoading(false);
+	};
+
+	const handleChangeSummaryName = async () =>{
+		setSummaryFieldLoading(true);
+		await personalSectionUpdate();
+		setEditSummaryField(false);
+		setSummaryFieldLoading(false);
+	};
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setSeconds(prevSeconds => prevSeconds - 1);
+		}, 1000);
+	
+		if (seconds <= 0 && editingPhase) {
+			personalSectionUpdate();
+		}
+	
+		return () => clearInterval(interval);
+	}, [seconds]);
 
   return (
     <Container style={{ padding: 0 }} maxWidth="xs">
@@ -56,7 +110,42 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 			sx={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '30vw' }}
 		>
 			<Grid container spacing={2}>
-			    <CustomTypography variant="h6">{personal_section.field_name}</CustomTypography>
+				{editPersonalField? (
+					<Grid item xs={6} sx={{ display: 'flex', alignItems:'center' }}>
+						<CustomTextField
+							fullWidth
+							label="Personal Field Name"
+							variant="outlined"
+							name="field_name"
+							value={personalData.field_name}
+							onChange={handleChange}
+						/>
+						{PersonalFieldLoading?
+							<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
+						:(
+							<CheckIcon
+								sx={{
+									color: '#6499E9',
+									fontSize: 40,
+									cursor: 'pointer',
+								}}
+								onClick={handleChangeFieldName}
+							/>
+						)}
+					</Grid>
+				):(
+					<Grid item xs={12}  sx={{ display: 'flex', alignItems:'center' }}>
+						<CustomTypography variant="h6">{personalData.field_name}</CustomTypography>
+						<EditIcon
+							sx={{
+								color: '#6499E9',
+								fontSize: 20,
+								cursor: 'pointer',
+							}}
+							onClick={() => setEditPersonalField(true)}
+						/>
+					</Grid>
+				)}
 				<Grid item xs={12}>
 					<CustomTextField
 						fullWidth
@@ -128,25 +217,50 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 						onChange={handleChange}
 					/>
 				</Grid>
-                <CustomTypography variant="h6" sx={{ marginTop:'2rem', marginBottom:'0' }}>{personal_section.summary[0]}</CustomTypography>
-                {/*<Grid item xs={12}>
-                    <CustomTextField
-                        fullWidth
-                        label="Professional Summary"
-                        variant="outlined"
-                        name="summary[0]"  // Update the name to reflect the correct field in personalData
-                        value={personalData.summary[0]}
-                        onChange={handleChange}
-                    />
-                </Grid>*/}
+				{editSummaryField? (
+					<Grid item xs={6} sx={{ marginTop:'2rem', marginBottom:'0', display: 'flex', alignItems:'center' }}>
+						<CustomTextField
+							fullWidth
+							label="Professional Summary"
+							variant="outlined"
+							name="summary;-;0"
+							value={personalData.summary[0]}
+							onChange={handleChange}
+						/>
+						{summaryFieldLoading?
+							<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
+						:(
+							<CheckIcon
+								sx={{
+									color: '#6499E9',
+									fontSize: 40,
+									cursor: 'pointer',
+								}}
+								onClick={handleChangeSummaryName}
+							/>
+						)}
+					</Grid>
+				):(
+					<Grid item xs={12}  sx={{ marginTop:'2rem', marginBottom:'0', display: 'flex', alignItems:'center' }}>
+						<CustomTypography variant="h6">{personalData.summary[0]}</CustomTypography>
+						<EditIcon
+							sx={{
+								color: '#6499E9',
+								fontSize: 20,
+								cursor: 'pointer',
+							}}
+							onClick={() => setEditSummaryField(true)}
+						/>
+					</Grid>
+				)}
                 <Grid item xs={12}>
                     <CustomTextField
                         fullWidth
                         label="About yourself and the work you do ..."
                         variant="outlined"
-                        name="summary[1]"  // Update the name to reflect the correct field in personalData
-                        value={personalData.summary[1]}
-                        onChange={handleChange}
+                        name="summary;-;1"
+						value={personalData.summary[1]}
+						onChange={handleChange}
                         multiline 
                         rows={4}
                     />

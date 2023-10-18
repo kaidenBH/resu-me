@@ -12,7 +12,7 @@ API.interceptors.request.use((req) => {
 });
 
 type ApiFunction = (userData?: object | string) => Promise<AxiosResponse<object>>;
-type ApiResumeFunction = (ResumeData?: object | string) => Promise<AxiosResponse<object>>;
+type ApiResumeFunction = (resumeId?: string, ResumeData?: object) => Promise<AxiosResponse<object>>;
 
 // User apis
 export const signIn: ApiFunction = (userData) => API.post('/user/signin', userData);
@@ -28,5 +28,8 @@ export const newResume: ApiResumeFunction = (ResumeData) => API.post('/resume/',
 export const get_resume: ApiResumeFunction = (resumeId) => API.get(`/resume/${resumeId}`);
 export const getAllResumes: ApiResumeFunction = () => API.get('/resume/getAllResumes');
 export const removeResume: ApiResumeFunction = (resumeId) => API.delete(`/resume/${resumeId}`);
-export const duplicateResume: ApiResumeFunction = (resumeId) =>
-	API.post(`/resume/duplicate/${resumeId}`);
+export const duplicateResume: ApiResumeFunction = (resumeId) => API.post(`/resume/duplicate/${resumeId}`);
+
+// Personal Api
+export const updatePersonalSection: ApiResumeFunction = (resumeId, PeronalSectionData) => 
+	API.patch(`/resume/updatePersonalSection/${resumeId}`, PeronalSectionData);
