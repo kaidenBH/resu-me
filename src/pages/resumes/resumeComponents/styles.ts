@@ -3,23 +3,11 @@ import { Button, Typography, TextField, Paper } from '@mui/material';
 
 export const CustomPaper = styled(Paper)({
 	padding: '20px',
-	border: 'solid 3px #DDE6ED',
 	boxShadow: 'none',
 });
 
 export const CustomTextField = styled(TextField)({
 	background: '#DDE6ED',
-	'& .MuiOutlinedInput-root': {
-		'& fieldset': {
-			borderColor: '#61677A', // Adjust the border color
-		},
-		'&:hover fieldset': {
-			borderColor: '#646cffaa', // Adjust the hover border color
-		},
-		'&.Mui-focused fieldset': {
-			borderColor: '#646cffaa', // Adjust the focused border color
-		},
-	},
 });
 
 export const CustomTypography = styled(Typography)(({ theme }) => ({

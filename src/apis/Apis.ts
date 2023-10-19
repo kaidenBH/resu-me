@@ -12,7 +12,7 @@ API.interceptors.request.use((req) => {
 });
 
 type ApiFunction = (userData?: object | string) => Promise<AxiosResponse<object>>;
-type ApiResumeFunction = (resumeId?: string, ResumeData?: object) => Promise<AxiosResponse<object>>;
+type ApiResumeFunction = (resumeId?: string, fieldId?: string, ResumeData?: object) => Promise<AxiosResponse<object>>;
 
 // User apis
 export const signIn: ApiFunction = (userData) => API.post('/user/signin', userData);
@@ -33,3 +33,13 @@ export const duplicateResume: ApiResumeFunction = (resumeId) => API.post(`/resum
 // Personal Api
 export const updatePersonalSection: ApiResumeFunction = (resumeId, PeronalSectionData) => 
 	API.patch(`/resume/updatePersonalSection/${resumeId}`, PeronalSectionData);
+
+// Employment Api
+export const addEmploymentRecord:ApiResumeFunction = (resumeId) => 
+	API.patch(`/resume/employment/addEmploymentRecord/${resumeId}`);
+export const updateEmploymentRecord:ApiResumeFunction = (resumeId, employmentId, ResumeData) => 
+	API.patch(`/resume/employment/updateEmploymentRecord/${resumeId}/${employmentId}`, ResumeData);
+export const deleteEmploymentRecord:ApiResumeFunction = (resumeId, employmentId) => 
+	API.delete(`/resume/employment/deleteEmploymentRecord/${resumeId}/${employmentId}`);
+export const deleteEmployment:ApiResumeFunction = (resumeId) => 
+	API.delete(`/resume/employment/deleteEmployment/${resumeId}`);

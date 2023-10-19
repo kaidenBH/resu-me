@@ -6,7 +6,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 
 interface personalSectionForm {
-    _id: string;
     resumeId: string;
     field_name: string;
     job_title: string;
@@ -34,7 +33,6 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 	const [seconds, setSeconds] = useState(2);
 
     const [personalData, setPersonalData] = useState<personalSectionForm>({
-        _id: personal_section._id || '',
         resumeId: personal_section.resumeId || '',
         field_name: personal_section.field_name || 'Personal Details',
         job_title: personal_section.job_title || '',
@@ -110,12 +108,13 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 			sx={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '30vw' }}
 		>
 			<Grid container spacing={2}>
-				{editPersonalField? (
+				<CustomTypography variant="h6">{personalData.field_name}</CustomTypography>
+				{/*editPersonalField? (
 					<Grid item xs={6} sx={{ display: 'flex', alignItems:'center' }}>
 						<CustomTextField
 							fullWidth
 							label="Personal Field Name"
-							variant="outlined"
+							variant="filled"
 							name="field_name"
 							value={personalData.field_name}
 							onChange={handleChange}
@@ -145,12 +144,12 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							onClick={() => setEditPersonalField(true)}
 						/>
 					</Grid>
-				)}
+				)*/}
 				<Grid item xs={12}>
 					<CustomTextField
 						fullWidth
-						label="Job Title"
-						variant="outlined"
+						label="Wanted Job Title"
+						variant="filled"
 						name="job_title"
 						value={personalData.job_title}
 						onChange={handleChange}
@@ -160,7 +159,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 					<CustomTextField
 						fullWidth
 						label="First Name"
-						variant="outlined"
+						variant="filled"
 						name="first_name"
 						value={personalData.first_name}
 						onChange={handleChange}
@@ -170,7 +169,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 					<CustomTextField
 						fullWidth
 						label="Last Name"
-						variant="outlined"
+						variant="filled"
 						name="last_name"
 						value={personalData.last_name}
 						onChange={handleChange}
@@ -180,7 +179,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 					<CustomTextField
 						fullWidth
 						label="Email"
-						variant="outlined"
+						variant="filled"
 						type="email"
 						name="email"
 						value={personalData.email}
@@ -191,7 +190,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 					<CustomTextField
 						fullWidth
 						label="Phone"
-						variant="outlined"
+						variant="filled"
 						name="phone"
 						value={personalData.phone}
 						onChange={handleChange}
@@ -201,7 +200,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 					<CustomTextField
 						fullWidth
 						label="Country"
-						variant="outlined"
+						variant="filled"
 						name="country"
 						value={personalData.country}
 						onChange={handleChange}
@@ -211,7 +210,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 					<CustomTextField
 						fullWidth
 						label="City"
-						variant="outlined"
+						variant="filled"
 						name="city"
 						value={personalData.city}
 						onChange={handleChange}
@@ -222,7 +221,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 						<CustomTextField
 							fullWidth
 							label="Professional Summary"
-							variant="outlined"
+							variant="filled"
 							name="summary;-;0"
 							value={personalData.summary[0]}
 							onChange={handleChange}
@@ -241,8 +240,8 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 						)}
 					</Grid>
 				):(
-					<Grid item xs={12}  sx={{ marginTop:'2rem', marginBottom:'0', display: 'flex', alignItems:'center' }}>
-						<CustomTypography variant="h6">{personalData.summary[0]}</CustomTypography>
+					<Grid item xs={12}  sx={{ margin:'2rem 0 0 0', display: 'flex', alignItems:'center' }}>
+						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{personalData.summary[0]}</CustomTypography>
 						<EditIcon
 							sx={{
 								color: '#6499E9',
@@ -257,7 +256,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
                     <CustomTextField
                         fullWidth
                         label="About yourself and the work you do ..."
-                        variant="outlined"
+                        variant="filled"
                         name="summary;-;1"
 						value={personalData.summary[1]}
 						onChange={handleChange}

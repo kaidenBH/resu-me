@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grow, Grid, Paper } from '@mui/material';
 import PersonalSection from './PersonalSection';
+import EmploymentSection from './EmploymentSection';
 import { useResume } from '../../../components/context/ResumeContext';
 import { CustomTypography } from './styles';
 
@@ -18,7 +19,10 @@ const ResumeEditPage: React.FC  = () => {
           top: 0,
           width: '50vw',
           height: '97vh',
-          overflowY: 'auto',
+          overflowY: 'scroll',
+          '&::-webkit-scrollbar': {
+            width: '0 !important', /* Hide the scrollbar for WebKit */
+          },
         }}>
           <CustomTypography variant="h4" sx={{ 
             position: 'fixed', 
@@ -31,16 +35,16 @@ const ResumeEditPage: React.FC  = () => {
           }}>{resume?.title}</CustomTypography>
           <Grid container spacing={2} sx={{ marginTop:'2rem' }}>
             <Grid item xs={12}>
-              <PersonalSection personal_section={resume?.fields[0]} title={resume?.title} />
+              <PersonalSection personal_section={resume?.fields[0]}/>
             </Grid>
             <Grid item xs={12}>
-              <PersonalSection personal_section={resume?.fields[0]} title={resume?.title} />
+              <EmploymentSection employment_section={resume?.fields[2]}/>
             </Grid>
             <Grid item xs={12}>
-              <PersonalSection personal_section={resume?.fields[0]} title={resume?.title} />
+              <PersonalSection personal_section={resume?.fields[0]}/>
             </Grid>
             <Grid item xs={12}>
-              <PersonalSection personal_section={resume?.fields[0]} title={resume?.title} />
+              <PersonalSection personal_section={resume?.fields[0]}/>
             </Grid>
           </Grid>
         </Paper>
