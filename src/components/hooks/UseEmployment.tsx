@@ -1,5 +1,5 @@
 import * as API from '../../apis/Apis';
-
+import { useResume } from '../context/ResumeContext';
 interface UseEmploymentSection {
 	addEmploymentRecord: (resumeId: string) => Promise<void>;
 	updateEmploymentRecord: (resumeId: string, employmentId: string, EmploymentData: object) => Promise<void>;
@@ -8,7 +8,7 @@ interface UseEmploymentSection {
 }
 
 export const useEmployment = (): UseEmploymentSection => {
-
+	const { getResume } = useResume();
     const addEmploymentRecord = async (resumeId: string) => {
 		try {
 			const { data } = await API.addEmploymentRecord(resumeId);
@@ -33,6 +33,7 @@ export const useEmployment = (): UseEmploymentSection => {
 		try {
 			const { data } = await API.deleteEmploymentRecord(resumeId, employmentId);
 			console.log(data);
+			return data.employment_section;
 		} catch (error) {
 			console.error('Error signing in:', error);
 		}
@@ -41,6 +42,7 @@ export const useEmployment = (): UseEmploymentSection => {
     const deleteEmployment = async (resumeId: string) => {
 		try {
 			const { data } = await API.deleteEmployment(resumeId);
+			await getResume(resumeId);
 			console.log(data);
 		} catch (error) {
 			console.error('Error signing in:', error);

@@ -66,9 +66,9 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 				...personalData,
 				[name]: value,
 			});
+			setEditingPhase(true);
+			setSeconds(2);
 		}
-		setEditingPhase(true);
-		setSeconds(2);
 	};	
 	
 	const personalSectionUpdate = async () => {
@@ -76,12 +76,12 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 		setEditingPhase(false);
 	};
 
-	const handleChangeFieldName = async () =>{
+	/*const handleChangeFieldName = async () =>{
 		setPersonalFieldLoading(true);
 		await personalSectionUpdate();
 		setEditPersonalField(false);
 		setPersonalFieldLoading(false);
-	};
+	};*/
 
 	const handleChangeSummaryName = async () =>{
 		setSummaryFieldLoading(true);
