@@ -2,6 +2,7 @@ import React from 'react'
 import { Grow, Grid, Paper } from '@mui/material';
 import PersonalSection from './PersonalSection';
 import EmploymentSection from './EmploymentSection';
+import EducationSection from './EducationSection';
 import { useResume } from '../../../components/context/ResumeContext';
 import { CustomTypography } from './styles';
 
@@ -38,10 +39,10 @@ const ResumeEditPage: React.FC  = () => {
               <PersonalSection personal_section={resume?.fields[0]}/>
             </Grid>
             <Grid item xs={12}>
-              <EmploymentSection employment_section={resume?.fields[2]}/>
+              <EmploymentSection employment_section={resume?.fields[6]}/>
             </Grid>
             <Grid item xs={12}>
-              <PersonalSection personal_section={resume?.fields[0]}/>
+              <EducationSection education_section={resume?.fields[2]}/>
             </Grid>
             <Grid item xs={12}>
               <PersonalSection personal_section={resume?.fields[0]}/>

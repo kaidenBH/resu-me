@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
-import { useEmployment } from '../../../components/hooks/UseEmployment';
+import { useEducation } from '../../../components/hooks/UseEducation';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-interface EmploymentSectionForm {
+interface EducationSectionForm {
     _id: string;
     resumeId: string;
     field_name: string;
-	employments: [
+	schools: [
         {
             _id: string;
-			job_title: string;
-			employer_name: string;
+			school_name: string;
+			degree_title: string;
 			start_date: string;
 			end_date: string;
 			city: string;
@@ -24,27 +24,27 @@ interface EmploymentSectionForm {
     ];
 }
 
-interface EmploymentSectionProps {
-    employment_section: EmploymentSectionForm; 
+interface EducationSectionProps {
+    education_section: EducationSectionForm; 
 }
 
-const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_section }) => {
-    const [employmentData, setEmploymentData] = useState<EmploymentSectionForm>({
-        _id: employment_section._id,
-        resumeId: employment_section.resumeId || '',
-        field_name: employment_section.field_name || 'Employment History',
-        employments: employment_section.employments || [],
+const EducationSection: React.FC<EducationSectionProps> = ({ education_section }) => {
+    const [schoolData, setSchoolData] = useState<EducationSectionForm>({
+        _id: education_section._id,
+        resumeId: education_section.resumeId || '',
+        field_name: education_section.field_name || 'Education',
+        schools: education_section.schools || [],
     });
 
-    const { addEmploymentRecord, updateEmploymentRecord, deleteEmploymentRecord, deleteEmployment } = useEmployment();
-	const [editEmploymentField, setEditEmploymentField] = useState(false);
-	const [employmentFieldLoading, setEmploymentFieldLoading] = useState(false);
-	const [editingPhases, setEditingPhases] = useState(employmentData.employments.map(() => false));
-    const [secondsArray, setSecondsArray] = useState(employmentData.employments.map(() => 2));
-    const [showDialogEmployment, setShowDialogEmployment] = useState(false);
-    const [showDialogRecord, setShowDialogRecord] = useState(false);
+    const { addSchool, updateSchool, deleteSchool, deleteEducation } = useEducation();
+	const [editSchoolField, setEditSchoolField] = useState(false);
+	const [schoolFieldLoading, setSchoolFieldLoading] = useState(false);
+	const [editingPhases, setEditingPhases] = useState(schoolData.schools.map(() => false));
+    const [secondsArray, setSecondsArray] = useState(schoolData.schools.map(() => 2));
+    const [showDialogEducation, setShowDialogEducation] = useState(false);
+    const [showDialogSchool, setShowDialogSchool] = useState(false);
     const [showDetails, setShowDetails] = useState(
-        employmentData.employments.map(() => false)
+        schoolData.schools.map(() => false)
       );
 
     const toggleDetails = (index: number) => {
@@ -58,24 +58,24 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		if (name === "field_name") {
-            setEmploymentData({
-                ...employmentData,
+            setSchoolData({
+                ...schoolData,
 				[name]: value,
 			});
 		} else {
             const [fieldName, indexStr] = name.split(';-;');
             const index = parseInt(indexStr, 10);
     
-            setEmploymentData(prevData => {
-                const updatedEmployments = [...prevData.employments];
-                updatedEmployments[index] = {
-                    ...updatedEmployments[index],
+            setSchoolData(prevData => {
+                const updatedSchools = [...prevData.schools];
+                updatedSchools[index] = {
+                    ...updatedSchools[index],
                     [fieldName]: value,
                 };
     
                 return {
                     ...prevData,
-                    employments: updatedEmployments,
+                    schools: updatedSchools,
                 };
             });
             setEditingPhases(prevPhases => {
@@ -92,8 +92,8 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
         }
 	};	
 	
-	const employmentRecordUpdate = async (index: number) => {
-		await updateEmploymentRecord(employmentData.resumeId, employmentData.employments[index]._id, employmentData.employments[index]);
+	const schoolUpdate = async (index: number) => {
+		await updateSchool(schoolData.resumeId, schoolData.schools[index]._id, schoolData.schools[index]);
 		setEditingPhases(prevPhases => {
             const updatedPhases = [...prevPhases];
             updatedPhases[index] = false;
@@ -102,34 +102,33 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 	};
 
 	const handleChangeFieldName = async () =>{
-		setEmploymentFieldLoading(true);
-		await updateEmploymentRecord(employmentData.resumeId, employmentData._id, employmentData);
-		setEditEmploymentField(false);
-		setEmploymentFieldLoading(false);
+		setSchoolFieldLoading(true);
+		await updateSchool(schoolData.resumeId, schoolData._id, schoolData);
+		setEditSchoolField(false);
+		setSchoolFieldLoading(false);
 	};
 
-    const handleAddRecord = async () =>{
-        const employment_section = await addEmploymentRecord(employmentData.resumeId);
-        setEmploymentData(employment_section!);
+    const handleAddSchool = async () =>{
+        const education_section = await addSchool(schoolData.resumeId);
+        setSchoolData(education_section!);
     };
 
-	const handleDeleteEmployment = async () =>{
-		await deleteEmployment(employmentData.resumeId);
-        console.log('works');
-        setShowDialogEmployment(false);
+	const handleDeleteEducation = async () =>{
+		await deleteEducation(schoolData.resumeId);
+        setShowDialogEducation(false);
 	};
 
-	const handleDeleteRecord = async (index: number) =>{
-		const employment_section = await deleteEmploymentRecord(employmentData.resumeId, employmentData.employments[index]._id);
-        setEmploymentData(employment_section!);
-        setShowDialogRecord(false);
+	const handleDeleteSchool = async (index: number) =>{
+		const education_section = await deleteSchool(schoolData.resumeId, schoolData.schools[index]._id);
+        setSchoolData(education_section!);
+        setShowDialogSchool(false);
 	};
 
-    const handleShowDialogEmployment = () =>{
-        setShowDialogEmployment(prev => !prev);
+    const handleShowDialogEducation = () =>{
+        setShowDialogEducation(prev => !prev);
     }
-    const handleShowDialogRecord = () =>{
-        setShowDialogRecord(prev => !prev);
+    const handleShowDialogSchool = () =>{
+        setShowDialogSchool(prev => !prev);
     }
 
 	useEffect(() => {
@@ -145,7 +144,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
     
         secondsArray.forEach((seconds, index) => {
             if (seconds <= 0 && editingPhases[index]) {
-                employmentRecordUpdate(index);
+                schoolUpdate(index);
             }
         });
     
@@ -160,17 +159,17 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 			sx={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '30vw' }}
 		>
 			<Grid container spacing={2}>
-				{editEmploymentField? (
+				{editSchoolField? (
 					<Grid item xs={6} sx={{ display: 'flex', alignItems:'center', marginBottom: '8px' }}>
 						<CustomTextField
 							fullWidth
-							label="Employment Field Name"
+							label="Education Field Name"
 							variant="filled"
 							name="field_name"
-							value={employmentData.field_name}
+							value={schoolData.field_name}
 							onChange={handleChange}
 						/>
-						{employmentFieldLoading?
+						{schoolFieldLoading?
 							<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
 						:(
                             <>
@@ -183,7 +182,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                                         }}
                                     />
                                 </IconButton>
-                                <IconButton onClick={handleShowDialogEmployment} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={handleShowDialogEducation} sx={{ '&:focus': { outline: 'none' }}} >
                                     <Delete
                                         sx={{
                                             color: '#D71313',
@@ -197,8 +196,8 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 					</Grid>
 				):(
 					<Grid item xs={12}  sx={{ display: 'flex', alignItems:'center' }}>
-						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{employmentData.field_name}</CustomTypography>
-                        <IconButton onClick={() => setEditEmploymentField(true)} sx={{ '&:focus': { outline: 'none' }}} >
+						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{schoolData.field_name}</CustomTypography>
+                        <IconButton onClick={() => setEditSchoolField(true)} sx={{ '&:focus': { outline: 'none' }}} >
                             <Edit
                                 sx={{
                                     color: '#6499E9',
@@ -207,7 +206,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                                 }}
                             />
                         </IconButton>
-                        <IconButton onClick={handleShowDialogEmployment} sx={{ '&:focus': { outline: 'none' }}} >
+                        <IconButton onClick={handleShowDialogEducation} sx={{ '&:focus': { outline: 'none' }}} >
                             <Delete
                                 sx={{
                                     color: '#D71313',
@@ -218,8 +217,8 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                         </IconButton>
 					</Grid>
 				)}
-                <AlertDialog open={showDialogEmployment} handleCloseDialog={handleShowDialogEmployment} handleAgreement={handleDeleteEmployment}/>
-                {employmentData.employments.map((employment, index) => (
+                <AlertDialog open={showDialogEducation} handleCloseDialog={handleShowDialogEducation} handleAgreement={handleDeleteEducation}/>
+                {schoolData.schools.map((school, index) => (
                     <Grid item xs={12} key={index} sx={{ border: '1px solid #272829', padding: '16px', margin: '0 0 16px 16px', borderRadius: '5px' }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -228,12 +227,12 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                                     cursor: 'pointer' ,
                                     '&:hover': { color: '#687EFF' }
                                     }}>
-                                    {employment.job_title}
+                                    {school.school_name}
                                     <IconButton sx={{ '&:focus': { outline: 'none' }}} >
                                         {showDetails[index] ? <ExpandLess /> : <ExpandMore />}
                                     </IconButton>
                                 </CustomTypography>
-                                <IconButton onClick={handleShowDialogRecord} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={handleShowDialogSchool} sx={{ '&:focus': { outline: 'none' }}} >
                                     <DeleteOutline
                                         sx={{
                                             color: '#FF6969',
@@ -242,33 +241,33 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                                         }}
                                     />
                                 </IconButton>
-                                <AlertDialog open={showDialogRecord} handleCloseDialog={handleShowDialogRecord} handleAgreement={() => handleDeleteRecord(index)}/>
+                                <AlertDialog open={showDialogSchool} handleCloseDialog={handleShowDialogSchool} handleAgreement={() => handleDeleteSchool(index)}/>
                             </Grid>
                             {showDetails[index] && (
                                 <>
                                     <Grid item xs={6}>
                                         <CustomTextField
                                             fullWidth
-                                            label="Job Title"
+                                            label="School Name"
                                             variant="filled"
-                                            name={`job_title;-;${index}`}
-                                            value={employment.job_title}
+                                            name={`school_name;-;${index}`}
+                                            value={school.school_name}
                                             onChange={handleChange}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
                                         <CustomTextField
                                             fullWidth
-                                            label="Employer Name"
+                                            label="Degree"
                                             variant="filled"
-                                            name={`employer_name;-;${index}`}
-                                            value={employment.employer_name}
+                                            name={`degree_title;-;${index}`}
+                                            value={school.degree_title}
                                             onChange={handleChange}
                                         />
                                     </Grid>
                                     <Grid item xs={3}>
                                         <DatePicker
-                                            selected={employment.start_date ? new Date(employment.start_date) : null}
+                                            selected={school.start_date ? new Date(school.start_date) : null}
                                             onChange={(date: Date) => {
                                                 const isoString = date ? date.toISOString() : '';
                                                 handleChange({ target: { name: `start_date;-;${index}`, value: isoString } });
@@ -279,7 +278,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                                     </Grid>
                                     <Grid item xs={3}>
                                         <DatePicker
-                                            selected={employment.end_date ?  new Date(employment.end_date): null}
+                                            selected={school.end_date ?  new Date(school.end_date): null}
                                             onChange={(date: Date) => {
                                                 const isoString = date ? date.toISOString() : '';
                                                 handleChange({ target: { name: `end_date;-;${index}`, value: isoString } });
@@ -294,17 +293,17 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                                             label="City"
                                             variant="filled"
                                             name={`city;-;${index}`}
-                                            value={employment.city}
+                                            value={school.city}
                                             onChange={handleChange}
                                         />
                                     </Grid>
                                     <Grid item xs={12} style={{ zIndex: 0 }}>
                                         <CustomTextField
                                             fullWidth
-                                            label="Description of the job"
+                                            label="Description"
                                             variant="filled"
                                             name={`description;-;${index}`}
-                                            value={employment.description}
+                                            value={school.description}
                                             onChange={handleChange}
                                             multiline 
                                             rows={4}
@@ -316,7 +315,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                     </Grid>
                 ))}
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent:'flex-start', marginLeft: '16px' }}>
-                    <LinkTypography onClick={handleAddRecord}>+ Add an Employment Record</LinkTypography>
+                    <LinkTypography onClick={handleAddSchool}>+ Add an School</LinkTypography>
                 </Grid>
 			</Grid>
 		</CustomPaper>
@@ -324,4 +323,4 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
   );
 }
 
-export default EmploymentSection
+export default EducationSection

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Box, Container } from '@mui/material';
+import { Grid, Container, IconButton } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomPaper } from './styles';
 import { useResume } from '../../../components/context/ResumeContext';
-import EditIcon from '@mui/icons-material/Edit';
-import CheckIcon from '@mui/icons-material/Check';
+import { Edit, Check } from '@mui/icons-material';
 
 interface personalSectionForm {
     resumeId: string;
@@ -122,27 +121,29 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 						{PersonalFieldLoading?
 							<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
 						:(
-							<CheckIcon
-								sx={{
-									color: '#6499E9',
-									fontSize: 40,
-									cursor: 'pointer',
-								}}
-								onClick={handleChangeFieldName}
-							/>
+							<IconButton onClick={handleChangeFieldName} sx={{ '&:focus': { outline: 'none' }}} >
+								<Check
+									sx={{
+										color: '#6499E9',
+										fontSize: 20,
+										cursor: 'pointer',
+									}}
+								/>
+							</IconButton>
 						)}
 					</Grid>
 				):(
 					<Grid item xs={12}  sx={{ display: 'flex', alignItems:'center' }}>
 						<CustomTypography variant="h6">{personalData.field_name}</CustomTypography>
-						<EditIcon
-							sx={{
-								color: '#6499E9',
-								fontSize: 20,
-								cursor: 'pointer',
-							}}
-							onClick={() => setEditPersonalField(true)}
-						/>
+						<IconButton onClick={() => setEditPersonalField(true)} sx={{ '&:focus': { outline: 'none' }}} >
+							<Edit
+								sx={{
+									color: '#6499E9',
+									fontSize: 20,
+									cursor: 'pointer',
+								}}
+							/>
+						</IconButton>
 					</Grid>
 				)*/}
 				<Grid item xs={12}>
@@ -229,27 +230,29 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 						{summaryFieldLoading?
 							<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
 						:(
-							<CheckIcon
-								sx={{
-									color: '#6499E9',
-									fontSize: 40,
-									cursor: 'pointer',
-								}}
-								onClick={handleChangeSummaryName}
-							/>
+							<IconButton onClick={handleChangeSummaryName} sx={{ '&:focus': { outline: 'none' }}} >
+								<Check
+									sx={{
+										color: '#6499E9',
+										fontSize: 40,
+										cursor: 'pointer',
+									}}
+								/>
+							</IconButton>
 						)}
 					</Grid>
 				):(
 					<Grid item xs={12}  sx={{ margin:'2rem 0 0 0', display: 'flex', alignItems:'center' }}>
 						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{personalData.summary[0]}</CustomTypography>
-						<EditIcon
-							sx={{
-								color: '#6499E9',
-								fontSize: 20,
-								cursor: 'pointer',
-							}}
-							onClick={() => setEditSummaryField(true)}
-						/>
+						<IconButton onClick={() => setEditSummaryField(true)} sx={{ '&:focus': { outline: 'none' }}} >
+                            <Edit
+                                sx={{
+                                    color: '#6499E9',
+                                    fontSize: 20,
+                                    cursor: 'pointer',
+                                }}
+                            />
+                        </IconButton>
 					</Grid>
 				)}
                 <Grid item xs={12}>
