@@ -77,6 +77,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 		if (existUser) {
 			const parsedUser = JSON.parse(existUser);
 			setUser(parsedUser);
+			navigate('/');
 		} else {
 			navigate('/auth');
 		}

@@ -27,8 +27,8 @@ export const verifyEmail = (token: string) => API.get(`/user/verify/${token}`);
 export const newResume: ApiResumeFunction = (ResumeData) => API.post('/resume/', ResumeData);
 export const get_resume: ApiResumeFunction = (resumeId) => API.get(`/resume/${resumeId}`);
 export const getAllResumes: ApiResumeFunction = () => API.get('/resume/getAllResumes');
-export const removeResume: ApiResumeFunction = (resumeId) => API.delete(`/resume/${resumeId}`);
-export const duplicateResume: ApiResumeFunction = (resumeId) => API.post(`/resume/duplicate/${resumeId}`);
+export const removeResume: ApiResumeFunction = (resumeId) => API.delete(`/resume/${resumeId}`, {});
+export const duplicateResume: ApiResumeFunction = (resumeId) => API.post(`/resume/duplicate/${resumeId}`, {});
 
 // Personal Api
 export const updatePersonalSection: ApiResumeFunction = (resumeId, PeronalSectionData) => 
@@ -36,10 +36,10 @@ export const updatePersonalSection: ApiResumeFunction = (resumeId, PeronalSectio
 
 // Employment Api
 export const addEmploymentRecord:ApiResumeFunction = (resumeId) => 
-	API.patch(`/resume/employment/addEmploymentRecord/${resumeId}`);
+	API.patch(`/resume/employment/addEmploymentRecord/${resumeId}`, {});
 export const updateEmploymentRecord:ApiResumeFunction = (resumeId, employmentId, ResumeData) => 
 	API.patch(`/resume/employment/updateEmploymentRecord/${resumeId}/${employmentId}`, ResumeData);
 export const deleteEmploymentRecord:ApiResumeFunction = (resumeId, employmentId) => 
-	API.delete(`/resume/employment/deleteEmploymentRecord/${resumeId}/${employmentId}`);
+	API.patch(`/resume/employment/deleteEmploymentRecord/${resumeId}/${employmentId}`, {});
 export const deleteEmployment:ApiResumeFunction = (resumeId) => 
-	API.delete(`/resume/employment/deleteEmployment/${resumeId}`);
+	API.delete(`/resume/employment/deleteEmployment/${resumeId}`, {});

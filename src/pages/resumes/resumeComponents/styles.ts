@@ -22,3 +22,13 @@ export const CustomTypography = styled(Typography)(({ theme }) => ({
 	color: '#272829',
 	margin: '1rem',
 }));
+
+export const LinkTypography = styled(Typography)(({ theme }) => ({
+    fontFamily: theme.typography.fontFamily,
+    fontWeight: 500,
+    color: '#687EFF',
+    cursor: 'pointer',
+    '&:hover': {
+        color: '#EF6262',
+    },
+}));

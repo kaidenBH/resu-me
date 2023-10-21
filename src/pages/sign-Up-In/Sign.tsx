@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Slide } from '@mui/material';
 import { useAuth } from '../../components/context/AuthContext';
 import SignUp, { SignUpFormData } from './SignUp';
@@ -6,9 +6,13 @@ import SignIn, { SignInFormData } from './SignIn';
 import Slider from './Slider';
 
 const Sign = () => {
-	const { signIn, signUp } = useAuth();
+	const { signIn, signUp, checkUser } = useAuth();
 	const [haveAccount, setHaveAccount] = useState(true);
 
+	useEffect(() => {
+		checkUser();
+	}, []);
+	
 	const SignUpFormData = async (formData: SignUpFormData) => {
 		await signUp(formData);
 	};

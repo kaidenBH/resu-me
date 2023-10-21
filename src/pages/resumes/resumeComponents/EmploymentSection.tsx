@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
-import { CustomTextField, CustomTypography, CustomPaper } from './styles';
+import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
 import { useEmployment } from '../../../components/hooks/UseEmployment';
 import AlertDialog from './Dialog';
 import EditIcon from '@mui/icons-material/Edit';
@@ -113,8 +113,13 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 		setEmploymentFieldLoading(false);
 	};
 
+    const handleAddRecord = async () =>{
+        const employment_section = await addEmploymentRecord(employmentData.resumeId);
+        setEmploymentData(employment_section!);
+    };
+
 	const handleDeleteEmployment = async () =>{
-		//await deleteEmployment(employmentData.resumeId);
+		await deleteEmployment(employmentData.resumeId);
         console.log('works');
         setShowDialogEmployment(false);
 	};
@@ -218,24 +223,27 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 				)}
                 <AlertDialog open={showDialogEmployment} handleCloseDialog={handleShowDialogEmployment} handleAgreement={handleDeleteEmployment}/>
                 {employmentData.employments.map((employment, index) => (
-                    <Grid item xs={12} key={index} sx={{ border: '1px solid #272829', padding: '16px', margin: '0 0 16px 0', borderRadius: '5px' }}>
+                    <Grid item xs={12} key={index} sx={{ border: '1px solid #272829', padding: '16px', margin: '0 0 16px 16px', borderRadius: '5px' }}>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sx={{ display: 'flex' }}>
-                                <CustomTypography variant="body1" sx={{ marginLeft: 0 }}>
+                            <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
+                                <CustomTypography variant="body1" onClick={() => toggleDetails(index)} sx={{ 
+                                    marginLeft: 0, 
+                                    cursor: 'pointer' ,
+                                    '&:hover': { color: '#687EFF' }
+                                    }}>
                                     {employment.job_title}
-                                    <IconButton onClick={() => toggleDetails(index)}>
+                                    <IconButton sx={{ '&:focus': { outline: 'none' }}} >
                                         {showDetails[index] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                                     </IconButton>
-                                    <DeleteOutlineIcon
-                                        sx={{
-                                            color: '#D71313',
-                                            fontSize: 20,
-                                            cursor: 'pointer',
-                                            marginLeft: '8px',
-                                        }}
-                                        onClick={handleShowDialogRecord}
-                                    />
                                 </CustomTypography>
+                                <DeleteOutlineIcon
+                                    sx={{
+                                        color: '#FF6969',
+                                        fontSize: 20,
+                                        cursor: 'pointer',
+                                    }}
+                                    onClick={handleShowDialogRecord}
+                                />
                                 <AlertDialog open={showDialogRecord} handleCloseDialog={handleShowDialogRecord} handleAgreement={() => handleDeleteRecord(index)}/>
                             </Grid>
                             {showDetails[index] && (
@@ -309,6 +317,9 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                         </Grid>
                     </Grid>
                 ))}
+                <Grid item xs={6}>
+                    <LinkTypography onClick={handleAddRecord}>+ Add an Employment Record</LinkTypography>
+                </Grid>
 			</Grid>
 		</CustomPaper>
 	</Container>
