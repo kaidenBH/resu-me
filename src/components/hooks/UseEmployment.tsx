@@ -1,9 +1,9 @@
 import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
 interface UseEmploymentSection {
-	addEmploymentRecord: (resumeId: string) => Promise<void>;
-	updateEmploymentRecord: (resumeId: string, employmentId: string, EmploymentData: object) => Promise<void>;
-	deleteEmploymentRecord: (resumeId: string, employmentId: string) => Promise<void>;
+	addEmploymentRecord: (resumeId: string) => Promise<void | object>;
+	updateEmploymentRecord: (resumeId: string, employmentId: string, EmploymentData: object) => Promise<void | object>;
+	deleteEmploymentRecord: (resumeId: string, employmentId: string) => Promise<void | object>;
 	deleteEmployment: (resumeId: string) => Promise<void>;
 }
 
@@ -15,7 +15,7 @@ export const useEmployment = (): UseEmploymentSection => {
 			console.log(data.employment_section);
 			return data.employment_section;
 		} catch (error) {
-			console.error('Error signing in:', error);
+			console.error('Error Employment in:', error);
 		}
 	};
 
@@ -25,7 +25,7 @@ export const useEmployment = (): UseEmploymentSection => {
 			console.log(data.employment_section);
 			return data.employment_section;
 		} catch (error) {
-			console.error('Error signing in:', error);
+			console.error('Error Employment in:', error);
 		}
 	};
 
@@ -35,7 +35,7 @@ export const useEmployment = (): UseEmploymentSection => {
 			console.log(data);
 			return data.employment_section;
 		} catch (error) {
-			console.error('Error signing in:', error);
+			console.error('Error Employment in:', error);
 		}
 	};
 
@@ -45,7 +45,7 @@ export const useEmployment = (): UseEmploymentSection => {
 			await getResume(resumeId);
 			console.log(data);
 		} catch (error) {
-			console.error('Error signing in:', error);
+			console.error('Error Employment in:', error);
 		}
 	};
 

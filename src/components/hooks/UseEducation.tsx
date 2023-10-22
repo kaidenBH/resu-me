@@ -1,9 +1,9 @@
 import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
 interface UseEducationSection {
-	addSchool: (resumeId: string) => Promise<void>;
-	updateSchool: (resumeId: string, schoolId: string, schoolData: object) => Promise<void>;
-	deleteSchool: (resumeId: string, schoolId: string) => Promise<void>;
+	addSchool: (resumeId: string) => Promise<void | object>;
+	updateSchool: (resumeId: string, schoolId: string, schoolData: object) => Promise<void | object>;
+	deleteSchool: (resumeId: string, schoolId: string) => Promise<void | object>;
 	deleteEducation: (resumeId: string) => Promise<void>;
 }
 
@@ -15,7 +15,7 @@ export const useEducation = (): UseEducationSection => {
 			console.log(data.education_section);
 			return data.education_section;
 		} catch (error) {
-			console.error('Error signing in:', error);
+			console.error('Error Education in:', error);
 		}
 	};
 
@@ -25,7 +25,7 @@ export const useEducation = (): UseEducationSection => {
 			console.log(data.education_section);
 			return data.education_section;
 		} catch (error) {
-			console.error('Error signing in:', error);
+			console.error('Error Education in:', error);
 		}
 	};
 
@@ -35,7 +35,7 @@ export const useEducation = (): UseEducationSection => {
 			console.log(data);
 			return data.education_section;
 		} catch (error) {
-			console.error('Error signing in:', error);
+			console.error('Error Education in:', error);
 		}
 	};
 
@@ -45,7 +45,7 @@ export const useEducation = (): UseEducationSection => {
 			await getResume(resumeId);
 			console.log(data);
 		} catch (error) {
-			console.error('Error signing in:', error);
+			console.error('Error Education in:', error);
 		}
 	};
 

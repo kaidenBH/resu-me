@@ -216,9 +216,9 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                                 }}
                             />
                         </IconButton>
+                        <AlertDialog open={showDialogEmployment} handleCloseDialog={handleShowDialogEmployment} handleAgreement={handleDeleteEmployment}/>
 					</Grid>
 				)}
-                <AlertDialog open={showDialogEmployment} handleCloseDialog={handleShowDialogEmployment} handleAgreement={handleDeleteEmployment}/>
                 {employmentData.employments.map((employment, index) => (
                     <Grid item xs={12} key={index} sx={{ border: '1px solid #272829', padding: '16px', margin: '0 0 16px 16px', borderRadius: '5px' }}>
                         <Grid container spacing={2}>

@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Button, Typography, TextField, Paper } from '@mui/material';
+import { Slider, Typography, TextField, Paper } from '@mui/material';
 
 export const CustomPaper = styled(Paper)({
 	padding: '20px',
@@ -32,3 +32,26 @@ export const LinkTypography = styled(Typography)(({ theme }) => ({
         color: '#EF6262',
     },
 }));
+
+export const CustomSlider = styled(Slider)(({ theme, value }) => ({
+	'.MuiSlider-rail': {
+		color: '#ccc',
+	},
+	'.MuiSlider-track': {
+		color: value === 1 ? '#FF6464' :
+					value === 2 ? '#E25E3E' :
+					value === 3 ? '#FFBD67' :
+					value === 4 ? '#5BE7A9' :
+								'#8E8FFA',
+	},
+	'.MuiSlider-thumb': {
+		color: value === 1 ? '#FF6464' :
+					value === 2 ? '#E25E3E' :
+					value === 3 ? '#FFBD67' :
+					value === 4 ? '#5BE7A9' :
+								'#8E8FFA',
+		width: '20px',
+		height: '20px',
+	},
+    height: '12px',
+  }));

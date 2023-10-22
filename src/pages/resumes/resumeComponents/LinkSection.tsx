@@ -1,50 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
-import { useEducation } from '../../../components/hooks/UseEducation';
+import { useLink } from '../../../components/hooks/UseLink';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 
-interface EducationSectionForm {
+interface LinkSectionForm {
     _id: string;
     resumeId: string;
     field_name: string;
-	schools: [
+	links: [
         {
             _id: string;
-			school_name: string;
-			degree_title: string;
-			start_date: string;
-			end_date: string;
-			city: string;
-			description: string;
+			webite_name: string;
+			url: string;
 		}
     ];
 }
 
-interface EducationSectionProps {
-    education_section: EducationSectionForm; 
+interface LinkSectionProps {
+    link_section: LinkSectionForm; 
 }
 
-const EducationSection: React.FC<EducationSectionProps> = ({ education_section }) => {
-    const [schoolData, setSchoolData] = useState<EducationSectionForm>({
-        _id: education_section._id,
-        resumeId: education_section.resumeId || '',
-        field_name: education_section.field_name || 'Education',
-        schools: education_section.schools || [],
+const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
+    const [linkData, setLinkData] = useState<LinkSectionForm>({
+        _id: link_section._id,
+        resumeId: link_section.resumeId || '',
+        field_name: link_section.field_name || 'Websites & Links',
+        links: link_section.links || [],
     });
 
-    const { addSchool, updateSchool, deleteSchool, deleteEducation } = useEducation();
-	const [editSchoolField, setEditSchoolField] = useState(false);
-	const [schoolFieldLoading, setSchoolFieldLoading] = useState(false);
-	const [editingPhases, setEditingPhases] = useState(schoolData.schools.map(() => false));
-    const [secondsArray, setSecondsArray] = useState(schoolData.schools.map(() => 2));
-    const [showDialogEducation, setShowDialogEducation] = useState(false);
-    const [showDialogSchool, setShowDialogSchool] = useState(false);
+    const { addLink, updateLink, deleteLink, deleteLinkSection } = useLink();
+	const [editLinkField, setEditLinkField] = useState(false);
+	const [linkFieldLoading, setLinkFieldLoading] = useState(false);
+	const [editingPhases, setEditingPhases] = useState(linkData.links.map(() => false));
+    const [secondsArray, setSecondsArray] = useState(linkData.links.map(() => 2));
+    const [showDialogLinkSection, setShowDialogLinkSection] = useState(false);
+    const [showDialogLink, setShowDialogLink] = useState(false);
     const [showDetails, setShowDetails] = useState(
-        schoolData.schools.map(() => false)
+        linkData.links.map(() => false)
       );
 
     const toggleDetails = (index: number) => {
@@ -58,24 +52,24 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		if (name === "field_name") {
-            setSchoolData({
-                ...schoolData,
+            setLinkData({
+                ...linkData,
 				[name]: value,
 			});
 		} else {
             const [fieldName, indexStr] = name.split(';-;');
             const index = parseInt(indexStr, 10);
     
-            setSchoolData(prevData => {
-                const updatedSchools = [...prevData.schools];
-                updatedSchools[index] = {
-                    ...updatedSchools[index],
+            setLinkData(prevData => {
+                const updatedLinks = [...prevData.links];
+                updatedLinks[index] = {
+                    ...updatedLinks[index],
                     [fieldName]: value,
                 };
     
                 return {
                     ...prevData,
-                    schools: updatedSchools,
+                    links: updatedLinks,
                 };
             });
             setEditingPhases(prevPhases => {
@@ -92,8 +86,8 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
         }
 	};	
 	
-	const schoolUpdate = async (index: number) => {
-		await updateSchool(schoolData.resumeId, schoolData.schools[index]._id, schoolData.schools[index]);
+	const linkUpdate = async (index: number) => {
+		await updateLink(linkData.resumeId, linkData.links[index]._id, linkData.links[index]);
 		setEditingPhases(prevPhases => {
             const updatedPhases = [...prevPhases];
             updatedPhases[index] = false;
@@ -102,33 +96,33 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 	};
 
 	const handleChangeFieldName = async () =>{
-		setSchoolFieldLoading(true);
-		await updateSchool(schoolData.resumeId, schoolData._id, schoolData);
-		setEditSchoolField(false);
-		setSchoolFieldLoading(false);
+		setLinkFieldLoading(true);
+		await updateLink(linkData.resumeId, linkData._id, linkData);
+		setEditLinkField(false);
+		setLinkFieldLoading(false);
 	};
 
-    const handleAddSchool = async () =>{
-        const education_section = await addSchool(schoolData.resumeId);
-        setSchoolData(education_section);
+    const handleAddLink = async () =>{
+        const link_section = await addLink(linkData.resumeId);
+        setLinkData(link_section!);
     };
 
-	const handleDeleteEducation = async () =>{
-		await deleteEducation(schoolData.resumeId);
-        setShowDialogEducation(false);
+	const handleDeleteLinkSection = async () =>{
+		await deleteLinkSection(linkData.resumeId);
+        setShowDialogLinkSection(false);
 	};
 
-	const handleDeleteSchool = async (index: number) =>{
-		const education_section = await deleteSchool(schoolData.resumeId, schoolData.schools[index]._id);
-        setSchoolData(education_section);
-        setShowDialogSchool(false);
+	const handleDeleteLink = async (index: number) =>{
+		const link_section = await deleteLink(linkData.resumeId, linkData.links[index]._id);
+        setLinkData(link_section!);
+        setShowDialogLink(false);
 	};
 
-    const handleShowDialogEducation = () =>{
-        setShowDialogEducation(prev => !prev);
+    const handleShowDialogLinkSection = () =>{
+        setShowDialogLinkSection(prev => !prev);
     }
-    const handleShowDialogSchool = () =>{
-        setShowDialogSchool(prev => !prev);
+    const handleShowDialogLink = () =>{
+        setShowDialogLink(prev => !prev);
     }
 
 	useEffect(() => {
@@ -144,7 +138,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
     
         secondsArray.forEach((seconds, index) => {
             if (seconds <= 0 && editingPhases[index]) {
-                schoolUpdate(index);
+                linkUpdate(index);
             }
         });
     
@@ -159,17 +153,17 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 			sx={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '30vw' }}
 		>
 			<Grid container spacing={2}>
-				{editSchoolField? (
+				{editLinkField? (
 					<Grid item xs={6} sx={{ display: 'flex', alignItems:'center', marginBottom: '8px' }}>
 						<CustomTextField
 							fullWidth
-							label="Education Field Name"
+							label="Links Field Name"
 							variant="filled"
 							name="field_name"
-							value={schoolData.field_name}
+							value={linkData.field_name}
 							onChange={handleChange}
 						/>
-						{schoolFieldLoading?
+						{linkFieldLoading?
 							<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
 						:(
                             <>
@@ -182,7 +176,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                         }}
                                     />
                                 </IconButton>
-                                <IconButton onClick={handleShowDialogEducation} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={handleShowDialogLinkSection} sx={{ '&:focus': { outline: 'none' }}} >
                                     <Delete
                                         sx={{
                                             color: '#D71313',
@@ -196,8 +190,8 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 					</Grid>
 				):(
 					<Grid item xs={12}  sx={{ display: 'flex', alignItems:'center' }}>
-						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{schoolData.field_name}</CustomTypography>
-                        <IconButton onClick={() => setEditSchoolField(true)} sx={{ '&:focus': { outline: 'none' }}} >
+						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{linkData.field_name}</CustomTypography>
+                        <IconButton onClick={() => setEditLinkField(true)} sx={{ '&:focus': { outline: 'none' }}} >
                             <Edit
                                 sx={{
                                     color: '#6499E9',
@@ -206,7 +200,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                 }}
                             />
                         </IconButton>
-                        <IconButton onClick={handleShowDialogEducation} sx={{ '&:focus': { outline: 'none' }}} >
+                        <IconButton onClick={handleShowDialogLinkSection} sx={{ '&:focus': { outline: 'none' }}} >
                             <Delete
                                 sx={{
                                     color: '#D71313',
@@ -215,10 +209,10 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                 }}
                             />
                         </IconButton>
-                        <AlertDialog open={showDialogEducation} handleCloseDialog={handleShowDialogEducation} handleAgreement={handleDeleteEducation}/>
+                        <AlertDialog open={showDialogLinkSection} handleCloseDialog={handleShowDialogLinkSection} handleAgreement={handleDeleteLinkSection}/>
 					</Grid>
 				)}
-                {schoolData.schools.map((school, index) => (
+                {linkData.links.map((link, index) => (
                     <Grid item xs={12} key={index} sx={{ border: '1px solid #272829', padding: '16px', margin: '0 0 16px 16px', borderRadius: '5px' }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -227,12 +221,12 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                     cursor: 'pointer' ,
                                     '&:hover': { color: '#687EFF' }
                                     }}>
-                                    {school.school_name}
+                                    {link.webite_name}
                                     <IconButton sx={{ '&:focus': { outline: 'none' }}} >
                                         {showDetails[index] ? <ExpandLess /> : <ExpandMore />}
                                     </IconButton>
                                 </CustomTypography>
-                                <IconButton onClick={handleShowDialogSchool} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={handleShowDialogLink} sx={{ '&:focus': { outline: 'none' }}} >
                                     <DeleteOutline
                                         sx={{
                                             color: '#FF6969',
@@ -241,72 +235,28 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                         }}
                                     />
                                 </IconButton>
-                                <AlertDialog open={showDialogSchool} handleCloseDialog={handleShowDialogSchool} handleAgreement={() => handleDeleteSchool(index)}/>
+                                <AlertDialog open={showDialogLink} handleCloseDialog={handleShowDialogLink} handleAgreement={() => handleDeleteLink(index)}/>
                             </Grid>
                             {showDetails[index] && (
                                 <>
                                     <Grid item xs={6}>
                                         <CustomTextField
                                             fullWidth
-                                            label="School Name"
+                                            label="Website Name"
                                             variant="filled"
-                                            name={`school_name;-;${index}`}
-                                            value={school.school_name}
+                                            name={`webite_name;-;${index}`}
+                                            value={link.webite_name}
                                             onChange={handleChange}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
                                         <CustomTextField
                                             fullWidth
-                                            label="Degree"
+                                            label="Link"
                                             variant="filled"
-                                            name={`degree_title;-;${index}`}
-                                            value={school.degree_title}
+                                            name={`url;-;${index}`}
+                                            value={link.url}
                                             onChange={handleChange}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <DatePicker
-                                            selected={school.start_date ? new Date(school.start_date) : null}
-                                            onChange={(date: Date) => {
-                                                const isoString = date ? date.toISOString() : '';
-                                                handleChange({ target: { name: `start_date;-;${index}`, value: isoString } });
-                                            }}
-                                            dateFormat="MM/dd/yyyy"
-                                            customInput={<CustomTextField fullWidth variant="filled" label="Start date" />}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <DatePicker
-                                            selected={school.end_date ?  new Date(school.end_date): null}
-                                            onChange={(date: Date) => {
-                                                const isoString = date ? date.toISOString() : '';
-                                                handleChange({ target: { name: `end_date;-;${index}`, value: isoString } });
-                                            }}
-                                            dateFormat="MM/dd/yyyy"
-                                            customInput={<CustomTextField fullWidth variant="filled" label="End date" />}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <CustomTextField
-                                            fullWidth
-                                            label="City"
-                                            variant="filled"
-                                            name={`city;-;${index}`}
-                                            value={school.city}
-                                            onChange={handleChange}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} style={{ zIndex: 0 }}>
-                                        <CustomTextField
-                                            fullWidth
-                                            label="Description"
-                                            variant="filled"
-                                            name={`description;-;${index}`}
-                                            value={school.description}
-                                            onChange={handleChange}
-                                            multiline 
-                                            rows={4}
                                         />
                                     </Grid>
                                 </>
@@ -315,7 +265,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                     </Grid>
                 ))}
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent:'flex-start', marginLeft: '16px' }}>
-                    <LinkTypography onClick={handleAddSchool}>+ Add an School</LinkTypography>
+                    <LinkTypography onClick={handleAddLink}>+ Add an Link</LinkTypography>
                 </Grid>
 			</Grid>
 		</CustomPaper>
@@ -323,4 +273,4 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
   );
 }
 
-export default EducationSection
+export default LinkSection

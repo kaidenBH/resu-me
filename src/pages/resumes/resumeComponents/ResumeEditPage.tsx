@@ -3,6 +3,8 @@ import { Grow, Grid, Paper } from '@mui/material';
 import PersonalSection from './PersonalSection';
 import EmploymentSection from './EmploymentSection';
 import EducationSection from './EducationSection';
+import LinkSection from './LinkSection';
+import SkillSection from './SkillSection';
 import { useResume } from '../../../components/context/ResumeContext';
 import { CustomTypography } from './styles';
 
@@ -11,7 +13,6 @@ const ResumeEditPage: React.FC  = () => {
   return (
     <Grow in={true}>
         <Paper sx={{
-          padding: '20px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -19,7 +20,7 @@ const ResumeEditPage: React.FC  = () => {
           left: 0,
           top: 0,
           width: '50vw',
-          height: '97vh',
+          height: '100vh',
           overflowY: 'scroll',
           '&::-webkit-scrollbar': {
             width: '0 !important', /* Hide the scrollbar for WebKit */
@@ -29,24 +30,43 @@ const ResumeEditPage: React.FC  = () => {
             position: 'fixed', 
             top: 0, 
             margin: '0', 
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             background: 'white', 
             width: '50vw', 
-            height: '4rem',
-            zIndex: '9' 
-          }}>{resume?.title}</CustomTypography>
-          <Grid container spacing={2} sx={{ marginTop:'2rem' }}>
-            <Grid item xs={12}>
-              <PersonalSection personal_section={resume?.fields[0]}/>
+            height: '9rem',
+            zIndex: '9',
+          }}>{resume?.title}
+          <span style={{
+            position: 'absolute',
+            bottom: 0,
+            left: '10%',
+            width: '80%',
+            borderBottom: '2px solid #ccc',
+            content: '""'
+          }} />
+          </CustomTypography>
+          <Grid container sx={{ marginTop:'10rem' }}>
+          {resume && resume.fields.map((field, index) => (
+            <Grid item xs={12} key={index}>
+              {field.type === 'Personal' && (
+                <PersonalSection personal_section={field} />
+              )}
+              {field.type === 'Education' && (
+                <EducationSection education_section={field} />
+              )}
+              {field.type === 'Employment' && (
+                <EmploymentSection employment_section={field} />
+              )}
+              {field.type === 'Link' && (
+                <LinkSection link_section={field} />
+              )}
+              {field.type === 'Skill' && (
+                <SkillSection skill_section={field} />
+              )}
             </Grid>
-            <Grid item xs={12}>
-              <EmploymentSection employment_section={resume?.fields[6]}/>
-            </Grid>
-            <Grid item xs={12}>
-              <EducationSection education_section={resume?.fields[2]}/>
-            </Grid>
-            <Grid item xs={12}>
-              <PersonalSection personal_section={resume?.fields[0]}/>
-            </Grid>
+          ))}
           </Grid>
         </Paper>
     </Grow>

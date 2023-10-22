@@ -12,8 +12,20 @@ API.interceptors.request.use((req) => {
 });
 
 type ApiFunction = (userData?: object | string) => Promise<AxiosResponse<object>>;
-type ApiResumeFunction = (resumeId?: string, fieldId?: string, ResumeData?: object) => Promise<AxiosResponse<object>>;
-
+type ApiResumeFunction = (
+	resumeId?: string,
+	fieldId?: string,
+	ResumeData?: object
+  ) => Promise<
+	AxiosResponse<{
+		data: object;
+		employment_section?: object;
+		education_section?: object;
+		link_section?: object;
+		skill_section?: object;
+	}>
+  >;
+  
 // User Apis
 export const signIn: ApiFunction = (userData) => API.post('/user/signin', userData);
 export const signUp: ApiFunction = (userData) => API.post('/user/signup', userData);
@@ -23,6 +35,7 @@ export const refreshToken = () => API.post('/user/refreshToken');
 export const sendVerificationEmail = () => API.post('/user/sendVerificationEmail');
 export const verifyEmail = (token: string) => API.get(`/user/verify/${token}`);
 
+
 // Resume Apis
 export const newResume: ApiResumeFunction = (ResumeData) => API.post('/resume/', ResumeData);
 export const get_resume: ApiResumeFunction = (resumeId) => API.get(`/resume/${resumeId}`);
@@ -30,9 +43,11 @@ export const getAllResumes: ApiResumeFunction = () => API.get('/resume/getAllRes
 export const removeResume: ApiResumeFunction = (resumeId) => API.delete(`/resume/${resumeId}`, {});
 export const duplicateResume: ApiResumeFunction = (resumeId) => API.post(`/resume/duplicate/${resumeId}`, {});
 
+
 // Personal Apis
 export const updatePersonalSection: ApiResumeFunction = (resumeId, PeronalSectionData) => 
 	API.patch(`/resume/updatePersonalSection/${resumeId}`, PeronalSectionData);
+
 
 // Employment Apis
 export const addEmploymentRecord:ApiResumeFunction = (resumeId) => 
@@ -54,3 +69,25 @@ export const deleteSchool:ApiResumeFunction = (resumeId, schoolId) =>
 	API.patch(`/resume/education/deleteSchool/${resumeId}/${schoolId}`, {});
 export const deleteEducation:ApiResumeFunction = (resumeId) =>
 	API.patch(`/resume/education/deleteEducation/${resumeId}`, {});
+
+
+// Links Apis
+export const addLink:ApiResumeFunction = (resumeId) =>
+	API.patch(`/resume/link/addLink/${resumeId}`, {});
+export const updateLink:ApiResumeFunction = (resumeId, linkId, ResumeData) =>
+	API.patch(`/resume/link/updateLink/${resumeId}/${linkId}`, ResumeData);
+export const deleteLink:ApiResumeFunction = (resumeId, linkId) =>
+	API.patch(`/resume/link/deleteLink/${resumeId}/${linkId}`, {});
+export const deleteLinkSection:ApiResumeFunction = (resumeId) =>
+	API.patch(`/resume/link/deleteLinkSection/${resumeId}`, {});
+
+
+// Skills Apis
+export const addSkill:ApiResumeFunction = (resumeId) =>
+	API.patch(`/resume/skill/addSkill/${resumeId}`, {});
+export const updateSkill:ApiResumeFunction = (resumeId, skillId, ResumeData) =>
+	API.patch(`/resume/skill/updateSkill/${resumeId}/${skillId}`, ResumeData);
+export const deleteSkill:ApiResumeFunction = (resumeId, skillId) =>
+	API.patch(`/resume/skill/deleteSkill/${resumeId}/${skillId}`, {});
+export const deleteSkillSection:ApiResumeFunction = (resumeId) =>
+	API.patch(`/resume/skill/deleteSkillSection/${resumeId}`, {});
