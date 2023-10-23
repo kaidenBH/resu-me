@@ -8,6 +8,7 @@ import SkillSection from './SkillSection';
 import { useResume } from '../../../components/context/ResumeContext';
 import { CustomTypography } from './styles';
 import LanguageSection from './LanguageSection';
+import InternShipSection from './InternShipSection';
 
 const ResumeEditPage: React.FC  = () => {
   const { resume } = useResume();
@@ -68,6 +69,9 @@ const ResumeEditPage: React.FC  = () => {
               )}
               {field.type === 'Language' && (
                 <LanguageSection language_section={field} />
+              )}
+              {field.type === 'InternShip' && (
+                <InternShipSection internship_section={field} />
               )}
             </Grid>
           ))}

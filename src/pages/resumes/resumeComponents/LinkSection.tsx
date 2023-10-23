@@ -37,6 +37,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
     const [secondsArray, setSecondsArray] = useState(linkData.links.map(() => 2));
     const [showDialogLinkSection, setShowDialogLinkSection] = useState(false);
     const [showDialogLink, setShowDialogLink] = useState(false);
+    const [deletionIndex, setDeletionIndex] = useState(0);
     const [showDetails, setShowDetails] = useState(
         linkData.links.map(() => false)
       );
@@ -117,8 +118,8 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
         setShowDialogLinkSection(false);
 	};
 
-	const handleDeleteLink = async (index: number) =>{
-		const link_section = await deleteLink(linkData.resumeId, linkData.links[index]._id);
+	const handleDeleteLink = async () =>{
+		const link_section = await deleteLink(linkData.resumeId, linkData.links[deletionIndex]._id);
         setLinkData(link_section!);
         setShowDialogLink(false);
 	};
@@ -126,8 +127,9 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
     const handleShowDialogLinkSection = () =>{
         setShowDialogLinkSection(prev => !prev);
     }
-    const handleShowDialogLink = () =>{
-        setShowDialogLink(prev => !prev);
+    const handleShowDialogLink = (index: number) =>{
+        setDeletionIndex(index);
+        setShowDialogLink(true);
     }
 
 	useEffect(() => {
@@ -231,7 +233,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                         {showDetails[index] ? <ExpandLess /> : <ExpandMore />}
                                     </IconButton>
                                 </CustomTypography>
-                                <IconButton onClick={handleShowDialogLink} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={() => handleShowDialogLink(index)} sx={{ '&:focus': { outline: 'none' }}} >
                                     <DeleteOutline
                                         sx={{
                                             color: '#FF6969',
@@ -240,7 +242,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                         }}
                                     />
                                 </IconButton>
-                                <AlertDialog open={showDialogLink} handleCloseDialog={handleShowDialogLink} handleAgreement={() => handleDeleteLink(index)}/>
+                                <AlertDialog open={showDialogLink} handleCloseDialog={() => setShowDialogLink(false)} handleAgreement={handleDeleteLink}/>
                             </Grid>
                             {showDetails[index] && (
                                 <>

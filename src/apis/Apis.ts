@@ -24,6 +24,7 @@ type ApiResumeFunction = (
 		link_section?: object;
 		skill_section?: object;
 		language_section?: object;
+		internship_section?: object;
 	}>
   >;
   
@@ -103,3 +104,14 @@ export const deleteLanguage:ApiResumeFunction = (resumeId, languageId) =>
 	API.patch(`/resume/language/deleteLanguage/${resumeId}/${languageId}`, {});
 export const deleteLanguageSection:ApiResumeFunction = (resumeId) =>
 	API.patch(`/resume/language/deleteLanguageSection/${resumeId}`, {});
+
+
+// Internship Apis
+export const addInternShipRecord:ApiResumeFunction = (resumeId) => 
+API.patch(`/resume/internship/addInternShipRecord/${resumeId}`, {});
+export const updateInternShipRecord:ApiResumeFunction = (resumeId, internshipId, ResumeData) => 
+API.patch(`/resume/internship/updateInternShipRecord/${resumeId}/${internshipId}`, ResumeData);
+export const deleteInternShipRecord:ApiResumeFunction = (resumeId, internshipId) => 
+API.patch(`/resume/internship/deleteInternShipRecord/${resumeId}/${internshipId}`, {});
+export const deleteInternShip:ApiResumeFunction = (resumeId) => 
+API.patch(`/resume/internship/deleteInternShip/${resumeId}`, {});

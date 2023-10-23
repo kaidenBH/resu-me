@@ -43,6 +43,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
     const [secondsArray, setSecondsArray] = useState(employmentData.employments.map(() => 2));
     const [showDialogEmployment, setShowDialogEmployment] = useState(false);
     const [showDialogRecord, setShowDialogRecord] = useState(false);
+    const [deletionIndex, setDeletionIndex] = useState(0);
     const [showDetails, setShowDetails] = useState(
         employmentData.employments.map(() => false)
       );
@@ -120,12 +121,11 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 
 	const handleDeleteEmployment = async () =>{
 		await deleteEmployment(employmentData.resumeId);
-        console.log('works');
         setShowDialogEmployment(false);
 	};
 
-	const handleDeleteRecord = async (index: number) =>{
-		const employment_section = await deleteEmploymentRecord(employmentData.resumeId, employmentData.employments[index]._id);
+	const handleDeleteRecord = async () =>{
+		const employment_section = await deleteEmploymentRecord(employmentData.resumeId, employmentData.employments[deletionIndex]._id);
         setEmploymentData(employment_section!);
         setShowDialogRecord(false);
 	};
@@ -133,8 +133,9 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
     const handleShowDialogEmployment = () =>{
         setShowDialogEmployment(prev => !prev);
     }
-    const handleShowDialogRecord = () =>{
-        setShowDialogRecord(prev => !prev);
+    const handleShowDialogRecord = (index: number) =>{
+        setDeletionIndex(index);
+        setShowDialogRecord(true);
     }
 
 	useEffect(() => {
@@ -238,7 +239,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                                         {showDetails[index] ? <ExpandLess /> : <ExpandMore />}
                                     </IconButton>
                                 </CustomTypography>
-                                <IconButton onClick={handleShowDialogRecord} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={() => handleShowDialogRecord(index)} sx={{ '&:focus': { outline: 'none' }}} >
                                     <DeleteOutline
                                         sx={{
                                             color: '#FF6969',
@@ -247,7 +248,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                                         }}
                                     />
                                 </IconButton>
-                                <AlertDialog open={showDialogRecord} handleCloseDialog={handleShowDialogRecord} handleAgreement={() => handleDeleteRecord(index)}/>
+                                <AlertDialog open={showDialogRecord} handleCloseDialog={() => setShowDialogRecord(false)} handleAgreement={handleDeleteRecord}/>
                             </Grid>
                             {showDetails[index] && (
                                 <>

@@ -37,6 +37,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
     const [secondsArray, setSecondsArray] = useState(languageData.languages.map(() => 2));
     const [showDialogLanguageSection, setShowDialogLanguageSection] = useState(false);
     const [showDialogLanguage, setShowDialogLanguage] = useState(false);
+    const [deletionIndex, setDeletionIndex] = useState(0);
     const [showDetails, setShowDetails] = useState(
         languageData.languages.map(() => false)
     );
@@ -142,8 +143,8 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
         setShowDialogLanguageSection(false);
 	};
 
-	const handleDeleteLanguage = async (index: number) =>{
-		const language_section = await deleteLanguage(languageData.resumeId, languageData.languages[index]._id);
+	const handleDeleteLanguage = async () =>{
+		const language_section = await deleteLanguage(languageData.resumeId, languageData.languages[deletionIndex]._id);
         setLanguageData(language_section);
         setShowDialogLanguage(false);
 	};
@@ -151,8 +152,9 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
     const handleShowDialogLanguageSection = () =>{
         setShowDialogLanguageSection(prev => !prev);
     }
-    const handleShowDialogLanguage = () =>{
-        setShowDialogLanguage(prev => !prev);
+    const handleShowDialogLanguage = (index: number) =>{
+        setDeletionIndex(index);
+        setShowDialogLanguage(true);
     }
 
 	useEffect(() => {
@@ -256,7 +258,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
                                         {showDetails[index] ? <ExpandLess /> : <ExpandMore />}
                                     </IconButton>
                                 </CustomTypography>
-                                <IconButton onClick={handleShowDialogLanguage} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={() => handleShowDialogLanguage(index)} sx={{ '&:focus': { outline: 'none' }}} >
                                     <DeleteOutline
                                         sx={{
                                             color: '#FF6969',
@@ -265,14 +267,14 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
                                         }}
                                     />
                                 </IconButton>
-                                <AlertDialog open={showDialogLanguage} handleCloseDialog={handleShowDialogLanguage} handleAgreement={() => handleDeleteLanguage(index)}/>
+                                <AlertDialog open={showDialogLanguage} handleCloseDialog={() =>setShowDialogLanguage(false)} handleAgreement={handleDeleteLanguage}/>
                             </Grid>
                             {showDetails[index] && (
                                 <>
                                     <Grid item xs={6}>
                                         <CustomTextField
                                             fullWidth
-                                            label="Language Name"
+                                            label="Language"
                                             variant="filled"
                                             name={`language;-;${index}`}
                                             value={language.language}

@@ -37,6 +37,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
     const [secondsArray, setSecondsArray] = useState(skillData.skills.map(() => 2));
     const [showDialogSkillSection, setShowDialogSkillSection] = useState(false);
     const [showDialogSkill, setShowDialogSkill] = useState(false);
+    const [deletionIndex, setDeletionIndex] = useState(0);
     const [showDetails, setShowDetails] = useState(
         skillData.skills.map(() => false)
     );
@@ -142,8 +143,8 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
         setShowDialogSkillSection(false);
 	};
 
-	const handleDeleteSkill = async (index: number) =>{
-		const skill_section = await deleteSkill(skillData.resumeId, skillData.skills[index]._id);
+	const handleDeleteSkill = async () =>{
+		const skill_section = await deleteSkill(skillData.resumeId, skillData.skills[deletionIndex]._id);
         setSkillData(skill_section);
         setShowDialogSkill(false);
 	};
@@ -151,8 +152,9 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
     const handleShowDialogSkillSection = () =>{
         setShowDialogSkillSection(prev => !prev);
     }
-    const handleShowDialogSkill = () =>{
-        setShowDialogSkill(prev => !prev);
+    const handleShowDialogSkill = (index: number) =>{
+        setDeletionIndex(index);
+        setShowDialogSkill(true);
     }
 
 	useEffect(() => {
@@ -256,7 +258,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
                                         {showDetails[index] ? <ExpandLess /> : <ExpandMore />}
                                     </IconButton>
                                 </CustomTypography>
-                                <IconButton onClick={handleShowDialogSkill} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={() => handleShowDialogSkill(index)} sx={{ '&:focus': { outline: 'none' }}} >
                                     <DeleteOutline
                                         sx={{
                                             color: '#FF6969',
@@ -265,7 +267,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
                                         }}
                                     />
                                 </IconButton>
-                                <AlertDialog open={showDialogSkill} handleCloseDialog={handleShowDialogSkill} handleAgreement={() => handleDeleteSkill(index)}/>
+                                <AlertDialog open={showDialogSkill} handleCloseDialog={() => setShowDialogSkill(false)} handleAgreement={handleDeleteSkill}/>
                             </Grid>
                             {showDetails[index] && (
                                 <>
