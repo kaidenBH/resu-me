@@ -1,45 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Container, IconButton } from '@mui/material';
-import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
-import { useLink } from '../../../components/hooks/UseLink';
+import { Grid, Container, IconButton, Typography, Box  } from '@mui/material';
+import { CustomTextField, CustomTypography, CustomPaper, LinkTypography, CustomSlider } from './styles';
+import { useLanguage } from '../../../components/hooks/UseLanguage';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
 
-interface LinkSectionForm {
+interface LanguageSectionForm {
     _id: string;
     resumeId: string;
     field_name: string;
-	links: [
+	languages: [
         {
             _id: string;
-			webite_name: string;
-			url: string;
+			language: string;
+			level: number;
 		}
     ];
 }
 
-interface LinkSectionProps {
-    link_section: LinkSectionForm; 
+interface LanguageSectionProps {
+    language_section: LanguageSectionForm; 
 }
 
-const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
-    const [linkData, setLinkData] = useState<LinkSectionForm>({
-        _id: link_section._id,
-        resumeId: link_section.resumeId || '',
-        field_name: link_section.field_name || 'Websites & Links',
-        links: link_section.links || [],
+const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) => {
+    const [languageData, setLanguageData] = useState<LanguageSectionForm>({
+        _id: language_section._id,
+        resumeId: language_section.resumeId || '',
+        field_name: language_section.field_name || 'Languages',
+        languages: language_section.languages || [],
     });
 
-    const { addLink, updateLink, deleteLink, deleteLinkSection } = useLink();
-	const [editLinkField, setEditLinkField] = useState(false);
-	const [linkFieldLoading, setLinkFieldLoading] = useState(false);
-	const [editingPhases, setEditingPhases] = useState(linkData.links.map(() => false));
-    const [secondsArray, setSecondsArray] = useState(linkData.links.map(() => 2));
-    const [showDialogLinkSection, setShowDialogLinkSection] = useState(false);
-    const [showDialogLink, setShowDialogLink] = useState(false);
+    const { addLanguage, updateLanguage, deleteLanguage, deleteLanguageSection } = useLanguage();
+	const [editLanguageField, setEditLanguageField] = useState(false);
+	const [languageFieldLoading, setLanguageFieldLoading] = useState(false);
+	const [editingPhases, setEditingPhases] = useState(languageData.languages.map(() => false));
+    const [secondsArray, setSecondsArray] = useState(languageData.languages.map(() => 2));
+    const [showDialogLanguageSection, setShowDialogLanguageSection] = useState(false);
+    const [showDialogLanguage, setShowDialogLanguage] = useState(false);
     const [showDetails, setShowDetails] = useState(
-        linkData.links.map(() => false)
-      );
+        languageData.languages.map(() => false)
+    );
 
     const toggleDetails = (index: number) => {
         setShowDetails(prevDetails => {
@@ -48,28 +48,53 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
             return newDetails;
         });
     };
+    
+    const levelMarks = ['Novice', 'Beginner', 'Intermediate', 'Fluent', 'Expert / Native'];
+
+    const handleChangeLevel = (index: number, newValue: number) => {
+        setLanguageData(prevData => {
+            const updatedLanguages = [...prevData.languages];
+            updatedLanguages[index].level = newValue;
+    
+            return {
+                ...prevData,
+                languages: updatedLanguages,
+            };
+        });
+        setEditingPhases(prevPhases => {
+            const updatedPhases = [...prevPhases];
+            updatedPhases[index] = true;
+            return updatedPhases;
+        });
+
+        setSecondsArray(prevSeconds => {
+            const updatedSeconds = [...prevSeconds];
+            updatedSeconds[index] = 2;
+            return updatedSeconds;
+        });
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		if (name === "field_name") {
-            setLinkData({
-                ...linkData,
+            setLanguageData({
+                ...languageData,
 				[name]: value,
 			});
 		} else {
             const [fieldName, indexStr] = name.split(';-;');
             const index = parseInt(indexStr, 10);
     
-            setLinkData(prevData => {
-                const updatedLinks = [...prevData.links];
-                updatedLinks[index] = {
-                    ...updatedLinks[index],
+            setLanguageData(prevData => {
+                const updatedLanguages = [...prevData.languages];
+                updatedLanguages[index] = {
+                    ...updatedLanguages[index],
                     [fieldName]: value,
                 };
     
                 return {
                     ...prevData,
-                    links: updatedLinks,
+                    languages: updatedLanguages,
                 };
             });
             setEditingPhases(prevPhases => {
@@ -86,8 +111,8 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
         }
 	};	
 	
-	const linkUpdate = async (index: number) => {
-		await updateLink(linkData.resumeId, linkData.links[index]._id, linkData.links[index]);
+	const languageUpdate = async (index: number) => {
+		await updateLanguage(languageData.resumeId, languageData.languages[index]._id, languageData.languages[index]);
 		setEditingPhases(prevPhases => {
             const updatedPhases = [...prevPhases];
             updatedPhases[index] = false;
@@ -96,15 +121,15 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 	};
 
 	const handleChangeFieldName = async () =>{
-		setLinkFieldLoading(true);
-		await updateLink(linkData.resumeId, linkData._id, linkData);
-		setEditLinkField(false);
-		setLinkFieldLoading(false);
+		setLanguageFieldLoading(true);
+		await updateLanguage(languageData.resumeId, languageData._id, languageData);
+		setEditLanguageField(false);
+		setLanguageFieldLoading(false);
 	};
 
-    const handleAddLink = async () =>{
-        const link_section = await addLink(linkData.resumeId);
-        setLinkData(link_section!);
+    const handleAddLanguage = async () =>{
+        const language_section = await addLanguage(languageData.resumeId);
+        setLanguageData(language_section);
         setShowDetails(prevDetails => {
             const updatedDetails = [...prevDetails];
             updatedDetails[updatedDetails.length] = true;
@@ -112,22 +137,22 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
         });
     };
 
-	const handleDeleteLinkSection = async () =>{
-		await deleteLinkSection(linkData.resumeId);
-        setShowDialogLinkSection(false);
+	const handleDeleteLanguageSection = async () =>{
+		await deleteLanguageSection(languageData.resumeId);
+        setShowDialogLanguageSection(false);
 	};
 
-	const handleDeleteLink = async (index: number) =>{
-		const link_section = await deleteLink(linkData.resumeId, linkData.links[index]._id);
-        setLinkData(link_section!);
-        setShowDialogLink(false);
+	const handleDeleteLanguage = async (index: number) =>{
+		const language_section = await deleteLanguage(languageData.resumeId, languageData.languages[index]._id);
+        setLanguageData(language_section);
+        setShowDialogLanguage(false);
 	};
 
-    const handleShowDialogLinkSection = () =>{
-        setShowDialogLinkSection(prev => !prev);
+    const handleShowDialogLanguageSection = () =>{
+        setShowDialogLanguageSection(prev => !prev);
     }
-    const handleShowDialogLink = () =>{
-        setShowDialogLink(prev => !prev);
+    const handleShowDialogLanguage = () =>{
+        setShowDialogLanguage(prev => !prev);
     }
 
 	useEffect(() => {
@@ -143,7 +168,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
     
         secondsArray.forEach((seconds, index) => {
             if (seconds <= 0 && editingPhases[index]) {
-                linkUpdate(index);
+                languageUpdate(index);
             }
         });
     
@@ -158,17 +183,17 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 			sx={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '30vw' }}
 		>
 			<Grid container spacing={2}>
-				{editLinkField? (
+				{editLanguageField? (
 					<Grid item xs={6} sx={{ display: 'flex', alignItems:'center', marginBottom: '8px' }}>
 						<CustomTextField
 							fullWidth
-							label="Links Field Name"
+							label="Languages Field Name"
 							variant="filled"
 							name="field_name"
-							value={linkData.field_name}
+							value={languageData.field_name}
 							onChange={handleChange}
 						/>
-						{linkFieldLoading?
+						{languageFieldLoading?
 							<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
 						:(
                             <>
@@ -181,7 +206,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                         }}
                                     />
                                 </IconButton>
-                                <IconButton onClick={handleShowDialogLinkSection} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={handleShowDialogLanguageSection} sx={{ '&:focus': { outline: 'none' }}} >
                                     <Delete
                                         sx={{
                                             color: '#D71313',
@@ -195,8 +220,8 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 					</Grid>
 				):(
 					<Grid item xs={12}  sx={{ display: 'flex', alignItems:'center' }}>
-						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{linkData.field_name}</CustomTypography>
-                        <IconButton onClick={() => setEditLinkField(true)} sx={{ '&:focus': { outline: 'none' }}} >
+						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{languageData.field_name}</CustomTypography>
+                        <IconButton onClick={() => setEditLanguageField(true)} sx={{ '&:focus': { outline: 'none' }}} >
                             <Edit
                                 sx={{
                                     color: '#6499E9',
@@ -205,7 +230,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                 }}
                             />
                         </IconButton>
-                        <IconButton onClick={handleShowDialogLinkSection} sx={{ '&:focus': { outline: 'none' }}} >
+                        <IconButton onClick={handleShowDialogLanguageSection} sx={{ '&:focus': { outline: 'none' }}} >
                             <Delete
                                 sx={{
                                     color: '#D71313',
@@ -214,10 +239,10 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                 }}
                             />
                         </IconButton>
-                        <AlertDialog open={showDialogLinkSection} handleCloseDialog={handleShowDialogLinkSection} handleAgreement={handleDeleteLinkSection}/>
+                        <AlertDialog open={showDialogLanguageSection} handleCloseDialog={handleShowDialogLanguageSection} handleAgreement={handleDeleteLanguageSection}/>
 					</Grid>
 				)}
-                {linkData.links.map((link, index) => (
+                {languageData.languages.map((language, index) => (
                     <Grid item xs={12} key={index} sx={{ border: '1px solid #272829', padding: '16px', margin: '0 0 16px 16px', borderRadius: '5px' }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', height: '4rem' }}>
@@ -226,12 +251,12 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                     cursor: 'pointer' ,
                                     '&:hover': { color: '#687EFF' }
                                     }}>
-                                    {link.webite_name}
+                                    {language.language}
                                     <IconButton sx={{ '&:focus': { outline: 'none' }}} >
                                         {showDetails[index] ? <ExpandLess /> : <ExpandMore />}
                                     </IconButton>
                                 </CustomTypography>
-                                <IconButton onClick={handleShowDialogLink} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={handleShowDialogLanguage} sx={{ '&:focus': { outline: 'none' }}} >
                                     <DeleteOutline
                                         sx={{
                                             color: '#FF6969',
@@ -240,29 +265,44 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                         }}
                                     />
                                 </IconButton>
-                                <AlertDialog open={showDialogLink} handleCloseDialog={handleShowDialogLink} handleAgreement={() => handleDeleteLink(index)}/>
+                                <AlertDialog open={showDialogLanguage} handleCloseDialog={handleShowDialogLanguage} handleAgreement={() => handleDeleteLanguage(index)}/>
                             </Grid>
                             {showDetails[index] && (
                                 <>
                                     <Grid item xs={6}>
                                         <CustomTextField
                                             fullWidth
-                                            label="Website Name"
+                                            label="Language Name"
                                             variant="filled"
-                                            name={`webite_name;-;${index}`}
-                                            value={link.webite_name}
+                                            name={`language;-;${index}`}
+                                            value={language.language}
                                             onChange={handleChange}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <CustomTextField
-                                            fullWidth
-                                            label="Link"
-                                            variant="filled"
-                                            name={`url;-;${index}`}
-                                            value={link.url}
-                                            onChange={handleChange}
-                                        />
+                                    <Box sx={{ 
+                                        display: 'flex',
+                                        justifyContent: 'flex-start',
+                                    }}>
+                                        <Typography>level:</Typography>
+                                        <Typography sx={{
+                                            marginLeft: '8px',
+                                            color:  language.level === 1 ? '#FF6464' :
+                                                    language.level === 2 ? '#E25E3E' :
+                                                    language.level === 3 ? '#FFBD67' :
+                                                    language.level === 4 ? '#5BE7A9' :
+                                                                        '#8E8FFA',
+                                        }}>
+                                            {levelMarks[language.level - 1]}
+                                        </Typography>
+                                    </Box>
+                                    <CustomSlider
+                                        value={language.level}
+                                        min={1}
+                                        max={5}
+                                        marks={true}
+                                        onChange={(event, newValue) => handleChangeLevel(index, newValue)}
+                                    />
                                     </Grid>
                                 </>
                             )}
@@ -270,7 +310,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                     </Grid>
                 ))}
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent:'flex-start', marginLeft: '16px' }}>
-                    <LinkTypography onClick={handleAddLink}>+ Add an Link</LinkTypography>
+                    <LinkTypography onClick={handleAddLanguage}>+ Add an Language</LinkTypography>
                 </Grid>
 			</Grid>
 		</CustomPaper>
@@ -278,4 +318,4 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
   );
 }
 
-export default LinkSection
+export default LanguageSection

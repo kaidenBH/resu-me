@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Container, IconButton, Slider, Typography, Box  } from '@mui/material';
+import { Grid, Container, IconButton, Typography, Box  } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomPaper, LinkTypography, CustomSlider } from './styles';
 import { useSkill } from '../../../components/hooks/UseSkill';
 import AlertDialog from './Dialog';
@@ -130,6 +130,11 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
     const handleAddSkill = async () =>{
         const skill_section = await addSkill(skillData.resumeId);
         setSkillData(skill_section);
+        setShowDetails(prevDetails => {
+            const updatedDetails = [...prevDetails];
+            updatedDetails[updatedDetails.length] = true;
+            return updatedDetails;
+        });
     };
 
 	const handleDeleteSkillSection = async () =>{

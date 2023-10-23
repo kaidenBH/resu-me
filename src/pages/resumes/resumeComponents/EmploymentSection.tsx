@@ -111,6 +111,11 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
     const handleAddRecord = async () =>{
         const employment_section = await addEmploymentRecord(employmentData.resumeId);
         setEmploymentData(employment_section!);
+        setShowDetails(prevDetails => {
+            const updatedDetails = [...prevDetails];
+            updatedDetails[updatedDetails.length] = true;
+            return updatedDetails;
+        });
     };
 
 	const handleDeleteEmployment = async () =>{

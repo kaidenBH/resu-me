@@ -23,6 +23,7 @@ type ApiResumeFunction = (
 		education_section?: object;
 		link_section?: object;
 		skill_section?: object;
+		language_section?: object;
 	}>
   >;
   
@@ -91,3 +92,14 @@ export const deleteSkill:ApiResumeFunction = (resumeId, skillId) =>
 	API.patch(`/resume/skill/deleteSkill/${resumeId}/${skillId}`, {});
 export const deleteSkillSection:ApiResumeFunction = (resumeId) =>
 	API.patch(`/resume/skill/deleteSkillSection/${resumeId}`, {});
+
+
+// Languages Apis
+export const addLanguage:ApiResumeFunction = (resumeId) =>
+	API.patch(`/resume/language/addLanguage/${resumeId}`, {});
+export const updateLanguage:ApiResumeFunction = (resumeId, languageId, ResumeData) =>
+	API.patch(`/resume/language/updateLanguage/${resumeId}/${languageId}`, ResumeData);
+export const deleteLanguage:ApiResumeFunction = (resumeId, languageId) =>
+	API.patch(`/resume/language/deleteLanguage/${resumeId}/${languageId}`, {});
+export const deleteLanguageSection:ApiResumeFunction = (resumeId) =>
+	API.patch(`/resume/language/deleteLanguageSection/${resumeId}`, {});

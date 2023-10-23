@@ -7,6 +7,7 @@ import LinkSection from './LinkSection';
 import SkillSection from './SkillSection';
 import { useResume } from '../../../components/context/ResumeContext';
 import { CustomTypography } from './styles';
+import LanguageSection from './LanguageSection';
 
 const ResumeEditPage: React.FC  = () => {
   const { resume } = useResume();
@@ -64,6 +65,9 @@ const ResumeEditPage: React.FC  = () => {
               )}
               {field.type === 'Skill' && (
                 <SkillSection skill_section={field} />
+              )}
+              {field.type === 'Language' && (
+                <LanguageSection language_section={field} />
               )}
             </Grid>
           ))}

@@ -111,6 +111,11 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
     const handleAddSchool = async () =>{
         const education_section = await addSchool(schoolData.resumeId);
         setSchoolData(education_section);
+        setShowDetails(prevDetails => {
+            const updatedDetails = [...prevDetails];
+            updatedDetails[updatedDetails.length] = true;
+            return updatedDetails;
+        });
     };
 
 	const handleDeleteEducation = async () =>{
