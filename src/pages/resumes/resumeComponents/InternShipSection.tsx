@@ -322,7 +322,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
                     </Grid>
                 ))}
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent:'flex-start', marginLeft: '16px' }}>
-                    <LinkTypography onClick={handleAddRecord}>+ Add an InternShip Record</LinkTypography>
+                    <LinkTypography onClick={handleAddRecord}>+ Add another InternShip Record</LinkTypography>
                 </Grid>
 			</Grid>
 		</CustomPaper>

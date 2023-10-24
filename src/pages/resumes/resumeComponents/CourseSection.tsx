@@ -254,7 +254,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
                                     <Grid item xs={6}>
                                         <CustomTextField
                                             fullWidth
-                                            label="Course Name"
+                                            label="Course"
                                             variant="filled"
                                             name={`course_name;-;${index}`}
                                             value={course.course_name}
@@ -311,7 +311,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
                     </Grid>
                 ))}
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent:'flex-start', marginLeft: '16px' }}>
-                    <LinkTypography onClick={handleAddCourse}>+ Add an Course</LinkTypography>
+                    <LinkTypography onClick={handleAddCourse}>+ Add another Course</LinkTypography>
                 </Grid>
 			</Grid>
 		</CustomPaper>

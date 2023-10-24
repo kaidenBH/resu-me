@@ -322,7 +322,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
                     </Grid>
                 ))}
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent:'flex-start', marginLeft: '16px' }}>
-                    <LinkTypography onClick={handleAddRecord}>+ Add an Employment Record</LinkTypography>
+                    <LinkTypography onClick={handleAddRecord}>+ Add another Employment Record</LinkTypography>
                 </Grid>
 			</Grid>
 		</CustomPaper>

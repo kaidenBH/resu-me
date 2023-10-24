@@ -1,51 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
-import { useEducation } from '../../../components/hooks/UseEducation';
+import { useCustom } from '../../../components/hooks/UseCustom';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-interface EducationSectionForm {
+interface CustomSectionForm {
     _id: string;
     resumeId: string;
     field_name: string;
-	schools: [
+	activities: [
         {
             _id: string;
-			school_name: string;
-			degree_title: string;
-			start_date: string;
-			end_date: string;
+			activity_title: string;
 			city: string;
+            start_date: string;
+			end_date: string;
 			description: string;
 		}
     ];
 }
 
-interface EducationSectionProps {
-    education_section: EducationSectionForm; 
+interface CustomSectionProps {
+    customActivity_section: CustomSectionForm; 
 }
 
-const EducationSection: React.FC<EducationSectionProps> = ({ education_section }) => {
-    const [schoolData, setSchoolData] = useState<EducationSectionForm>({
-        _id: education_section._id,
-        resumeId: education_section.resumeId || '',
-        field_name: education_section.field_name || 'Education',
-        schools: education_section.schools || [],
+const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section }) => {
+    const [customData, setCustomData] = useState<CustomSectionForm>({
+        _id: customActivity_section._id,
+        resumeId: customActivity_section.resumeId || '',
+        field_name: customActivity_section.field_name || 'Untitled',
+        activities: customActivity_section.activities || [],
     });
 
-    const { addSchool, updateSchool, deleteSchool, deleteEducation } = useEducation();
-	const [editSchoolField, setEditSchoolField] = useState(false);
-	const [schoolFieldLoading, setSchoolFieldLoading] = useState(false);
-	const [editingPhases, setEditingPhases] = useState(schoolData.schools.map(() => false));
-    const [secondsArray, setSecondsArray] = useState(schoolData.schools.map(() => 2));
-    const [showDialogEducation, setShowDialogEducation] = useState(false);
-    const [showDialogSchool, setShowDialogSchool] = useState(false);
+    const { addCustomActivity, updateCustomActivity, deleteCustomActivity, deleteCustom } = useCustom();
+	const [editCustomField, setEditCustomField] = useState(false);
+	const [customFieldLoading, setCustomFieldLoading] = useState(false);
+	const [editingPhases, setEditingPhases] = useState(customData.activities.map(() => false));
+    const [secondsArray, setSecondsArray] = useState(customData.activities.map(() => 2));
+    const [showDialogCustomSection, setShowDialogCustomSection] = useState(false);
+    const [showDialogCustom, setShowDialogCustom] = useState(false);
     const [deletionIndex, setDeletionIndex] = useState(0);
     const [showDetails, setShowDetails] = useState(
-        schoolData.schools.map(() => false)
+        customData.activities.map(() => false)
       );
 
     const toggleDetails = (index: number) => {
@@ -59,24 +58,24 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		if (name === "field_name") {
-            setSchoolData({
-                ...schoolData,
+            setCustomData({
+                ...customData,
 				[name]: value,
 			});
 		} else {
             const [fieldName, indexStr] = name.split(';-;');
             const index = parseInt(indexStr, 10);
     
-            setSchoolData(prevData => {
-                const updatedSchools = [...prevData.schools];
-                updatedSchools[index] = {
-                    ...updatedSchools[index],
+            setCustomData(prevData => {
+                const updatedActivities = [...prevData.activities];
+                updatedActivities[index] = {
+                    ...updatedActivities[index],
                     [fieldName]: value,
                 };
     
                 return {
                     ...prevData,
-                    schools: updatedSchools,
+                    activities: updatedActivities,
                 };
             });
             setEditingPhases(prevPhases => {
@@ -93,8 +92,8 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
         }
 	};	
 	
-	const schoolUpdate = async (index: number) => {
-		await updateSchool(schoolData.resumeId, schoolData.schools[index]._id, schoolData.schools[index]);
+	const customUpdate = async (index: number) => {
+		await updateCustomActivity(customData.resumeId, customData._id, customData.activities[index]._id, customData.activities[index]);
 		setEditingPhases(prevPhases => {
             const updatedPhases = [...prevPhases];
             updatedPhases[index] = false;
@@ -103,15 +102,15 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 	};
 
 	const handleChangeFieldName = async () =>{
-		setSchoolFieldLoading(true);
-		await updateSchool(schoolData.resumeId, schoolData._id, schoolData);
-		setEditSchoolField(false);
-		setSchoolFieldLoading(false);
+		setCustomFieldLoading(true);
+		await updateCustomActivity(customData.resumeId, customData._id, customData.activities[0]._id, customData);
+		setEditCustomField(false);
+		setCustomFieldLoading(false);
 	};
 
-    const handleAddSchool = async () =>{
-        const education_section = await addSchool(schoolData.resumeId);
-        setSchoolData(education_section);
+    const handleAddActivity = async () =>{
+        const customActivity_section = await addCustomActivity(customData.resumeId, customData._id);
+        setCustomData(customActivity_section!);
         setShowDetails(prevDetails => {
             const updatedDetails = [...prevDetails];
             updatedDetails[updatedDetails.length] = true;
@@ -119,23 +118,23 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
         });
     };
 
-	const handleDeleteEducation = async () =>{
-		await deleteEducation(schoolData.resumeId);
-        setShowDialogEducation(false);
+	const handleDeleteCustomSection = async () =>{
+		await deleteCustom(customData.resumeId, customData._id);
+        setShowDialogCustomSection(false);
 	};
 
-	const handleDeleteSchool = async () =>{
-		const education_section = await deleteSchool(schoolData.resumeId, schoolData.schools[deletionIndex]._id);
-        setSchoolData(education_section);
-        setShowDialogSchool(false);
+	const handleDeleteActivity = async () =>{
+		const customActivity_section = await deleteCustomActivity(customData.resumeId, customData._id, customData.activities[deletionIndex]._id);
+        setCustomData(customActivity_section!);
+        setShowDialogCustom(false);
 	};
 
-    const handleShowDialogEducation = () =>{
-        setShowDialogEducation(prev => !prev);
+    const handleShowDialogCustomSection = () =>{
+        setShowDialogCustomSection(prev => !prev);
     }
-    const handleShowDialogSchool = (index: number) =>{
+    const handleShowDialogCustom = (index: number) =>{
         setDeletionIndex(index);
-        setShowDialogSchool(true);
+        setShowDialogCustom(true);
     }
 
 	useEffect(() => {
@@ -151,7 +150,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
     
         secondsArray.forEach((seconds, index) => {
             if (seconds <= 0 && editingPhases[index]) {
-                schoolUpdate(index);
+                customUpdate(index);
             }
         });
     
@@ -166,17 +165,17 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 			sx={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '30vw' }}
 		>
 			<Grid container spacing={2}>
-				{editSchoolField? (
+				{editCustomField? (
 					<Grid item xs={6} sx={{ display: 'flex', alignItems:'center', marginBottom: '8px' }}>
 						<CustomTextField
 							fullWidth
-							label="Education Field Name"
+							label="Custom Field Name"
 							variant="filled"
 							name="field_name"
-							value={schoolData.field_name}
+							value={customData.field_name}
 							onChange={handleChange}
 						/>
-						{schoolFieldLoading?
+						{customFieldLoading?
 							<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
 						:(
                             <>
@@ -189,7 +188,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                         }}
                                     />
                                 </IconButton>
-                                <IconButton onClick={handleShowDialogEducation} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={handleShowDialogCustomSection} sx={{ '&:focus': { outline: 'none' }}} >
                                     <Delete
                                         sx={{
                                             color: '#D71313',
@@ -203,8 +202,8 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 					</Grid>
 				):(
 					<Grid item xs={12}  sx={{ display: 'flex', alignItems:'center' }}>
-						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{schoolData.field_name}</CustomTypography>
-                        <IconButton onClick={() => setEditSchoolField(true)} sx={{ '&:focus': { outline: 'none' }}} >
+						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{customData.field_name}</CustomTypography>
+                        <IconButton onClick={() => setEditCustomField(true)} sx={{ '&:focus': { outline: 'none' }}} >
                             <Edit
                                 sx={{
                                     color: '#6499E9',
@@ -213,7 +212,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                 }}
                             />
                         </IconButton>
-                        <IconButton onClick={handleShowDialogEducation} sx={{ '&:focus': { outline: 'none' }}} >
+                        <IconButton onClick={handleShowDialogCustomSection} sx={{ '&:focus': { outline: 'none' }}} >
                             <Delete
                                 sx={{
                                     color: '#D71313',
@@ -222,10 +221,10 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                 }}
                             />
                         </IconButton>
-                        <AlertDialog open={showDialogEducation} handleCloseDialog={handleShowDialogEducation} handleAgreement={handleDeleteEducation}/>
+                        <AlertDialog open={showDialogCustomSection} handleCloseDialog={handleShowDialogCustomSection} handleAgreement={handleDeleteCustomSection}/>
 					</Grid>
 				)}
-                {schoolData.schools.map((school, index) => (
+                {customData.activities.map((activity, index) => (
                     <Grid item xs={12} key={index} sx={{ border: '1px solid #D8D9DA', padding: '16px', margin: '0 0 16px 16px', borderRadius: '5px' }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', height: '4rem' }}>
@@ -234,12 +233,12 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                     cursor: 'pointer' ,
                                     '&:hover': { color: '#687EFF' }
                                     }}>
-                                    {school.school_name}
+                                    {activity.activity_title}
                                     <IconButton sx={{ '&:focus': { outline: 'none' }}} >
                                         {showDetails[index] ? <ExpandLess /> : <ExpandMore />}
                                     </IconButton>
                                 </CustomTypography>
-                                <IconButton onClick={() => handleShowDialogSchool(index)} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={() => handleShowDialogCustom(index)} sx={{ '&:focus': { outline: 'none' }}} >
                                     <DeleteOutline
                                         sx={{
                                             color: '#FF6969',
@@ -248,33 +247,33 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                         }}
                                     />
                                 </IconButton>
-                                <AlertDialog open={showDialogSchool} handleCloseDialog={() => setShowDialogSchool(false)} handleAgreement={handleDeleteSchool}/>
+                                <AlertDialog open={showDialogCustom} handleCloseDialog={() => setShowDialogCustom(false)} handleAgreement={handleDeleteActivity}/>
                             </Grid>
                             {showDetails[index] && (
                                 <>
                                     <Grid item xs={6}>
                                         <CustomTextField
                                             fullWidth
-                                            label="School Name"
+                                            label="Activity name, job title etc..."
                                             variant="filled"
-                                            name={`school_name;-;${index}`}
-                                            value={school.school_name}
+                                            name={`activity_title;-;${index}`}
+                                            value={activity.activity_title}
                                             onChange={handleChange}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
                                         <CustomTextField
                                             fullWidth
-                                            label="Degree"
+                                            label="City"
                                             variant="filled"
-                                            name={`degree_title;-;${index}`}
-                                            value={school.degree_title}
+                                            name={`city;-;${index}`}
+                                            value={activity.city}
                                             onChange={handleChange}
                                         />
                                     </Grid>
                                     <Grid item xs={3}>
                                         <DatePicker
-                                            selected={school.start_date ? new Date(school.start_date) : null}
+                                            selected={activity.start_date ? new Date(activity.start_date) : null}
                                             onChange={(date: Date) => {
                                                 const isoString = date ? date.toISOString() : '';
                                                 handleChange({ target: { name: `start_date;-;${index}`, value: isoString } });
@@ -285,7 +284,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                     </Grid>
                                     <Grid item xs={3}>
                                         <DatePicker
-                                            selected={school.end_date ?  new Date(school.end_date): null}
+                                            selected={activity.end_date ?  new Date(activity.end_date): null}
                                             onChange={(date: Date) => {
                                                 const isoString = date ? date.toISOString() : '';
                                                 handleChange({ target: { name: `end_date;-;${index}`, value: isoString } });
@@ -294,23 +293,13 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                             customInput={<CustomTextField fullWidth variant="filled" label="End date" />}
                                         />
                                     </Grid>
-                                    <Grid item xs={6}>
-                                        <CustomTextField
-                                            fullWidth
-                                            label="City"
-                                            variant="filled"
-                                            name={`city;-;${index}`}
-                                            value={school.city}
-                                            onChange={handleChange}
-                                        />
-                                    </Grid>
                                     <Grid item xs={12} style={{ zIndex: 0 }}>
                                         <CustomTextField
                                             fullWidth
                                             label="Description"
                                             variant="filled"
                                             name={`description;-;${index}`}
-                                            value={school.description}
+                                            value={activity.description}
                                             onChange={handleChange}
                                             multiline 
                                             rows={4}
@@ -322,7 +311,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                     </Grid>
                 ))}
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent:'flex-start', marginLeft: '16px' }}>
-                    <LinkTypography onClick={handleAddSchool}>+ Add another School</LinkTypography>
+                    <LinkTypography onClick={handleAddActivity}>+ Add another Activity</LinkTypography>
                 </Grid>
 			</Grid>
 		</CustomPaper>
@@ -330,4 +319,4 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
   );
 }
 
-export default EducationSection
+export default CustomSection

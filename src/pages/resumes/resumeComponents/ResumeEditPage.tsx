@@ -10,6 +10,7 @@ import { CustomTypography } from './styles';
 import LanguageSection from './LanguageSection';
 import InternShipSection from './InternShipSection';
 import CourseSection from './CourseSection';
+import CustomSection from './CustomSection';
 
 const ResumeEditPage: React.FC  = () => {
   const { resume } = useResume();
@@ -76,6 +77,9 @@ const ResumeEditPage: React.FC  = () => {
               )}
               {field.type === 'Course' && (
                 <CourseSection course_section={field} />
+              )}
+              {field.type === 'Custom' && (
+                <CustomSection customActivity_section={field} />
               )}
             </Grid>
           ))}

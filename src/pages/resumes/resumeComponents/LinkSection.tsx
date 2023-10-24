@@ -272,7 +272,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                     </Grid>
                 ))}
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent:'flex-start', marginLeft: '16px' }}>
-                    <LinkTypography onClick={handleAddLink}>+ Add an Link</LinkTypography>
+                    <LinkTypography onClick={handleAddLink}>+ Add another Link</LinkTypography>
                 </Grid>
 			</Grid>
 		</CustomPaper>

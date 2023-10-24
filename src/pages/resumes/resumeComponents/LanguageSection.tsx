@@ -312,7 +312,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
                     </Grid>
                 ))}
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent:'flex-start', marginLeft: '16px' }}>
-                    <LinkTypography onClick={handleAddLanguage}>+ Add an Language</LinkTypography>
+                    <LinkTypography onClick={handleAddLanguage}>+ Add another Language</LinkTypography>
                 </Grid>
 			</Grid>
 		</CustomPaper>

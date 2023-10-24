@@ -312,7 +312,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
                     </Grid>
                 ))}
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent:'flex-start', marginLeft: '16px' }}>
-                    <LinkTypography onClick={handleAddSkill}>+ Add an Skill</LinkTypography>
+                    <LinkTypography onClick={handleAddSkill}>+ Add another Skill</LinkTypography>
                 </Grid>
 			</Grid>
 		</CustomPaper>
