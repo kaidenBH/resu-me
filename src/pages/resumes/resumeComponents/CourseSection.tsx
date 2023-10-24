@@ -1,45 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
-import { useLink } from '../../../components/hooks/UseLink';
+import { useCourse } from '../../../components/hooks/UseCourse';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-interface LinkSectionForm {
+interface CourseSectionForm {
     _id: string;
     resumeId: string;
     field_name: string;
-	links: [
+	courses: [
         {
             _id: string;
-			webite_name: string;
-			url: string;
+			course_name: string;
+			institution: string;
+            start_date: string;
+			end_date: string;
+			description: string;
 		}
     ];
 }
 
-interface LinkSectionProps {
-    link_section: LinkSectionForm; 
+interface CourseSectionProps {
+    course_section: CourseSectionForm; 
 }
 
-const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
-    const [linkData, setLinkData] = useState<LinkSectionForm>({
-        _id: link_section._id,
-        resumeId: link_section.resumeId || '',
-        field_name: link_section.field_name || 'Websites & Links',
-        links: link_section.links || [],
+const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
+    const [courseData, setCourseData] = useState<CourseSectionForm>({
+        _id: course_section._id,
+        resumeId: course_section.resumeId || '',
+        field_name: course_section.field_name || 'Courses',
+        courses: course_section.courses || [],
     });
 
-    const { addLink, updateLink, deleteLink, deleteLinkSection } = useLink();
-	const [editLinkField, setEditLinkField] = useState(false);
-	const [linkFieldLoading, setLinkFieldLoading] = useState(false);
-	const [editingPhases, setEditingPhases] = useState(linkData.links.map(() => false));
-    const [secondsArray, setSecondsArray] = useState(linkData.links.map(() => 2));
-    const [showDialogLinkSection, setShowDialogLinkSection] = useState(false);
-    const [showDialogLink, setShowDialogLink] = useState(false);
+    const { addCourse, updateCourse, deleteCourse, deleteCourseSection } = useCourse();
+	const [editCourseField, setEditCourseField] = useState(false);
+	const [courseFieldLoading, setCourseFieldLoading] = useState(false);
+	const [editingPhases, setEditingPhases] = useState(courseData.courses.map(() => false));
+    const [secondsArray, setSecondsArray] = useState(courseData.courses.map(() => 2));
+    const [showDialogCourseSection, setShowDialogCourseSection] = useState(false);
+    const [showDialogCourse, setShowDialogCourse] = useState(false);
     const [deletionIndex, setDeletionIndex] = useState(0);
     const [showDetails, setShowDetails] = useState(
-        linkData.links.map(() => false)
+        courseData.courses.map(() => false)
       );
 
     const toggleDetails = (index: number) => {
@@ -53,24 +58,24 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		if (name === "field_name") {
-            setLinkData({
-                ...linkData,
+            setCourseData({
+                ...courseData,
 				[name]: value,
 			});
 		} else {
             const [fieldName, indexStr] = name.split(';-;');
             const index = parseInt(indexStr, 10);
     
-            setLinkData(prevData => {
-                const updatedLinks = [...prevData.links];
-                updatedLinks[index] = {
-                    ...updatedLinks[index],
+            setCourseData(prevData => {
+                const updatedCourses = [...prevData.courses];
+                updatedCourses[index] = {
+                    ...updatedCourses[index],
                     [fieldName]: value,
                 };
     
                 return {
                     ...prevData,
-                    links: updatedLinks,
+                    courses: updatedCourses,
                 };
             });
             setEditingPhases(prevPhases => {
@@ -87,8 +92,8 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
         }
 	};	
 	
-	const linkUpdate = async (index: number) => {
-		await updateLink(linkData.resumeId, linkData.links[index]._id, linkData.links[index]);
+	const courseUpdate = async (index: number) => {
+		await updateCourse(courseData.resumeId, courseData.courses[index]._id, courseData.courses[index]);
 		setEditingPhases(prevPhases => {
             const updatedPhases = [...prevPhases];
             updatedPhases[index] = false;
@@ -97,15 +102,15 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 	};
 
 	const handleChangeFieldName = async () =>{
-		setLinkFieldLoading(true);
-		await updateLink(linkData.resumeId, linkData._id, linkData);
-		setEditLinkField(false);
-		setLinkFieldLoading(false);
+		setCourseFieldLoading(true);
+		await updateCourse(courseData.resumeId, courseData._id, courseData);
+		setEditCourseField(false);
+		setCourseFieldLoading(false);
 	};
 
-    const handleAddLink = async () =>{
-        const link_section = await addLink(linkData.resumeId);
-        setLinkData(link_section!);
+    const handleAddCourse = async () =>{
+        const course_section = await addCourse(courseData.resumeId);
+        setCourseData(course_section!);
         setShowDetails(prevDetails => {
             const updatedDetails = [...prevDetails];
             updatedDetails[updatedDetails.length] = true;
@@ -113,23 +118,23 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
         });
     };
 
-	const handleDeleteLinkSection = async () =>{
-		await deleteLinkSection(linkData.resumeId);
-        setShowDialogLinkSection(false);
+	const handleDeleteCourseSection = async () =>{
+		await deleteCourseSection(courseData.resumeId);
+        setShowDialogCourseSection(false);
 	};
 
-	const handleDeleteLink = async () =>{
-		const link_section = await deleteLink(linkData.resumeId, linkData.links[deletionIndex]._id);
-        setLinkData(link_section!);
-        setShowDialogLink(false);
+	const handleDeleteCourse = async () =>{
+		const course_section = await deleteCourse(courseData.resumeId, courseData.courses[deletionIndex]._id);
+        setCourseData(course_section!);
+        setShowDialogCourse(false);
 	};
 
-    const handleShowDialogLinkSection = () =>{
-        setShowDialogLinkSection(prev => !prev);
+    const handleShowDialogCourseSection = () =>{
+        setShowDialogCourseSection(prev => !prev);
     }
-    const handleShowDialogLink = (index: number) =>{
+    const handleShowDialogCourse = (index: number) =>{
         setDeletionIndex(index);
-        setShowDialogLink(true);
+        setShowDialogCourse(true);
     }
 
 	useEffect(() => {
@@ -145,7 +150,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
     
         secondsArray.forEach((seconds, index) => {
             if (seconds <= 0 && editingPhases[index]) {
-                linkUpdate(index);
+                courseUpdate(index);
             }
         });
     
@@ -160,17 +165,17 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 			sx={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '30vw' }}
 		>
 			<Grid container spacing={2}>
-				{editLinkField? (
+				{editCourseField? (
 					<Grid item xs={6} sx={{ display: 'flex', alignItems:'center', marginBottom: '8px' }}>
 						<CustomTextField
 							fullWidth
-							label="Links Field Name"
+							label="Courses Field Name"
 							variant="filled"
 							name="field_name"
-							value={linkData.field_name}
+							value={courseData.field_name}
 							onChange={handleChange}
 						/>
-						{linkFieldLoading?
+						{courseFieldLoading?
 							<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
 						:(
                             <>
@@ -183,7 +188,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                         }}
                                     />
                                 </IconButton>
-                                <IconButton onClick={handleShowDialogLinkSection} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={handleShowDialogCourseSection} sx={{ '&:focus': { outline: 'none' }}} >
                                     <Delete
                                         sx={{
                                             color: '#D71313',
@@ -197,8 +202,8 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 					</Grid>
 				):(
 					<Grid item xs={12}  sx={{ display: 'flex', alignItems:'center' }}>
-						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{linkData.field_name}</CustomTypography>
-                        <IconButton onClick={() => setEditLinkField(true)} sx={{ '&:focus': { outline: 'none' }}} >
+						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{courseData.field_name}</CustomTypography>
+                        <IconButton onClick={() => setEditCourseField(true)} sx={{ '&:focus': { outline: 'none' }}} >
                             <Edit
                                 sx={{
                                     color: '#6499E9',
@@ -207,7 +212,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                 }}
                             />
                         </IconButton>
-                        <IconButton onClick={handleShowDialogLinkSection} sx={{ '&:focus': { outline: 'none' }}} >
+                        <IconButton onClick={handleShowDialogCourseSection} sx={{ '&:focus': { outline: 'none' }}} >
                             <Delete
                                 sx={{
                                     color: '#D71313',
@@ -216,10 +221,10 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                 }}
                             />
                         </IconButton>
-                        <AlertDialog open={showDialogLinkSection} handleCloseDialog={handleShowDialogLinkSection} handleAgreement={handleDeleteLinkSection}/>
+                        <AlertDialog open={showDialogCourseSection} handleCloseDialog={handleShowDialogCourseSection} handleAgreement={handleDeleteCourseSection}/>
 					</Grid>
 				)}
-                {linkData.links.map((link, index) => (
+                {courseData.courses.map((course, index) => (
                     <Grid item xs={12} key={index} sx={{ border: '1px solid #D8D9DA', padding: '16px', margin: '0 0 16px 16px', borderRadius: '5px' }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', height: '4rem' }}>
@@ -228,12 +233,12 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                     cursor: 'pointer' ,
                                     '&:hover': { color: '#687EFF' }
                                     }}>
-                                    {link.webite_name}
+                                    {course.course_name}
                                     <IconButton sx={{ '&:focus': { outline: 'none' }}} >
                                         {showDetails[index] ? <ExpandLess /> : <ExpandMore />}
                                     </IconButton>
                                 </CustomTypography>
-                                <IconButton onClick={() => handleShowDialogLink(index)} sx={{ '&:focus': { outline: 'none' }}} >
+                                <IconButton onClick={() => handleShowDialogCourse(index)} sx={{ '&:focus': { outline: 'none' }}} >
                                     <DeleteOutline
                                         sx={{
                                             color: '#FF6969',
@@ -242,28 +247,62 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                                         }}
                                     />
                                 </IconButton>
-                                <AlertDialog open={showDialogLink} handleCloseDialog={() => setShowDialogLink(false)} handleAgreement={handleDeleteLink}/>
+                                <AlertDialog open={showDialogCourse} handleCloseDialog={() => setShowDialogCourse(false)} handleAgreement={handleDeleteCourse}/>
                             </Grid>
                             {showDetails[index] && (
                                 <>
                                     <Grid item xs={6}>
                                         <CustomTextField
                                             fullWidth
-                                            label="Website Name"
+                                            label="Course Name"
                                             variant="filled"
-                                            name={`webite_name;-;${index}`}
-                                            value={link.webite_name}
+                                            name={`course_name;-;${index}`}
+                                            value={course.course_name}
                                             onChange={handleChange}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>
                                         <CustomTextField
                                             fullWidth
-                                            label="Link"
+                                            label="Institution"
                                             variant="filled"
-                                            name={`url;-;${index}`}
-                                            value={link.url}
+                                            name={`institution;-;${index}`}
+                                            value={course.institution}
                                             onChange={handleChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={3}>
+                                        <DatePicker
+                                            selected={course.start_date ? new Date(course.start_date) : null}
+                                            onChange={(date: Date) => {
+                                                const isoString = date ? date.toISOString() : '';
+                                                handleChange({ target: { name: `start_date;-;${index}`, value: isoString } });
+                                            }}
+                                            dateFormat="MM/dd/yyyy"
+                                            customInput={<CustomTextField fullWidth variant="filled" label="Start date" />}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={3}>
+                                        <DatePicker
+                                            selected={course.end_date ?  new Date(course.end_date): null}
+                                            onChange={(date: Date) => {
+                                                const isoString = date ? date.toISOString() : '';
+                                                handleChange({ target: { name: `end_date;-;${index}`, value: isoString } });
+                                            }}
+                                            dateFormat="MM/dd/yyyy"
+                                            customInput={<CustomTextField fullWidth variant="filled" label="End date" />}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} style={{ zIndex: 0 }}>
+                                        <CustomTextField
+                                            fullWidth
+                                            label="Description"
+                                            variant="filled"
+                                            name={`description;-;${index}`}
+                                            value={course.description}
+                                            onChange={handleChange}
+                                            multiline 
+                                            rows={4}
                                         />
                                     </Grid>
                                 </>
@@ -272,7 +311,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
                     </Grid>
                 ))}
                 <Grid item xs={6} sx={{ display: 'flex', justifyContent:'flex-start', marginLeft: '16px' }}>
-                    <LinkTypography onClick={handleAddLink}>+ Add an Link</LinkTypography>
+                    <LinkTypography onClick={handleAddCourse}>+ Add an Course</LinkTypography>
                 </Grid>
 			</Grid>
 		</CustomPaper>
@@ -280,4 +319,4 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
   );
 }
 
-export default LinkSection
+export default CourseSection

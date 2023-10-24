@@ -9,6 +9,7 @@ import { useResume } from '../../../components/context/ResumeContext';
 import { CustomTypography } from './styles';
 import LanguageSection from './LanguageSection';
 import InternShipSection from './InternShipSection';
+import CourseSection from './CourseSection';
 
 const ResumeEditPage: React.FC  = () => {
   const { resume } = useResume();
@@ -72,6 +73,9 @@ const ResumeEditPage: React.FC  = () => {
               )}
               {field.type === 'InternShip' && (
                 <InternShipSection internship_section={field} />
+              )}
+              {field.type === 'Course' && (
+                <CourseSection course_section={field} />
               )}
             </Grid>
           ))}

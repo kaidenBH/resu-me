@@ -226,7 +226,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 					</Grid>
 				)}
                 {employmentData.employments.map((employment, index) => (
-                    <Grid item xs={12} key={index} sx={{ border: '1px solid #272829', padding: '16px', margin: '0 0 16px 16px', borderRadius: '5px' }}>
+                    <Grid item xs={12} key={index} sx={{ border: '1px solid #D8D9DA', padding: '16px', margin: '0 0 16px 16px', borderRadius: '5px' }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', height: '4rem' }}>
                                 <CustomTypography variant="body1" onClick={() => toggleDetails(index)} sx={{ 
