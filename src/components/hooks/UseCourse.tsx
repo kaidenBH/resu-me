@@ -12,7 +12,7 @@ export const useCourse = (): UseCourseSection => {
     const addCourse = async (resumeId: string) => {
 		try {
 			const { data } = await API.addCourse(resumeId);
-			console.log(data.course_section);
+			await getResume(resumeId);
 			return data.course_section;
 		} catch (error) {
 			console.error('Error Course in:', error);
@@ -22,7 +22,6 @@ export const useCourse = (): UseCourseSection => {
     const updateCourse = async (resumeId: string, courseId: string, courseData: object) => {
 		try {
 			const { data } = await API.updateCourse(resumeId, courseId, courseData);
-			console.log(data.course_section);
 			return data.course_section;
 		} catch (error) {
 			console.error('Error Course in:', error);
@@ -32,7 +31,6 @@ export const useCourse = (): UseCourseSection => {
     const deleteCourse = async (resumeId: string, courseId: string) => {
 		try {
 			const { data } = await API.deleteCourse(resumeId, courseId);
-			console.log(data);
 			return data.course_section;
 		} catch (error) {
 			console.error('Error Course in:', error);
@@ -41,9 +39,8 @@ export const useCourse = (): UseCourseSection => {
 
     const deleteCourseSection = async (resumeId: string) => {
 		try {
-			const { data } = await API.deleteCourse(resumeId);
+			await API.deleteCourse(resumeId);
 			await getResume(resumeId);
-			console.log(data);
 		} catch (error) {
 			console.error('Error Course in:', error);
 		}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
-import { useCourse } from '../../../components/hooks/UseCourse';
+import { useCourse } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
 import DatePicker from 'react-datepicker';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
-import { useLink } from '../../../components/hooks/UseLink';
+import { useLink } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
 

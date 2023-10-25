@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton, Typography, Box  } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomPaper, LinkTypography, CustomSlider } from './styles';
-import { useSkill } from '../../../components/hooks/UseSkill';
+import { useSkill } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
 

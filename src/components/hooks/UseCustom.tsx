@@ -12,8 +12,7 @@ export const useCustom = (): UseCustomSection => {
 	const { getResume } = useResume();
     const createCustomActivity = async (resumeId: string) => {
 		try {
-			const { data } = await API.createCustomActivity(resumeId);
-			console.log(data.customActivity_section);
+			await API.createCustomActivity(resumeId);
 			await getResume(resumeId);
 		} catch (error) {
 			console.error('Error Custom in:', error);
@@ -23,7 +22,6 @@ export const useCustom = (): UseCustomSection => {
     const addCustomActivity = async (resumeId: string, customId: string) => {
 		try {
 			const { data } = await API.addCustomActivity(resumeId, customId);
-			console.log(data.customActivity_section);
 			return data.customActivity_section;
 		} catch (error) {
 			console.error('Error Custom in:', error);
@@ -32,8 +30,7 @@ export const useCustom = (): UseCustomSection => {
 
     const updateCustomActivity = async (resumeId: string, customId: string, customActivityId: string, customData: object) => {
 		try {
-			const { data } = await API.updateCustomActivity(resumeId, customId, customActivityId, customData);
-			console.log(data.customActivity_section);
+			const { data } = await API.updateCustomActivity(resumeId, customId, customData, customActivityId);
 			return data.customActivity_section;
 		} catch (error) {
 			console.error('Error Custom in:', error);
@@ -42,8 +39,7 @@ export const useCustom = (): UseCustomSection => {
 
     const deleteCustomActivity = async (resumeId: string, customId: string, customActivityId: string) => {
 		try {
-			const { data } = await API.deleteCustomActivity(resumeId, customId, customActivityId);
-			console.log(data);
+			const { data } = await API.deleteCustomActivity(resumeId, customId, {}, customActivityId);
 			return data.customActivity_section;
 		} catch (error) {
 			console.error('Error Custom in:', error);
@@ -52,9 +48,8 @@ export const useCustom = (): UseCustomSection => {
 
     const deleteCustom = async (resumeId: string, customId: string) => {
 		try {
-			const { data } = await API.deleteCustomActivity(resumeId, customId);
+			await API.deleteCustomActivity(resumeId, customId);
 			await getResume(resumeId);
-			console.log(data);
 		} catch (error) {
 			console.error('Error Custom in:', error);
 		}

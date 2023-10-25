@@ -12,7 +12,7 @@ export const useInternShip = (): UseInternShipSection => {
     const addInternShipRecord = async (resumeId: string) => {
 		try {
 			const { data } = await API.addInternShipRecord(resumeId);
-			console.log(data.internship_section);
+			await getResume(resumeId);
 			return data.internship_section;
 		} catch (error) {
 			console.error('Error InternShip in:', error);
@@ -22,7 +22,6 @@ export const useInternShip = (): UseInternShipSection => {
     const updateInternShipRecord = async (resumeId: string, internshipId: string, InternShipData: object) => {
 		try {
 			const { data } = await API.updateInternShipRecord(resumeId, internshipId, InternShipData);
-			console.log(data.internship_section);
 			return data.internship_section;
 		} catch (error) {
 			console.error('Error InternShip in:', error);
@@ -32,7 +31,6 @@ export const useInternShip = (): UseInternShipSection => {
     const deleteInternShipRecord = async (resumeId: string, internshipId: string) => {
 		try {
 			const { data } = await API.deleteInternShipRecord(resumeId, internshipId);
-			console.log(data);
 			return data.internship_section;
 		} catch (error) {
 			console.error('Error InternShip in:', error);
@@ -41,9 +39,8 @@ export const useInternShip = (): UseInternShipSection => {
 
     const deleteInternShip = async (resumeId: string) => {
 		try {
-			const { data } = await API.deleteInternShip(resumeId);
+			await API.deleteInternShip(resumeId);
 			await getResume(resumeId);
-			console.log(data);
 		} catch (error) {
 			console.error('Error InternShip in:', error);
 		}

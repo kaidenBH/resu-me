@@ -12,7 +12,7 @@ export const useLink = (): UseLinkSection => {
     const addLink = async (resumeId: string) => {
 		try {
 			const { data } = await API.addLink(resumeId);
-			console.log(data.link_section);
+			await getResume(resumeId);
 			return data.link_section;
 		} catch (error) {
 			console.error('Error Link in:', error);
@@ -22,7 +22,6 @@ export const useLink = (): UseLinkSection => {
     const updateLink = async (resumeId: string, linkId: string, linkData: object) => {
 		try {
 			const { data } = await API.updateLink(resumeId, linkId, linkData);
-			console.log(data.link_section);
 			return data.link_section;
 		} catch (error) {
 			console.error('Error Link in:', error);
@@ -32,7 +31,6 @@ export const useLink = (): UseLinkSection => {
     const deleteLink = async (resumeId: string, linkId: string) => {
 		try {
 			const { data } = await API.deleteLink(resumeId, linkId);
-			console.log(data);
 			return data.link_section;
 		} catch (error) {
 			console.error('Error Link in:', error);
@@ -41,9 +39,8 @@ export const useLink = (): UseLinkSection => {
 
     const deleteLinkSection = async (resumeId: string) => {
 		try {
-			const { data } = await API.deleteLinkSection(resumeId);
+			await API.deleteLinkSection(resumeId);
 			await getResume(resumeId);
-			console.log(data);
 		} catch (error) {
 			console.error('Error Link in:', error);
 		}

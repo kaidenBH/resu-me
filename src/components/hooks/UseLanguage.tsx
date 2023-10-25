@@ -12,7 +12,7 @@ export const useLanguage = (): UseLanguageSection => {
     const addLanguage = async (resumeId: string) => {
 		try {
 			const { data } = await API.addLanguage(resumeId);
-			console.log(data.language_section);
+			await getResume(resumeId);
 			return data.language_section;
 		} catch (error) {
 			console.error('Error Language in:', error);
@@ -22,7 +22,6 @@ export const useLanguage = (): UseLanguageSection => {
     const updateLanguage = async (resumeId: string, languageId: string, languageData: object) => {
 		try {
 			const { data } = await API.updateLanguage(resumeId, languageId, languageData);
-			console.log(data.language_section);
 			return data.language_section;
 		} catch (error) {
 			console.error('Error Language in:', error);
@@ -32,7 +31,6 @@ export const useLanguage = (): UseLanguageSection => {
     const deleteLanguage = async (resumeId: string, languageId: string) => {
 		try {
 			const { data } = await API.deleteLanguage(resumeId, languageId);
-			console.log(data);
 			return data.language_section;
 		} catch (error) {
 			console.error('Error Language in:', error);
@@ -41,9 +39,8 @@ export const useLanguage = (): UseLanguageSection => {
 
     const deleteLanguageSection = async (resumeId: string) => {
 		try {
-			const { data } = await API.deleteLanguageSection(resumeId);
+			await API.deleteLanguageSection(resumeId);
 			await getResume(resumeId);
-			console.log(data);
 		} catch (error) {
 			console.error('Error Language in:', error);
 		}

@@ -12,7 +12,7 @@ export const useEducation = (): UseEducationSection => {
     const addSchool = async (resumeId: string) => {
 		try {
 			const { data } = await API.addSchool(resumeId);
-			console.log(data.education_section);
+			await getResume(resumeId);
 			return data.education_section;
 		} catch (error) {
 			console.error('Error Education in:', error);
@@ -22,7 +22,6 @@ export const useEducation = (): UseEducationSection => {
     const updateSchool = async (resumeId: string, schoolId: string, schoolData: object) => {
 		try {
 			const { data } = await API.updateSchool(resumeId, schoolId, schoolData);
-			console.log(data.education_section);
 			return data.education_section;
 		} catch (error) {
 			console.error('Error Education in:', error);
@@ -32,7 +31,6 @@ export const useEducation = (): UseEducationSection => {
     const deleteSchool = async (resumeId: string, schoolId: string) => {
 		try {
 			const { data } = await API.deleteSchool(resumeId, schoolId);
-			console.log(data);
 			return data.education_section;
 		} catch (error) {
 			console.error('Error Education in:', error);
@@ -41,9 +39,8 @@ export const useEducation = (): UseEducationSection => {
 
     const deleteEducation = async (resumeId: string) => {
 		try {
-			const { data } = await API.deleteEducation(resumeId);
+			await API.deleteEducation(resumeId);
 			await getResume(resumeId);
-			console.log(data);
 		} catch (error) {
 			console.error('Error Education in:', error);
 		}
