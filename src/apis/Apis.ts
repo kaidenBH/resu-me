@@ -16,7 +16,6 @@ type ApiResumeFunction = (
 	resumeId?: string,
 	fieldId?: string,
 	ResumeData?: object,
-	subFieldId?: string,
   ) => Promise<
 	AxiosResponse<{
 		data: object;
@@ -27,6 +26,16 @@ type ApiResumeFunction = (
 		language_section?: object;
 		internship_section?: object;
 		course_section?: object;
+	}>
+  >;
+type ApiCustomFunction = (
+	resumeId?: string,
+	fieldId?: string,
+	subId?: string,
+	ResumeData?: object,
+  ) => Promise<
+	AxiosResponse<{
+		data: object;
 		customActivity_section?: object;
 	}>
   >;
@@ -132,13 +141,13 @@ API.patch(`/resume/course/deleteCourseSection/${resumeId}`, {});
 
 
 // Custom section Apis
-export const createCustomActivity:ApiResumeFunction = (resumeId) => 
+export const createCustomActivity:ApiCustomFunction = (resumeId) => 
 	API.post(`/resume/custom/createCustomActivity/${resumeId}`, {});
-export const addCustomActivity:ApiResumeFunction = (resumeId, customId) => 
+export const addCustomActivity:ApiCustomFunction = (resumeId, customId) => 
 	API.patch(`/resume/custom/addCustomActivity/${resumeId}/${customId}`, {});
-export const updateCustomActivity:ApiResumeFunction = (resumeId, customId, ResumeData, customActivityId) => 
+export const updateCustomActivity:ApiCustomFunction = (resumeId, customId, customActivityId, ResumeData) => 
 	API.patch(`/resume/custom/updateCustomActivity/${resumeId}/${customId}/${customActivityId}`, ResumeData);
-export const deleteCustomActivity:ApiResumeFunction = (resumeId, customId, customActivityId,) => 
+export const deleteCustomActivity:ApiCustomFunction = (resumeId, customId, customActivityId) => 
 	API.patch(`/resume/custom/deleteCustomActivity/${resumeId}/${customId}/${customActivityId}`, {});
-export const deleteCustom:ApiResumeFunction = (resumeId, customId) => 
+export const deleteCustom:ApiCustomFunction = (resumeId, customId) => 
 	API.patch(`/resume/custom/deleteCustom/${resumeId}/${customId}`, {});
