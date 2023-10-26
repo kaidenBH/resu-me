@@ -12,6 +12,7 @@ API.interceptors.request.use((req) => {
 });
 
 type ApiFunction = (userData?: object | string) => Promise<AxiosResponse<object>>;
+type ApiOrderFunction = (resumeId?: string, originalIndex?: number, targetIndex?: number) => Promise<AxiosResponse<object>>;
 type ApiResumeFunction = (
 	resumeId?: string,
 	fieldId?: string,
@@ -56,6 +57,7 @@ export const get_resume: ApiResumeFunction = (resumeId) => API.get(`/resume/${re
 export const getAllResumes: ApiResumeFunction = () => API.get('/resume/getAllResumes');
 export const removeResume: ApiResumeFunction = (resumeId) => API.delete(`/resume/${resumeId}`, {});
 export const duplicateResume: ApiResumeFunction = (resumeId) => API.post(`/resume/duplicate/${resumeId}`, {});
+export const reOrderResume: ApiOrderFunction = (resumeId, originalIndex, targetIndex ) => API.patch(`/resume/reOrder/${resumeId}`, {originalIndex, targetIndex});
 
 
 // Personal Apis

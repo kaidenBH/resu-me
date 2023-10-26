@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Grow, Grid, Paper, Typography } from '@mui/material';
+import { Grow, Grid, Paper, Typography, IconButton } from '@mui/material';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+
 import PersonalSection from './PersonalSection';
 import EmploymentSection from './EmploymentSection';
 import EducationSection from './EducationSection';
@@ -22,8 +25,7 @@ const ResumeEditPage: React.FC  = () => {
   const { addInternShipRecord } = useInternShip();
   const { addCourse } = useCourse();
   const { createCustomActivity } = useCustom();
-  const { resume } = useResume();
-  
+  const { resume, reOrderResume } = useResume();
   const [sections, setSections] = useState({
     Education: false,
     Employment: false,
@@ -58,6 +60,18 @@ const ResumeEditPage: React.FC  = () => {
   const handleAddCustom = async () => {
     await createCustomActivity(resume?._id);
   }
+
+  const handleMoveUp = (index) => {
+    if (index > 0) {
+      reOrderResume(resume?._id, index, index - 1);
+    }
+  };
+
+  const handleMoveDown = (index) => {
+    if (index < resume.fields.length - 1) {
+      reOrderResume(resume?._id, index, index + 1);
+    }
+  };
 
   useEffect(() => {
     if (resume) {
@@ -119,7 +133,21 @@ const ResumeEditPage: React.FC  = () => {
           </CustomTypography>
           <Grid container sx={{ marginTop:'10rem', display: 'flex', justifyContent: 'center' }}>
             {resume && resume.fields.map((field, index) => (
-              <Grid item xs={12} key={index}>
+              <Grid item xs={12} key={index} sx={{ position: 'relative' }}>
+                {field.type !== 'Personal' &&(
+                  <>
+                    {field.type !== resume.fields[1].type && (
+                      <IconButton onClick={() => handleMoveUp(index)} sx={{ color: '#687EFF',position: 'absolute', top: '30%', left: '15%' }}>
+                        <ArrowUpwardIcon />
+                      </IconButton>
+                    )}
+                    {field.type !== resume.fields[resume.fields.length - 1].type && (
+                      <IconButton onClick={() => handleMoveDown(index)} sx={{ color: '#687EFF', position: 'absolute', top: '50%', left: '15%', marginTop: '2rem' }}>
+                        <ArrowDownwardIcon />
+                      </IconButton>
+                    )}
+                  </>
+                )}
                 {field.type === 'Personal' && (
                   <>
                     <PersonalSection personal_section={field} />
@@ -172,7 +200,7 @@ const ResumeEditPage: React.FC  = () => {
                   <CustomSection customActivity_section={field} />
                 )}
               </Grid>
-            ))}
+                ))}
               <span style={{
                 width: '60%',
                 borderBottom: '2px solid #ccc',

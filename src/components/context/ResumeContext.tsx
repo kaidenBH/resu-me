@@ -18,6 +18,7 @@ interface ResumeContextType {
 	getResume: (resumeId: string) => Promise<void>;
 	navigateResume: (resumeId: string) => void;
 	updatePersonalSection: (resumeId: string, PeronalSectionData: object) => Promise<void>;
+	reOrderResume: (resumeId: string, originalIndex: number, targetIndex: number) => Promise<void>;
 }
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
@@ -33,7 +34,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			const { data } = await API.getAllResumes();
 			setAllResumes(data.resumes);
 		} catch (error) {
-			console.error('Error signing in:', error);
+			console.error('Error getting all resumes in:', error);
 		}
 	};
 
@@ -47,7 +48,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			setResume(data);
 			setActiveTemplate(data.template);
 		} catch (error) {
-			console.error('Error signing in:', error);
+			console.error('Error getting resume in:', error);
 		}
 	};
 
@@ -57,9 +58,18 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			console.log(data.personal_section);
 			getResume(resumeId);
 		} catch (error) {
-			console.error('Error signing in:', error);
+			console.error('Error updating resume in:', error);
 		}
 	};
+	const reOrderResume = async (resumeId: string, originalIndex: number, targetIndex: number) => {
+		try {
+			await API.reOrderResume(resumeId, originalIndex, targetIndex);
+			const { data } = await API.get_resume(resumeId);
+			setResume(data);
+		} catch (error) {
+			console.error('Error updating resume order in:', error);
+		}
+	}
 
 	return (
 		<ResumeContext.Provider
@@ -71,6 +81,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 				navigateResume,
 				activeTemplate,
 				updatePersonalSection,
+				reOrderResume,
 			}}
 		>
 			{children}
