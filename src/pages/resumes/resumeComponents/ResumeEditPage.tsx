@@ -105,6 +105,7 @@ const ResumeEditPage: React.FC  = () => {
           top: 0,
           width: '50vw',
           height: '100vh',
+          zIndex: '4',
           overflowY: 'scroll',
           '&::-webkit-scrollbar': {
             width: '0 !important', /* Hide the scrollbar for WebKit */
