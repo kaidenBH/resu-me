@@ -180,9 +180,9 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
     }, [secondsArray, editingPhases]);
 
   return (
-    <Container style={{ padding: 0 }} maxWidth="xs">
+    <Container style={{ padding: 0 }} maxWidth="sm">
 		<CustomPaper
-			sx={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '30vw' }}
+			sx={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '35vw' }}
 		>
 			<Grid container spacing={2}>
 				{editSkillField? (

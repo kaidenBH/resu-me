@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Grow, Grid, Paper, Typography, IconButton } from '@mui/material';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { Grow, Grid, Paper, Typography, IconButton, Box } from '@mui/material';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import PersonalSection from './PersonalSection';
 import EmploymentSection from './EmploymentSection';
@@ -100,7 +100,6 @@ const ResumeEditPage: React.FC  = () => {
         <Paper sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
           position: 'fixed',
           left: 0,
           top: 0,
@@ -133,21 +132,23 @@ const ResumeEditPage: React.FC  = () => {
           </CustomTypography>
           <Grid container sx={{ marginTop:'10rem', display: 'flex', justifyContent: 'center' }}>
             {resume && resume.fields.map((field, index) => (
-              <Grid item xs={12} key={index} sx={{ position: 'relative' }}>
-                {field.type !== 'Personal' &&(
-                  <>
-                    {field.type !== resume.fields[1].type && (
-                      <IconButton onClick={() => handleMoveUp(index)} sx={{ color: '#687EFF',position: 'absolute', top: '30%', left: '15%' }}>
-                        <ArrowUpwardIcon />
-                      </IconButton>
-                    )}
-                    {field.type !== resume.fields[resume.fields.length - 1].type && (
-                      <IconButton onClick={() => handleMoveDown(index)} sx={{ color: '#687EFF', position: 'absolute', top: '50%', left: '15%', marginTop: '2rem' }}>
-                        <ArrowDownwardIcon />
-                      </IconButton>
-                    )}
-                  </>
-                )}
+              <Grid item xs={12} key={index} sx={{ position: 'relative', display: 'grid', gridTemplateColumns: '1fr 4fr 2fr' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
+                    <IconButton 
+                      disabled={field.type === resume.fields[1].type || field.type === 'Personal'} 
+                      onClick={() => handleMoveUp(index)} 
+                      sx={{ color: '#687EFF', '&:focus': { outline: 'none' } }}
+                      >
+                      <ExpandLessIcon fontSize="large"/>
+                    </IconButton>
+                    <IconButton 
+                      disabled={field.type === resume.fields[resume.fields.length - 1].type || field.type === 'Personal'} 
+                      onClick={() => handleMoveDown(index)} 
+                      sx={{ color: '#687EFF', '&:focus': { outline: 'none' } }}
+                      >
+                      <ExpandMoreIcon  fontSize="large"/>
+                    </IconButton>
+                </Box>
                 {field.type === 'Personal' && (
                   <>
                     <PersonalSection personal_section={field} />
@@ -202,7 +203,7 @@ const ResumeEditPage: React.FC  = () => {
               </Grid>
                 ))}
               <span style={{
-                width: '60%',
+                width: '80%',
                 borderBottom: '2px solid #ccc',
               }} />
             <Grid item xs={6} sx={{ marginTop: '3rem', marginBottom: '5rem' }}>
