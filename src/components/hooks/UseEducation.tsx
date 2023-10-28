@@ -22,6 +22,7 @@ export const useEducation = (): UseEducationSection => {
     const updateSchool = async (resumeId: string, schoolId: string, schoolData: object) => {
 		try {
 			const { data } = await API.updateSchool(resumeId, schoolId, schoolData);
+			getResume(resumeId);
 			return data.education_section;
 		} catch (error) {
 			console.error('Error Education in:', error);
@@ -31,6 +32,7 @@ export const useEducation = (): UseEducationSection => {
     const deleteSchool = async (resumeId: string, schoolId: string) => {
 		try {
 			const { data } = await API.deleteSchool(resumeId, schoolId);
+			getResume(resumeId);
 			return data.education_section;
 		} catch (error) {
 			console.error('Error Education in:', error);

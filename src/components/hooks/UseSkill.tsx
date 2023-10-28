@@ -22,6 +22,7 @@ export const useSkill = (): UseSkillSection => {
     const updateSkill = async (resumeId: string, skillId: string, skillData: object) => {
 		try {
 			const { data } = await API.updateSkill(resumeId, skillId, skillData);
+			getResume(resumeId);
 			return data.skill_section;
 		} catch (error) {
 			console.error('Error Skill in:', error);
@@ -31,6 +32,7 @@ export const useSkill = (): UseSkillSection => {
     const deleteSkill = async (resumeId: string, skillId: string) => {
 		try {
 			const { data } = await API.deleteSkill(resumeId, skillId);
+			getResume(resumeId);
 			return data.skill_section;
 		} catch (error) {
 			console.error('Error Skill in:', error);

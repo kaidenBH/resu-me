@@ -15,6 +15,7 @@ interface ResumeContextType {
 	allResumes: [Resume] | [object] | null;
 	activeTemplate: string | null;
 	getAllResumes: () => Promise<void>;
+	createResume: (title: string) => Promise<void>;
 	getResume: (resumeId: string) => Promise<void>;
 	navigateResume: (resumeId: string) => void;
 	updatePersonalSection: (resumeId: string, PeronalSectionData: object) => Promise<void>;
@@ -35,6 +36,15 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			setAllResumes(data.resumes);
 		} catch (error) {
 			console.error('Error getting all resumes in:', error);
+		}
+	};
+
+	const createResume = async (title: string) => {
+		try {
+			await API.newResume({ title: title });
+			await getAllResumes();
+		} catch (error) {
+			console.error('Error making new resumes in:', error);
 		}
 	};
 
@@ -77,6 +87,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 				resume,
 				allResumes,
 				getResume,
+				createResume,
 				getAllResumes,
 				navigateResume,
 				activeTemplate,

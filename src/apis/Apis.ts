@@ -52,7 +52,7 @@ export const verifyEmail = (token: string) => API.get(`/user/verify/${token}`);
 
 
 // Resume Apis
-export const newResume: ApiResumeFunction = (ResumeData) => API.post('/resume/', ResumeData);
+export const newResume = (ResumeData: object) => API.post('/resume/', ResumeData);
 export const get_resume: ApiResumeFunction = (resumeId) => API.get(`/resume/${resumeId}`);
 export const getAllResumes: ApiResumeFunction = () => API.get('/resume/getAllResumes');
 export const removeResume: ApiResumeFunction = (resumeId) => API.delete(`/resume/${resumeId}`, {});

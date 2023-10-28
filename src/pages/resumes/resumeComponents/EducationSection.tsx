@@ -276,8 +276,8 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                         <DatePicker
                                             selected={school.start_date ? new Date(school.start_date) : null}
                                             onChange={(date: Date) => {
-                                                const isoString = date ? date.toISOString() : '';
-                                                handleChange({ target: { name: `start_date;-;${index}`, value: isoString } });
+                                                const formattedDate = date ? date.toLocaleDateString('en-US') : '';
+                                                handleChange({ target: { name: `start_date;-;${index}`, value: formattedDate } });
                                             }}
                                             dateFormat="MM/dd/yyyy"
                                             customInput={<CustomTextField fullWidth variant="filled" label="Start date" />}
@@ -285,13 +285,13 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
                                     </Grid>
                                     <Grid item xs={3}>
                                         <DatePicker
-                                            selected={school.end_date ?  new Date(school.end_date): null}
+                                            selected={school.end_date ? new Date(school.end_date) : null}
                                             onChange={(date: Date) => {
-                                                const isoString = date ? date.toISOString() : '';
-                                                handleChange({ target: { name: `end_date;-;${index}`, value: isoString } });
+                                                const formattedDate = date ? date.toLocaleDateString('en-US') : '';
+                                                handleChange({ target: { name: `end_date;-;${index}`, value: formattedDate } });
                                             }}
                                             dateFormat="MM/dd/yyyy"
-                                            customInput={<CustomTextField fullWidth variant="filled" label="End date" />}
+                                            customInput={<CustomTextField fullWidth variant="filled" label="Start date" />}
                                         />
                                     </Grid>
                                     <Grid item xs={6}>

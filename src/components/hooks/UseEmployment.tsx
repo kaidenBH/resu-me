@@ -22,7 +22,7 @@ export const useEmployment = (): UseEmploymentSection => {
     const updateEmploymentRecord = async (resumeId: string, employmentId: string, EmploymentData: object) => {
 		try {
 			const { data } = await API.updateEmploymentRecord(resumeId, employmentId, EmploymentData);
-			console.log(data.employment_section);
+			getResume(resumeId);
 			return data.employment_section;
 		} catch (error) {
 			console.error('Error Employment in:', error);
@@ -32,6 +32,7 @@ export const useEmployment = (): UseEmploymentSection => {
     const deleteEmploymentRecord = async (resumeId: string, employmentId: string) => {
 		try {
 			const { data } = await API.deleteEmploymentRecord(resumeId, employmentId);
+			getResume(resumeId);
 			return data.employment_section;
 		} catch (error) {
 			console.error('Error Employment in:', error);

@@ -29,7 +29,7 @@ const Resume: React.FC = () => {
 						<ResumeEditPage />
 					):( null )}
 					{resume?.template === 'Simple'? (
-						<Templates.Simple />
+						<Templates.Simple/>
 					) : (null)}
 				</Box>
 			)}

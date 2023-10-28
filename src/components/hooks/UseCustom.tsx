@@ -22,6 +22,7 @@ export const useCustom = (): UseCustomSection => {
     const addCustomActivity = async (resumeId: string, customId: string) => {
 		try {
 			const { data } = await API.addCustomActivity(resumeId, customId);
+			getResume(resumeId);
 			return data.customActivity_section;
 		} catch (error) {
 			console.error('Error Custom in:', error);
@@ -31,6 +32,7 @@ export const useCustom = (): UseCustomSection => {
     const updateCustomActivity = async (resumeId: string, customId: string, customActivityId: string, customData: object) => {
 		try {
 			const { data } = await API.updateCustomActivity(resumeId, customId, customActivityId, customData);
+			getResume(resumeId);
 			return data.customActivity_section;
 		} catch (error) {
 			console.error('Error Custom in:', error);
@@ -40,6 +42,7 @@ export const useCustom = (): UseCustomSection => {
     const deleteCustomActivity = async (resumeId: string, customId: string, customActivityId: string) => {
 		try {
 			const { data } = await API.deleteCustomActivity(resumeId, customId, customActivityId);
+			getResume(resumeId);
 			return data.customActivity_section;
 		} catch (error) {
 			console.error('Error Custom in:', error);

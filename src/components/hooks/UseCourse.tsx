@@ -22,6 +22,7 @@ export const useCourse = (): UseCourseSection => {
     const updateCourse = async (resumeId: string, courseId: string, courseData: object) => {
 		try {
 			const { data } = await API.updateCourse(resumeId, courseId, courseData);
+			getResume(resumeId);
 			return data.course_section;
 		} catch (error) {
 			console.error('Error Course in:', error);
@@ -31,6 +32,7 @@ export const useCourse = (): UseCourseSection => {
     const deleteCourse = async (resumeId: string, courseId: string) => {
 		try {
 			const { data } = await API.deleteCourse(resumeId, courseId);
+			getResume(resumeId);
 			return data.course_section;
 		} catch (error) {
 			console.error('Error Course in:', error);

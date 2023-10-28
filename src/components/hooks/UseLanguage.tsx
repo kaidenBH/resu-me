@@ -22,6 +22,7 @@ export const useLanguage = (): UseLanguageSection => {
     const updateLanguage = async (resumeId: string, languageId: string, languageData: object) => {
 		try {
 			const { data } = await API.updateLanguage(resumeId, languageId, languageData);
+			getResume(resumeId);
 			return data.language_section;
 		} catch (error) {
 			console.error('Error Language in:', error);
@@ -31,6 +32,7 @@ export const useLanguage = (): UseLanguageSection => {
     const deleteLanguage = async (resumeId: string, languageId: string) => {
 		try {
 			const { data } = await API.deleteLanguage(resumeId, languageId);
+			getResume(resumeId);
 			return data.language_section;
 		} catch (error) {
 			console.error('Error Language in:', error);
