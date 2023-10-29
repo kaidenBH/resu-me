@@ -14,13 +14,13 @@ const ResumesPage: React.FC = () => {
 	const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
 		setResumeTile(value);
-	}
+	};
 	const handleAddResume = async () => {
 		setLoadingNewResume(true);
 		await createResume(resumeTitle);
 		setNewTextiField(false);
 		setLoadingNewResume(false);
-	}
+	};
 	useEffect(() => {
 		const ApiCall = async () => {
 			await getAllResumes();
@@ -56,45 +56,53 @@ const ResumesPage: React.FC = () => {
 									</Button>
 								</Paper>
 							</Grid>
-						))
-					}
+						))}
 					<Grid item sm={8} md={6}>
 						<Paper style={{ padding: '16px', marginBottom: '16px' }}>
 							{newTextField ? (
-									<>
-										<TextField
-											fullWidth
-											label="Resume Title"
-											variant="filled"
-											value={resumeTitle}
-											onChange={handleChangeTitle}
+								<>
+									<TextField
+										fullWidth
+										label="Resume Title"
+										variant="filled"
+										value={resumeTitle}
+										onChange={handleChangeTitle}
+									/>
+									{loadingNewResume ? (
+										<img
+											src={'/loading.svg'}
+											alt="My SVG"
+											style={{ height: '3rem' }}
 										/>
-										{loadingNewResume? 
-											<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
-											:	
-											<IconButton onClick={handleAddResume} sx={{ '&:focus': { outline: 'none' }}} >
-												<CheckIcon
-													sx={{
-														color: '#6499E9',
-														fontSize: 30,
-														cursor: 'pointer',
-													}}
-												/>
-											</IconButton>
-										}
-									</>	
-								) : (
-									<IconButton onClick={() => setNewTextiField(true)} sx={{ '&:focus': { outline: 'none' }}} >
-										<AddBoxIcon
-											sx={{
-												color: '#6499E9',
-												fontSize: 50,
-												cursor: 'pointer',
-											}}
-										/>
-									</IconButton>		
-								)
-							}
+									) : (
+										<IconButton
+											onClick={handleAddResume}
+											sx={{ '&:focus': { outline: 'none' } }}
+										>
+											<CheckIcon
+												sx={{
+													color: '#6499E9',
+													fontSize: 30,
+													cursor: 'pointer',
+												}}
+											/>
+										</IconButton>
+									)}
+								</>
+							) : (
+								<IconButton
+									onClick={() => setNewTextiField(true)}
+									sx={{ '&:focus': { outline: 'none' } }}
+								>
+									<AddBoxIcon
+										sx={{
+											color: '#6499E9',
+											fontSize: 50,
+											cursor: 'pointer',
+										}}
+									/>
+								</IconButton>
+							)}
 						</Paper>
 					</Grid>
 				</Grid>

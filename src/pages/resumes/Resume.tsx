@@ -25,12 +25,8 @@ const Resume: React.FC = () => {
 				<img src={'/loading.svg'} alt="My SVG" style={{ height: '15rem' }} />
 			) : (
 				<Box sx={{ display: 'flex', padding: 0 }}>
-					{resume?.owner? (
-						<ResumeEditPage />
-					):( null )}
-					{resume?.template === 'Simple'? (
-						<Templates.Simple/>
-					) : (null)}
+					{resume?.owner ? <ResumeEditPage /> : null}
+					{resume?.template === 'Simple' ? <Templates.Simple /> : null}
 				</Box>
 			)}
 		</Grow>

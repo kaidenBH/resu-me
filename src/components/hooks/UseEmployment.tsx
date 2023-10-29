@@ -2,14 +2,18 @@ import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
 interface UseEmploymentSection {
 	addEmploymentRecord: (resumeId: string) => Promise<void | object>;
-	updateEmploymentRecord: (resumeId: string, employmentId: string, EmploymentData: object) => Promise<void | object>;
+	updateEmploymentRecord: (
+		resumeId: string,
+		employmentId: string,
+		EmploymentData: object,
+	) => Promise<void | object>;
 	deleteEmploymentRecord: (resumeId: string, employmentId: string) => Promise<void | object>;
 	deleteEmployment: (resumeId: string) => Promise<void>;
 }
 
 export const useEmployment = (): UseEmploymentSection => {
 	const { getResume } = useResume();
-    const addEmploymentRecord = async (resumeId: string) => {
+	const addEmploymentRecord = async (resumeId: string) => {
 		try {
 			const { data } = await API.addEmploymentRecord(resumeId);
 			await getResume(resumeId);
@@ -19,9 +23,17 @@ export const useEmployment = (): UseEmploymentSection => {
 		}
 	};
 
-    const updateEmploymentRecord = async (resumeId: string, employmentId: string, EmploymentData: object) => {
+	const updateEmploymentRecord = async (
+		resumeId: string,
+		employmentId: string,
+		EmploymentData: object,
+	) => {
 		try {
-			const { data } = await API.updateEmploymentRecord(resumeId, employmentId, EmploymentData);
+			const { data } = await API.updateEmploymentRecord(
+				resumeId,
+				employmentId,
+				EmploymentData,
+			);
 			getResume(resumeId);
 			return data.employment_section;
 		} catch (error) {
@@ -29,7 +41,7 @@ export const useEmployment = (): UseEmploymentSection => {
 		}
 	};
 
-    const deleteEmploymentRecord = async (resumeId: string, employmentId: string) => {
+	const deleteEmploymentRecord = async (resumeId: string, employmentId: string) => {
 		try {
 			const { data } = await API.deleteEmploymentRecord(resumeId, employmentId);
 			getResume(resumeId);
@@ -39,7 +51,7 @@ export const useEmployment = (): UseEmploymentSection => {
 		}
 	};
 
-    const deleteEmployment = async (resumeId: string) => {
+	const deleteEmployment = async (resumeId: string) => {
 		try {
 			await API.deleteEmployment(resumeId);
 			await getResume(resumeId);
@@ -48,5 +60,10 @@ export const useEmployment = (): UseEmploymentSection => {
 		}
 	};
 
-	return { addEmploymentRecord, updateEmploymentRecord, deleteEmploymentRecord, deleteEmployment };
+	return {
+		addEmploymentRecord,
+		updateEmploymentRecord,
+		deleteEmploymentRecord,
+		deleteEmployment,
+	};
 };

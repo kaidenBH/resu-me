@@ -9,7 +9,7 @@ interface UseSkillSection {
 
 export const useSkill = (): UseSkillSection => {
 	const { getResume } = useResume();
-    const addSkill = async (resumeId: string) => {
+	const addSkill = async (resumeId: string) => {
 		try {
 			const { data } = await API.addSkill(resumeId);
 			await getResume(resumeId);
@@ -19,7 +19,7 @@ export const useSkill = (): UseSkillSection => {
 		}
 	};
 
-    const updateSkill = async (resumeId: string, skillId: string, skillData: object) => {
+	const updateSkill = async (resumeId: string, skillId: string, skillData: object) => {
 		try {
 			const { data } = await API.updateSkill(resumeId, skillId, skillData);
 			getResume(resumeId);
@@ -29,7 +29,7 @@ export const useSkill = (): UseSkillSection => {
 		}
 	};
 
-    const deleteSkill = async (resumeId: string, skillId: string) => {
+	const deleteSkill = async (resumeId: string, skillId: string) => {
 		try {
 			const { data } = await API.deleteSkill(resumeId, skillId);
 			getResume(resumeId);
@@ -39,7 +39,7 @@ export const useSkill = (): UseSkillSection => {
 		}
 	};
 
-    const deleteSkillSection = async (resumeId: string) => {
+	const deleteSkillSection = async (resumeId: string) => {
 		try {
 			await API.deleteSkillSection(resumeId);
 			await getResume(resumeId);

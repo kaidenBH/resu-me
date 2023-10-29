@@ -2,14 +2,18 @@ import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
 interface UseLanguageSection {
 	addLanguage: (resumeId: string) => Promise<void | object>;
-	updateLanguage: (resumeId: string, languageId: string, languageData: object) => Promise<void | object>;
+	updateLanguage: (
+		resumeId: string,
+		languageId: string,
+		languageData: object,
+	) => Promise<void | object>;
 	deleteLanguage: (resumeId: string, languageId: string) => Promise<void | object>;
 	deleteLanguageSection: (resumeId: string) => Promise<void>;
 }
 
 export const useLanguage = (): UseLanguageSection => {
 	const { getResume } = useResume();
-    const addLanguage = async (resumeId: string) => {
+	const addLanguage = async (resumeId: string) => {
 		try {
 			const { data } = await API.addLanguage(resumeId);
 			await getResume(resumeId);
@@ -19,7 +23,7 @@ export const useLanguage = (): UseLanguageSection => {
 		}
 	};
 
-    const updateLanguage = async (resumeId: string, languageId: string, languageData: object) => {
+	const updateLanguage = async (resumeId: string, languageId: string, languageData: object) => {
 		try {
 			const { data } = await API.updateLanguage(resumeId, languageId, languageData);
 			getResume(resumeId);
@@ -29,7 +33,7 @@ export const useLanguage = (): UseLanguageSection => {
 		}
 	};
 
-    const deleteLanguage = async (resumeId: string, languageId: string) => {
+	const deleteLanguage = async (resumeId: string, languageId: string) => {
 		try {
 			const { data } = await API.deleteLanguage(resumeId, languageId);
 			getResume(resumeId);
@@ -39,7 +43,7 @@ export const useLanguage = (): UseLanguageSection => {
 		}
 	};
 
-    const deleteLanguageSection = async (resumeId: string) => {
+	const deleteLanguageSection = async (resumeId: string) => {
 		try {
 			await API.deleteLanguageSection(resumeId);
 			await getResume(resumeId);

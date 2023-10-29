@@ -5,21 +5,21 @@ import { useResume } from '../../../components/context/ResumeContext';
 import { Edit, Check } from '@mui/icons-material';
 
 interface personalSectionForm {
-    resumeId: string;
-    field_name: string;
-    job_title: string;
-    image: string;
-    first_name: string;
-    last_name: string;
-    email: string;
-    phone: string;
-    country: string;
-    city: string;
+	resumeId: string;
+	field_name: string;
+	job_title: string;
+	image: string;
+	first_name: string;
+	last_name: string;
+	email: string;
+	phone: string;
+	country: string;
+	city: string;
 	summary: [string, string];
 }
 
 interface PersonalSectionProps {
-    personal_section: personalSectionForm; 
+	personal_section: personalSectionForm;
 }
 
 const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) => {
@@ -31,33 +31,30 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 	const [editingPhase, setEditingPhase] = useState(false);
 	const [seconds, setSeconds] = useState(2);
 
-    const [personalData, setPersonalData] = useState<personalSectionForm>({
-        resumeId: personal_section.resumeId || '',
-        field_name: personal_section.field_name || 'Personal Details',
-        job_title: personal_section.job_title || '',
-        image: personal_section.image || '',
-        first_name: personal_section.first_name || '',
-        last_name: personal_section.last_name || '',
-        email: personal_section.email || '',
-        phone: personal_section.phone || '',
-        country: personal_section.country || '',
-        city: personal_section.city || '',
-		summary: [
-			personal_section.summary[0],
-			personal_section.summary[1]
-		],
-    });
+	const [personalData, setPersonalData] = useState<personalSectionForm>({
+		resumeId: personal_section.resumeId || '',
+		field_name: personal_section.field_name || 'Personal Details',
+		job_title: personal_section.job_title || '',
+		image: personal_section.image || '',
+		first_name: personal_section.first_name || '',
+		last_name: personal_section.last_name || '',
+		email: personal_section.email || '',
+		phone: personal_section.phone || '',
+		country: personal_section.country || '',
+		city: personal_section.city || '',
+		summary: [personal_section.summary[0], personal_section.summary[1]],
+	});
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		if (name.startsWith("summary")) {
+		if (name.startsWith('summary')) {
 			const index = parseInt(name.split(';-;')[1], 10);
 			setPersonalData({
 				...personalData,
 				summary: [
 					...personalData.summary.slice(0, index),
 					value,
-					...personalData.summary.slice(index + 1)
+					...personalData.summary.slice(index + 1),
 				],
 			});
 		} else {
@@ -68,8 +65,8 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 			setEditingPhase(true);
 			setSeconds(2);
 		}
-	};	
-	
+	};
+
 	const personalSectionUpdate = async () => {
 		await updatePersonalSection(personalData.resumeId, personalData);
 		setEditingPhase(false);
@@ -82,7 +79,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 		setPersonalFieldLoading(false);
 	};*/
 
-	const handleChangeSummaryName = async () =>{
+	const handleChangeSummaryName = async () => {
 		setSummaryFieldLoading(true);
 		await personalSectionUpdate();
 		setEditSummaryField(false);
@@ -91,24 +88,30 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setSeconds(prevSeconds => prevSeconds - 1);
+			setSeconds((prevSeconds) => prevSeconds - 1);
 		}, 1000);
-	
+
 		if (seconds <= 0 && editingPhase) {
 			personalSectionUpdate();
 		}
-	
+
 		return () => clearInterval(interval);
 	}, [seconds]);
 
-  return (
-    <Container style={{ padding: 0 }} maxWidth='sm'>
-		<CustomPaper
-			sx={{ borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '35vw' }}
-		>
-			<Grid container spacing={2}>
-				<CustomTypography variant="h6">{personalData.field_name}</CustomTypography>
-				{/*editPersonalField? (
+	return (
+		<Container style={{ padding: 0 }} maxWidth="sm">
+			<CustomPaper
+				sx={{
+					borderRadius: '20px',
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					width: '35vw',
+				}}
+			>
+				<Grid container spacing={2}>
+					<CustomTypography variant="h6">{personalData.field_name}</CustomTypography>
+					{/*editPersonalField? (
 					<Grid item xs={6} sx={{ display: 'flex', alignItems:'center' }}>
 						<CustomTextField
 							fullWidth
@@ -146,131 +149,152 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 						</IconButton>
 					</Grid>
 				)*/}
-				<Grid item xs={12}>
-					<CustomTextField
-						fullWidth
-						label="Wanted Job Title"
-						variant="filled"
-						name="job_title"
-						value={personalData.job_title}
-						onChange={handleChange}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<CustomTextField
-						fullWidth
-						label="First Name"
-						variant="filled"
-						name="first_name"
-						value={personalData.first_name}
-						onChange={handleChange}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<CustomTextField
-						fullWidth
-						label="Last Name"
-						variant="filled"
-						name="last_name"
-						value={personalData.last_name}
-						onChange={handleChange}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<CustomTextField
-						fullWidth
-						label="Email"
-						variant="filled"
-						type="email"
-						name="email"
-						value={personalData.email}
-						onChange={handleChange}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<CustomTextField
-						fullWidth
-						label="Phone"
-						variant="filled"
-						name="phone"
-						value={personalData.phone}
-						onChange={handleChange}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<CustomTextField
-						fullWidth
-						label="Country"
-						variant="filled"
-						name="country"
-						value={personalData.country}
-						onChange={handleChange}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<CustomTextField
-						fullWidth
-						label="City"
-						variant="filled"
-						name="city"
-						value={personalData.city}
-						onChange={handleChange}
-					/>
-				</Grid>
-				{editSummaryField? (
-					<Grid item xs={6} sx={{ marginTop:'2rem', marginBottom:'0', display: 'flex', alignItems:'center' }}>
+					<Grid item xs={12}>
 						<CustomTextField
 							fullWidth
-							label="Professional Summary"
+							label="Wanted Job Title"
 							variant="filled"
-							name="summary;-;0"
-							value={personalData.summary[0]}
+							name="job_title"
+							value={personalData.job_title}
 							onChange={handleChange}
 						/>
-						{summaryFieldLoading?
-							<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
-						:(
-							<IconButton onClick={handleChangeSummaryName} sx={{ '&:focus': { outline: 'none' }}} >
-								<Check
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<CustomTextField
+							fullWidth
+							label="First Name"
+							variant="filled"
+							name="first_name"
+							value={personalData.first_name}
+							onChange={handleChange}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<CustomTextField
+							fullWidth
+							label="Last Name"
+							variant="filled"
+							name="last_name"
+							value={personalData.last_name}
+							onChange={handleChange}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<CustomTextField
+							fullWidth
+							label="Email"
+							variant="filled"
+							type="email"
+							name="email"
+							value={personalData.email}
+							onChange={handleChange}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<CustomTextField
+							fullWidth
+							label="Phone"
+							variant="filled"
+							name="phone"
+							value={personalData.phone}
+							onChange={handleChange}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<CustomTextField
+							fullWidth
+							label="Country"
+							variant="filled"
+							name="country"
+							value={personalData.country}
+							onChange={handleChange}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<CustomTextField
+							fullWidth
+							label="City"
+							variant="filled"
+							name="city"
+							value={personalData.city}
+							onChange={handleChange}
+						/>
+					</Grid>
+					{editSummaryField ? (
+						<Grid
+							item
+							xs={6}
+							sx={{
+								marginTop: '2rem',
+								marginBottom: '0',
+								display: 'flex',
+								alignItems: 'center',
+							}}
+						>
+							<CustomTextField
+								fullWidth
+								label="Professional Summary"
+								variant="filled"
+								name="summary;-;0"
+								value={personalData.summary[0]}
+								onChange={handleChange}
+							/>
+							{summaryFieldLoading ? (
+								<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
+							) : (
+								<IconButton
+									onClick={handleChangeSummaryName}
+									sx={{ '&:focus': { outline: 'none' } }}
+								>
+									<Check
+										sx={{
+											color: '#6499E9',
+											fontSize: 40,
+											cursor: 'pointer',
+										}}
+									/>
+								</IconButton>
+							)}
+						</Grid>
+					) : (
+						<Grid
+							item
+							xs={12}
+							sx={{ margin: '2rem 0 0 0', display: 'flex', alignItems: 'center' }}
+						>
+							<CustomTypography variant="h6" sx={{ marginLeft: 0 }}>
+								{personalData.summary[0]}
+							</CustomTypography>
+							<IconButton
+								onClick={() => setEditSummaryField(true)}
+								sx={{ '&:focus': { outline: 'none' } }}
+							>
+								<Edit
 									sx={{
 										color: '#6499E9',
-										fontSize: 40,
+										fontSize: 20,
 										cursor: 'pointer',
 									}}
 								/>
 							</IconButton>
-						)}
+						</Grid>
+					)}
+					<Grid item xs={12}>
+						<CustomTextField
+							fullWidth
+							label="About yourself and the work you do ..."
+							variant="filled"
+							name="summary;-;1"
+							value={personalData.summary[1]}
+							onChange={handleChange}
+							multiline
+							rows={4}
+						/>
 					</Grid>
-				):(
-					<Grid item xs={12}  sx={{ margin:'2rem 0 0 0', display: 'flex', alignItems:'center' }}>
-						<CustomTypography variant="h6" sx={{ marginLeft:0 }}>{personalData.summary[0]}</CustomTypography>
-						<IconButton onClick={() => setEditSummaryField(true)} sx={{ '&:focus': { outline: 'none' }}} >
-                            <Edit
-                                sx={{
-                                    color: '#6499E9',
-                                    fontSize: 20,
-                                    cursor: 'pointer',
-                                }}
-                            />
-                        </IconButton>
-					</Grid>
-				)}
-                <Grid item xs={12}>
-                    <CustomTextField
-                        fullWidth
-                        label="About yourself and the work you do ..."
-                        variant="filled"
-                        name="summary;-;1"
-						value={personalData.summary[1]}
-						onChange={handleChange}
-                        multiline 
-                        rows={4}
-                    />
-                </Grid>
-			</Grid>
-		</CustomPaper>
-	</Container>
-  );
-}
+				</Grid>
+			</CustomPaper>
+		</Container>
+	);
+};
 
-export default PersonalSection
+export default PersonalSection;

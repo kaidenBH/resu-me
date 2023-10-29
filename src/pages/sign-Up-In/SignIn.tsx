@@ -70,7 +70,7 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
 											<IconButton
 												onClick={handleClickShowPassword}
 												edge="end"
-												sx={{ '&:focus': { outline: 'none' }}}
+												sx={{ '&:focus': { outline: 'none' } }}
 											>
 												{showPassword ? <Visibility /> : <VisibilityOff />}
 											</IconButton>

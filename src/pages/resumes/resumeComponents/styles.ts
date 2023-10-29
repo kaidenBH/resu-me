@@ -24,13 +24,13 @@ export const CustomTypography = styled(Typography)(({ theme }) => ({
 }));
 
 export const LinkTypography = styled(Typography)(({ theme }) => ({
-    fontFamily: theme.typography.fontFamily,
-    fontWeight: 500,
-    color: '#687EFF',
-    cursor: 'pointer',
-    '&:hover': {
-        color: '#EF6262',
-    },
+	fontFamily: theme.typography.fontFamily,
+	fontWeight: 500,
+	color: '#687EFF',
+	cursor: 'pointer',
+	'&:hover': {
+		color: '#EF6262',
+	},
 }));
 
 export const CustomSlider = styled(Slider)(({ theme, value }) => ({
@@ -38,20 +38,30 @@ export const CustomSlider = styled(Slider)(({ theme, value }) => ({
 		color: '#ccc',
 	},
 	'.MuiSlider-track': {
-		color: value === 1 ? '#FF6464' :
-					value === 2 ? '#E25E3E' :
-					value === 3 ? '#FFBD67' :
-					value === 4 ? '#5BE7A9' :
-								'#8E8FFA',
+		color:
+			value === 1
+				? '#FF6464'
+				: value === 2
+				? '#E25E3E'
+				: value === 3
+				? '#FFBD67'
+				: value === 4
+				? '#5BE7A9'
+				: '#8E8FFA',
 	},
 	'.MuiSlider-thumb': {
-		color: value === 1 ? '#FF6464' :
-					value === 2 ? '#E25E3E' :
-					value === 3 ? '#FFBD67' :
-					value === 4 ? '#5BE7A9' :
-								'#8E8FFA',
+		color:
+			value === 1
+				? '#FF6464'
+				: value === 2
+				? '#E25E3E'
+				: value === 3
+				? '#FFBD67'
+				: value === 4
+				? '#5BE7A9'
+				: '#8E8FFA',
 		width: '20px',
 		height: '20px',
 	},
-    height: '12px',
-  }));
+	height: '12px',
+}));

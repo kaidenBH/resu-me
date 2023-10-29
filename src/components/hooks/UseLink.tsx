@@ -9,7 +9,7 @@ interface UseLinkSection {
 
 export const useLink = (): UseLinkSection => {
 	const { getResume } = useResume();
-    const addLink = async (resumeId: string) => {
+	const addLink = async (resumeId: string) => {
 		try {
 			const { data } = await API.addLink(resumeId);
 			await getResume(resumeId);
@@ -19,7 +19,7 @@ export const useLink = (): UseLinkSection => {
 		}
 	};
 
-    const updateLink = async (resumeId: string, linkId: string, linkData: object) => {
+	const updateLink = async (resumeId: string, linkId: string, linkData: object) => {
 		try {
 			const { data } = await API.updateLink(resumeId, linkId, linkData);
 			getResume(resumeId);
@@ -29,7 +29,7 @@ export const useLink = (): UseLinkSection => {
 		}
 	};
 
-    const deleteLink = async (resumeId: string, linkId: string) => {
+	const deleteLink = async (resumeId: string, linkId: string) => {
 		try {
 			const { data } = await API.deleteLink(resumeId, linkId);
 			getResume(resumeId);
@@ -39,7 +39,7 @@ export const useLink = (): UseLinkSection => {
 		}
 	};
 
-    const deleteLinkSection = async (resumeId: string) => {
+	const deleteLinkSection = async (resumeId: string) => {
 		try {
 			await API.deleteLinkSection(resumeId);
 			await getResume(resumeId);

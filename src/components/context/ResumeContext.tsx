@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as API from '../../apis/Apis';
 
 interface Resume {
-	_id: string,
+	_id: string;
 	title: string;
 	template: string;
 	owner: boolean;
@@ -64,7 +64,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
 	const updatePersonalSection = async (resumeId: string, PeronalSectionData: object) => {
 		try {
-			const {data} = await API.updatePersonalSection(resumeId, PeronalSectionData);
+			const { data } = await API.updatePersonalSection(resumeId, PeronalSectionData);
 			console.log(data.personal_section);
 			getResume(resumeId);
 		} catch (error) {
@@ -79,7 +79,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 		} catch (error) {
 			console.error('Error updating resume order in:', error);
 		}
-	}
+	};
 
 	return (
 		<ResumeContext.Provider

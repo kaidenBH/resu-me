@@ -12,7 +12,7 @@ const Sign = () => {
 	useEffect(() => {
 		checkUser();
 	}, []);
-	
+
 	const SignUpFormData = async (formData: SignUpFormData) => {
 		await signUp(formData);
 	};

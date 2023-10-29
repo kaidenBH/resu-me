@@ -2,14 +2,18 @@ import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
 interface UseEducationSection {
 	addSchool: (resumeId: string) => Promise<void | object>;
-	updateSchool: (resumeId: string, schoolId: string, schoolData: object) => Promise<void | object>;
+	updateSchool: (
+		resumeId: string,
+		schoolId: string,
+		schoolData: object,
+	) => Promise<void | object>;
 	deleteSchool: (resumeId: string, schoolId: string) => Promise<void | object>;
 	deleteEducation: (resumeId: string) => Promise<void>;
 }
 
 export const useEducation = (): UseEducationSection => {
 	const { getResume } = useResume();
-    const addSchool = async (resumeId: string) => {
+	const addSchool = async (resumeId: string) => {
 		try {
 			const { data } = await API.addSchool(resumeId);
 			await getResume(resumeId);
@@ -19,7 +23,7 @@ export const useEducation = (): UseEducationSection => {
 		}
 	};
 
-    const updateSchool = async (resumeId: string, schoolId: string, schoolData: object) => {
+	const updateSchool = async (resumeId: string, schoolId: string, schoolData: object) => {
 		try {
 			const { data } = await API.updateSchool(resumeId, schoolId, schoolData);
 			getResume(resumeId);
@@ -29,7 +33,7 @@ export const useEducation = (): UseEducationSection => {
 		}
 	};
 
-    const deleteSchool = async (resumeId: string, schoolId: string) => {
+	const deleteSchool = async (resumeId: string, schoolId: string) => {
 		try {
 			const { data } = await API.deleteSchool(resumeId, schoolId);
 			getResume(resumeId);
@@ -39,7 +43,7 @@ export const useEducation = (): UseEducationSection => {
 		}
 	};
 
-    const deleteEducation = async (resumeId: string) => {
+	const deleteEducation = async (resumeId: string) => {
 		try {
 			await API.deleteEducation(resumeId);
 			await getResume(resumeId);
