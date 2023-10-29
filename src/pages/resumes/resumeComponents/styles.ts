@@ -1,13 +1,14 @@
 import { styled } from '@mui/material/styles';
-import { Slider, Typography, TextField, Paper } from '@mui/material';
+import { Slider, Typography, TextField, Box } from '@mui/material';
 
-export const CustomPaper = styled(Paper)({
+export const CustomBox = styled(Box)({
 	padding: '20px',
 	boxShadow: 'none',
+	width: '35vw',
 });
 
 export const CustomTextField = styled(TextField)({
-	background: '#DDE6ED',
+	background: '#ECF2FF',
 });
 
 export const CustomTypography = styled(Typography)(({ theme }) => ({

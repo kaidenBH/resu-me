@@ -3,7 +3,7 @@ import { Grid, Container, IconButton, Typography, Box } from '@mui/material';
 import {
 	CustomTextField,
 	CustomTypography,
-	CustomPaper,
+	CustomBox,
 	LinkTypography,
 	CustomSlider,
 } from './styles';
@@ -188,15 +188,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
 
 	return (
 		<Container style={{ padding: 0 }} maxWidth="sm">
-			<CustomPaper
-				sx={{
-					borderRadius: '20px',
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					width: '35vw',
-				}}
-			>
+			<CustomBox>
 				<Grid container spacing={2}>
 					{editSkillField ? (
 						<Grid
@@ -208,6 +200,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
 								fullWidth
 								label="Skills Field Name"
 								variant="filled"
+							color="secondary"
 								name="field_name"
 								value={skillData.field_name}
 								onChange={handleChange}
@@ -346,6 +339,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
 												fullWidth
 												label="Skill Name"
 												variant="filled"
+							color="secondary"
 												name={`skill_name;-;${index}`}
 												value={skill.skill_name}
 												onChange={handleChange}
@@ -402,7 +396,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
 						</LinkTypography>
 					</Grid>
 				</Grid>
-			</CustomPaper>
+			</CustomBox>
 		</Container>
 	);
 };

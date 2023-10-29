@@ -4,28 +4,15 @@ import { Avatar, Box, Button, Typography, TextField, Paper } from '@mui/material
 export const CustomAvatar = styled(Avatar)(({ theme }) => ({
 	color: theme.palette.getContrastText('#363062'),
 	backgroundColor: '#363062',
-	fontSize: '60px',
 	height: '100px',
 	width: '100px',
 }));
 
 export const CustomSideBar = styled(Box)({
 	height: '100vh',
-	padding: '3rem',
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
+	padding: '2rem',
 	borderRadius: '0 20px',
 	background: '#F9F9F9',
-	position: 'fixed',
-	left: 0,
-	top: 0,
-});
-
-export const CustomSlidePaper = styled(Paper)({
-	height: '30rem',
-	padding: '20px',
-	background: '#232D3F',
 });
 
 export const CustomTextField = styled(TextField)({

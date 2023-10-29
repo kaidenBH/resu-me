@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
-import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
+import { CustomTextField, CustomTypography, CustomBox, LinkTypography } from './styles';
 import { useLink } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
@@ -154,15 +154,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 
 	return (
 		<Container style={{ padding: 0 }} maxWidth="sm">
-			<CustomPaper
-				sx={{
-					borderRadius: '20px',
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					width: '35vw',
-				}}
-			>
+			<CustomBox>
 				<Grid container spacing={2}>
 					{editLinkField ? (
 						<Grid
@@ -174,6 +166,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 								fullWidth
 								label="Links Field Name"
 								variant="filled"
+							color="secondary"
 								name="field_name"
 								value={linkData.field_name}
 								onChange={handleChange}
@@ -312,6 +305,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 												fullWidth
 												label="Website Name"
 												variant="filled"
+							color="secondary"
 												name={`webite_name;-;${index}`}
 												value={link.webite_name}
 												onChange={handleChange}
@@ -322,6 +316,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 												fullWidth
 												label="Link"
 												variant="filled"
+							color="secondary"
 												name={`url;-;${index}`}
 												value={link.url}
 												onChange={handleChange}
@@ -340,7 +335,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 						<LinkTypography onClick={handleAddLink}>+ Add another Link</LinkTypography>
 					</Grid>
 				</Grid>
-			</CustomPaper>
+			</CustomBox>
 		</Container>
 	);
 };

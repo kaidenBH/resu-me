@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
-import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
+import { CustomTextField, CustomTypography, CustomBox, LinkTypography } from './styles';
 import { useCustom } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
@@ -174,15 +174,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 
 	return (
 		<Container style={{ padding: 0 }} maxWidth="sm">
-			<CustomPaper
-				sx={{
-					borderRadius: '20px',
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					width: '35vw',
-				}}
-			>
+			<CustomBox>
 				<Grid container spacing={2}>
 					{editCustomField ? (
 						<Grid
@@ -194,6 +186,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 								fullWidth
 								label="Custom Field Name"
 								variant="filled"
+							color="secondary"
 								name="field_name"
 								value={customData.field_name}
 								onChange={handleChange}
@@ -332,6 +325,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 												fullWidth
 												label="Activity name, job title etc..."
 												variant="filled"
+							color="secondary"
 												name={`activity_title;-;${index}`}
 												value={activity.activity_title}
 												onChange={handleChange}
@@ -342,6 +336,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 												fullWidth
 												label="City"
 												variant="filled"
+							color="secondary"
 												name={`city;-;${index}`}
 												value={activity.city}
 												onChange={handleChange}
@@ -370,6 +365,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 													<CustomTextField
 														fullWidth
 														variant="filled"
+							color="secondary"
 														label="Start date"
 													/>
 												}
@@ -398,6 +394,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 													<CustomTextField
 														fullWidth
 														variant="filled"
+							color="secondary"
 														label="Start date"
 													/>
 												}
@@ -408,6 +405,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 												fullWidth
 												label="Description"
 												variant="filled"
+							color="secondary"
 												name={`description;-;${index}`}
 												value={activity.description}
 												onChange={handleChange}
@@ -430,7 +428,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 						</LinkTypography>
 					</Grid>
 				</Grid>
-			</CustomPaper>
+			</CustomBox>
 		</Container>
 	);
 };

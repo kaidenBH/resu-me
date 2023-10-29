@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Slide } from '@mui/material';
+import { Grid, Slide } from '@mui/material';
 import { useAuth } from '../../components/context/AuthContext';
 import SignUp, { SignUpFormData } from './SignUp';
 import SignIn, { SignInFormData } from './SignIn';
@@ -25,18 +25,22 @@ const Sign = () => {
 	};
 	return (
 		<Slide direction="right" in={true} timeout={600}>
-			<Box sx={{ display: 'flex', padding: 0 }}>
-				<Slider onSubmit={() => SlideEffect()} haveAccount={haveAccount} />
-				{haveAccount ? (
-					<>
-						<SignIn onSubmit={SignInFormData} />
-					</>
-				) : (
-					<>
-						<SignUp onSubmit={SignUpFormData} />
-					</>
-				)}
-			</Box>
+			<Grid container spacing={0} sx={{ display: 'felx', justifyContent: 'center', height: '100vh', alignItems: 'center' }}>
+				<Grid item >
+					<Slider onSubmit={() => SlideEffect()} haveAccount={haveAccount} />
+				</Grid>
+				<Grid item >
+					{haveAccount ? (
+						<>
+							<SignIn onSubmit={SignInFormData} />
+						</>
+					) : (
+						<>
+							<SignUp onSubmit={SignUpFormData} />
+						</>
+					)}
+				</Grid>
+			</Grid>
 		</Slide>
 	);
 };

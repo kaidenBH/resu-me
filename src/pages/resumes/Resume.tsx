@@ -6,7 +6,7 @@ import ResumeEditPage from './resumeComponents/ResumeEditPage';
 import * as Templates from './resumeTemplates/index';
 
 const Resume: React.FC = () => {
-	const { resume, getResume, activeTemplate } = useResume();
+	const { resume, getResume } = useResume();
 	const [resumeLoading, setResumeLoading] = useState(false);
 	const { resumeId } = useParams();
 

@@ -3,7 +3,7 @@ import { Grid, Container, IconButton, Typography, Box } from '@mui/material';
 import {
 	CustomTextField,
 	CustomTypography,
-	CustomPaper,
+	CustomBox,
 	LinkTypography,
 	CustomSlider,
 } from './styles';
@@ -192,15 +192,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 
 	return (
 		<Container style={{ padding: 0 }} maxWidth="xs">
-			<CustomPaper
-				sx={{
-					borderRadius: '20px',
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					width: '30vw',
-				}}
-			>
+			<CustomBox>
 				<Grid container spacing={2}>
 					{editLanguageField ? (
 						<Grid
@@ -212,6 +204,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 								fullWidth
 								label="Languages Field Name"
 								variant="filled"
+							color="secondary"
 								name="field_name"
 								value={languageData.field_name}
 								onChange={handleChange}
@@ -350,6 +343,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 												fullWidth
 												label="Language"
 												variant="filled"
+							color="secondary"
 												name={`language;-;${index}`}
 												value={language.language}
 												onChange={handleChange}
@@ -406,7 +400,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 						</LinkTypography>
 					</Grid>
 				</Grid>
-			</CustomPaper>
+			</CustomBox>
 		</Container>
 	);
 };

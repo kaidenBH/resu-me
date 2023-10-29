@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
-import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
+import { CustomTextField, CustomTypography, CustomBox, LinkTypography } from './styles';
 import { useInternShip } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
@@ -172,15 +172,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 
 	return (
 		<Container style={{ padding: 0 }} maxWidth="sm">
-			<CustomPaper
-				sx={{
-					borderRadius: '20px',
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					width: '35vw',
-				}}
-			>
+			<CustomBox>
 				<Grid container spacing={2}>
 					{editInternShipField ? (
 						<Grid
@@ -192,6 +184,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 								fullWidth
 								label="InternShip Field Name"
 								variant="filled"
+							color="secondary"
 								name="field_name"
 								value={internshipData.field_name}
 								onChange={handleChange}
@@ -330,6 +323,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 												fullWidth
 												label="Job Title"
 												variant="filled"
+							color="secondary"
 												name={`job_title;-;${index}`}
 												value={internship.job_title}
 												onChange={handleChange}
@@ -340,6 +334,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 												fullWidth
 												label="Employer Name"
 												variant="filled"
+							color="secondary"
 												name={`employer_name;-;${index}`}
 												value={internship.employer_name}
 												onChange={handleChange}
@@ -368,6 +363,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 													<CustomTextField
 														fullWidth
 														variant="filled"
+							color="secondary"
 														label="Start date"
 													/>
 												}
@@ -396,6 +392,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 													<CustomTextField
 														fullWidth
 														variant="filled"
+							color="secondary"
 														label="Start date"
 													/>
 												}
@@ -406,6 +403,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 												fullWidth
 												label="City"
 												variant="filled"
+							color="secondary"
 												name={`city;-;${index}`}
 												value={internship.city}
 												onChange={handleChange}
@@ -416,6 +414,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 												fullWidth
 												label="Description of the Internship"
 												variant="filled"
+							color="secondary"
 												name={`description;-;${index}`}
 												value={internship.description}
 												onChange={handleChange}
@@ -438,7 +437,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 						</LinkTypography>
 					</Grid>
 				</Grid>
-			</CustomPaper>
+			</CustomBox>
 		</Container>
 	);
 };

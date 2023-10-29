@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
-import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
+import { CustomTextField, CustomTypography, CustomBox, LinkTypography } from './styles';
 import { useEducation } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
@@ -167,15 +167,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 
 	return (
 		<Container style={{ padding: 0 }} maxWidth="sm">
-			<CustomPaper
-				sx={{
-					borderRadius: '20px',
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					width: '35vw',
-				}}
-			>
+			<CustomBox>
 				<Grid container spacing={2}>
 					{editSchoolField ? (
 						<Grid
@@ -187,6 +179,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 								fullWidth
 								label="Education Field Name"
 								variant="filled"
+							color="secondary"
 								name="field_name"
 								value={schoolData.field_name}
 								onChange={handleChange}
@@ -325,6 +318,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 												fullWidth
 												label="School Name"
 												variant="filled"
+							color="secondary"
 												name={`school_name;-;${index}`}
 												value={school.school_name}
 												onChange={handleChange}
@@ -335,6 +329,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 												fullWidth
 												label="Degree"
 												variant="filled"
+							color="secondary"
 												name={`degree_title;-;${index}`}
 												value={school.degree_title}
 												onChange={handleChange}
@@ -363,6 +358,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 													<CustomTextField
 														fullWidth
 														variant="filled"
+							color="secondary"
 														label="Start date"
 													/>
 												}
@@ -391,6 +387,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 													<CustomTextField
 														fullWidth
 														variant="filled"
+							color="secondary"
 														label="Start date"
 													/>
 												}
@@ -401,6 +398,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 												fullWidth
 												label="City"
 												variant="filled"
+							color="secondary"
 												name={`city;-;${index}`}
 												value={school.city}
 												onChange={handleChange}
@@ -411,6 +409,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 												fullWidth
 												label="Description"
 												variant="filled"
+							color="secondary"
 												name={`description;-;${index}`}
 												value={school.description}
 												onChange={handleChange}
@@ -433,7 +432,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 						</LinkTypography>
 					</Grid>
 				</Grid>
-			</CustomPaper>
+			</CustomBox>
 		</Container>
 	);
 };

@@ -20,6 +20,7 @@ interface ResumeContextType {
 	navigateResume: (resumeId: string) => void;
 	updatePersonalSection: (resumeId: string, PeronalSectionData: object) => Promise<void>;
 	reOrderResume: (resumeId: string, originalIndex: number, targetIndex: number) => Promise<void>;
+	removeResume: (resumeId: string) => Promise<void>;
 }
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
@@ -71,6 +72,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			console.error('Error updating resume in:', error);
 		}
 	};
+
 	const reOrderResume = async (resumeId: string, originalIndex: number, targetIndex: number) => {
 		try {
 			await API.reOrderResume(resumeId, originalIndex, targetIndex);
@@ -78,6 +80,15 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			setResume(data);
 		} catch (error) {
 			console.error('Error updating resume order in:', error);
+		}
+	};
+
+	const removeResume = async (resumeId: string) => {
+		try {
+			await API.removeResume(resumeId);
+			await getAllResumes();
+		} catch (error) {
+			console.error('Error deleting resume order in:', error);
 		}
 	};
 
@@ -93,6 +104,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 				activeTemplate,
 				updatePersonalSection,
 				reOrderResume,
+				removeResume,
 			}}
 		>
 			{children}

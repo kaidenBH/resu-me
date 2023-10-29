@@ -37,7 +37,7 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
 	return (
 		<Container style={{ padding: 0 }} maxWidth="xs">
 			<CustomPaper
-				sx={{ borderRadius: '0 15px 15px 0', display: 'flex', alignItems: 'center' }}
+				sx={{ borderRadius: '0 15px 15px 0' }}
 			>
 				<form onSubmit={handleSubmit}>
 					<CustomTypography variant="h4">Sign In</CustomTypography>
@@ -46,7 +46,7 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
 							<CustomTextField
 								fullWidth
 								label="Email"
-								variant="outlined"
+								variant="filled"
 								type="email"
 								name="email"
 								value={formData.email}
@@ -58,7 +58,7 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
 							<CustomTextField
 								fullWidth
 								label="Password"
-								variant="outlined"
+								variant="filled"
 								type={showPassword ? 'text' : 'password'}
 								name="password"
 								value={formData.password}

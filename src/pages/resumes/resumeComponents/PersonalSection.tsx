@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
-import { CustomTextField, CustomTypography, CustomPaper } from './styles';
+import { CustomTextField, CustomTypography, CustomBox } from './styles';
 import { useResume } from '../../../components/context/ResumeContext';
 import { Edit, Check } from '@mui/icons-material';
 
@@ -100,15 +100,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 
 	return (
 		<Container style={{ padding: 0 }} maxWidth="sm">
-			<CustomPaper
-				sx={{
-					borderRadius: '20px',
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					width: '35vw',
-				}}
-			>
+			<CustomBox>
 				<Grid container spacing={2}>
 					<CustomTypography variant="h6">{personalData.field_name}</CustomTypography>
 					{/*editPersonalField? (
@@ -117,6 +109,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							fullWidth
 							label="Personal Field Name"
 							variant="filled"
+							color="secondary"
 							name="field_name"
 							value={personalData.field_name}
 							onChange={handleChange}
@@ -154,6 +147,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							fullWidth
 							label="Wanted Job Title"
 							variant="filled"
+							color="secondary"
 							name="job_title"
 							value={personalData.job_title}
 							onChange={handleChange}
@@ -164,6 +158,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							fullWidth
 							label="First Name"
 							variant="filled"
+							color="secondary"
 							name="first_name"
 							value={personalData.first_name}
 							onChange={handleChange}
@@ -174,6 +169,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							fullWidth
 							label="Last Name"
 							variant="filled"
+							color="secondary"
 							name="last_name"
 							value={personalData.last_name}
 							onChange={handleChange}
@@ -184,6 +180,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							fullWidth
 							label="Email"
 							variant="filled"
+							color="secondary"
 							type="email"
 							name="email"
 							value={personalData.email}
@@ -195,6 +192,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							fullWidth
 							label="Phone"
 							variant="filled"
+							color="secondary"
 							name="phone"
 							value={personalData.phone}
 							onChange={handleChange}
@@ -205,6 +203,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							fullWidth
 							label="Country"
 							variant="filled"
+							color="secondary"
 							name="country"
 							value={personalData.country}
 							onChange={handleChange}
@@ -215,6 +214,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							fullWidth
 							label="City"
 							variant="filled"
+							color="secondary"
 							name="city"
 							value={personalData.city}
 							onChange={handleChange}
@@ -235,6 +235,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 								fullWidth
 								label="Professional Summary"
 								variant="filled"
+							color="secondary"
 								name="summary;-;0"
 								value={personalData.summary[0]}
 								onChange={handleChange}
@@ -284,6 +285,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							fullWidth
 							label="About yourself and the work you do ..."
 							variant="filled"
+							color="secondary"
 							name="summary;-;1"
 							value={personalData.summary[1]}
 							onChange={handleChange}
@@ -292,7 +294,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 						/>
 					</Grid>
 				</Grid>
-			</CustomPaper>
+			</CustomBox>
 		</Container>
 	);
 };

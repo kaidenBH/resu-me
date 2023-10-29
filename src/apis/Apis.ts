@@ -58,7 +58,7 @@ export const verifyEmail = (token: string) => API.get(`/user/verify/${token}`);
 export const newResume = (ResumeData: object) => API.post('/resume/', ResumeData);
 export const get_resume: ApiResumeFunction = (resumeId) => API.get(`/resume/${resumeId}`);
 export const getAllResumes: ApiResumeFunction = () => API.get('/resume/getAllResumes');
-export const removeResume: ApiResumeFunction = (resumeId) => API.delete(`/resume/${resumeId}`, {});
+export const removeResume: ApiResumeFunction = (resumeId) => API.patch(`/resume/removeResume/${resumeId}`, {});
 export const duplicateResume: ApiResumeFunction = (resumeId) =>
 	API.post(`/resume/duplicate/${resumeId}`, {});
 export const reOrderResume: ApiOrderFunction = (resumeId, originalIndex, targetIndex) =>

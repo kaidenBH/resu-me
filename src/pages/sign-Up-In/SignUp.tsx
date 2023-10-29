@@ -43,7 +43,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 	return (
 		<Container style={{ padding: 0 }} maxWidth="xs">
 			<CustomPaper
-				sx={{ borderRadius: '0 15px 15px 0', display: 'flex', alignItems: 'center' }}
+				sx={{ borderRadius: '0 15px 15px 0' }}
 			>
 				<form onSubmit={handleSubmit}>
 					<CustomTypography variant="h4">Sign Up</CustomTypography>
@@ -52,7 +52,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 							<CustomTextField
 								fullWidth
 								label="First Name"
-								variant="outlined"
+								variant="filled"
 								name="first_name"
 								value={formData.first_name}
 								onChange={handleChange}
@@ -63,7 +63,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 							<CustomTextField
 								fullWidth
 								label="Last Name"
-								variant="outlined"
+								variant="filled"
 								name="last_name"
 								value={formData.last_name}
 								onChange={handleChange}
@@ -74,7 +74,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 							<CustomTextField
 								fullWidth
 								label="Email"
-								variant="outlined"
+								variant="filled"
 								type="email"
 								name="email"
 								value={formData.email}
@@ -86,7 +86,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 							<CustomTextField
 								fullWidth
 								label="Password"
-								variant="outlined"
+								variant="filled"
 								type={showPassword ? 'text' : 'password'}
 								name="password"
 								value={formData.password}
@@ -111,7 +111,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 							<CustomTextField
 								fullWidth
 								label="Repeat Password"
-								variant="outlined"
+								variant="filled"
 								type="password"
 								name="confirmPassword"
 								value={formData.confirmPassword}

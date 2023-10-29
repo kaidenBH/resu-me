@@ -3,13 +3,25 @@ import { Grow, Paper, Typography, Button, Grid, Box, IconButton, TextField } fro
 import { useResume } from '../../components/context/ResumeContext';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import CheckIcon from '@mui/icons-material/Check';
+import { DeleteOutline } from '@mui/icons-material';
+import AlertDialog from './resumeComponents/Dialog';
 
 const ResumesPage: React.FC = () => {
-	const { allResumes, getAllResumes, navigateResume, createResume } = useResume();
-	const [newTextField, setNewTextiField] = useState(false);
+	const { allResumes, navigateResume, createResume, removeResume } = useResume();
 	const [resumeTitle, setResumeTile] = useState('');
 	const [loadingNewResume, setLoadingNewResume] = useState(false);
-	const [resumeLoading, setResumeLoading] = useState(false);
+	const [deletionDialog, setDeletionDialog] = useState(false);
+	const [deletionIndex, setDeletionIndex] = useState(0);
+	const [resumeLoading, setResumeLoading] = useState(allResumes?.map(() => false) || [false]);
+
+	const toggleLoading = (index: number) => {
+		console.log(index);
+		setResumeLoading((prevDetails) => {
+			const newDetails = [...prevDetails];
+			newDetails[index] = !newDetails[index];
+			return newDetails;
+		});
+	};
 
 	const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
@@ -18,15 +30,20 @@ const ResumesPage: React.FC = () => {
 	const handleAddResume = async () => {
 		setLoadingNewResume(true);
 		await createResume(resumeTitle);
-		setNewTextiField(false);
 		setLoadingNewResume(false);
 	};
-	useEffect(() => {
-		const ApiCall = async () => {
-			await getAllResumes();
-		};
-		ApiCall();
-	}, []);
+	const popDialog = (index: number) => {
+		setDeletionDialog(true);
+		setDeletionIndex(index);
+	}
+	const handleDeletion = async () => {
+		if (allResumes && allResumes[deletionIndex]) {
+			setDeletionDialog(false);
+			toggleLoading(deletionIndex);
+			await removeResume(allResumes[deletionIndex]._id);
+			toggleLoading(deletionIndex);
+		}
+	}
 
 	const handleViewResume = (resumeId: string) => {
 		navigateResume(resumeId);
@@ -34,79 +51,91 @@ const ResumesPage: React.FC = () => {
 
 	return (
 		<Grow in={true}>
-			<Box>
-				<Typography
-					variant="h2"
-					sx={{ color: 'white', position: 'absolute', top: 10, left: 400 }}
-				>
-					My Resumes
-				</Typography>
-				<Grid container spacing={2} sx={{ marginLeft: '320px', marginTop: '16px' }}>
+			<Grid container spacing={6} sx={{ margin: '1rem' }}>
+				<Grid item xs={12}>
+					<Typography
+						variant="h4"
+						sx={{ color: 'white' }}
+					>
+						My Resumes
+					</Typography>
+				</Grid>
+				<Grid item xs={12} sm={4} md={3} sx={{ textAlign: 'center' }}>
+					<Paper style={{ padding: '16px', marginBottom: '16px' }}>
+						<TextField
+							fullWidth
+							label="Resume Title"
+							variant="filled"
+							color='secondary'
+							value={resumeTitle}
+							onChange={handleChangeTitle}
+							required
+						/>
+						{loadingNewResume ? (
+							<img
+								src={'/loading.svg'}
+								alt="My SVG"
+								style={{ height: '5rem' }}
+							/>
+						) : (
+							<IconButton
+								onClick={handleAddResume}
+								sx={{ '&:focus': { outline: 'none' } }}
+								disabled={resumeTitle === ''}
+							>
+								<AddBoxIcon
+									sx={{
+										color: resumeTitle !== '' ? '#6499E9' : '#ccc',
+										fontSize: 50,
+										cursor: 'pointer',
+									}}
+								/>
+							</IconButton>
+						)}
+					</Paper>
+				</Grid>
+				<Grid item xs={12} container spacing={2} sx={{ marginRight: '1rem' }}>
 					{allResumes &&
-						allResumes.map((resume) => (
-							<Grid item key={resume._id} sm={8} md={6}>
-								<Paper style={{ padding: '16px', marginBottom: '16px' }}>
-									<Typography variant="h5">{resume.title}</Typography>
-									<Button
-										variant="contained"
-										color="primary"
-										onClick={() => handleViewResume(resume._id)}
-									>
-										View Resume
-									</Button>
+						allResumes.map((resume, index) => (
+							<Grid item key={resume._id} xs={12} sm={4} md={3}>
+								<Paper style={{ padding: '16px' }} >
+								{resumeLoading[index] ? (
+									<img src={'/loading.svg'} alt="My SVG" style={{ height: '5rem' }} />
+								) : (
+									<Grid container spacing={2}>
+										<Grid item xs={12} sx={{ cursor: 'pointer', '&:hover': { color: '#687EFF' } }} onClick={() => handleViewResume(resume._id)}>
+											<Typography variant="h6">{resume.title}</Typography>
+										</Grid>
+										<Grid item xs={12} sx={{ textAlign: 'left' }}>
+											<Box sx={{ display: 'flex', alignContent: 'center' }}>
+												<IconButton
+													onClick={() => popDialog(index)}
+													sx={{ padding: 0, '&:focus': { outline: 'none' } }}
+												>
+													Delete this resume
+													<DeleteOutline
+														sx={{
+															color: '#FF6969',
+															fontSize: 20,
+															cursor: 'pointer',
+														}}
+													/>
+												</IconButton>
+												<AlertDialog
+													open={deletionDialog}
+													handleCloseDialog={() => setDeletionDialog(false)}
+													handleAgreement={handleDeletion}
+												/>
+											</Box>
+										</Grid>
+									</Grid>
+								)}
 								</Paper>
 							</Grid>
-						))}
-					<Grid item sm={8} md={6}>
-						<Paper style={{ padding: '16px', marginBottom: '16px' }}>
-							{newTextField ? (
-								<>
-									<TextField
-										fullWidth
-										label="Resume Title"
-										variant="filled"
-										value={resumeTitle}
-										onChange={handleChangeTitle}
-									/>
-									{loadingNewResume ? (
-										<img
-											src={'/loading.svg'}
-											alt="My SVG"
-											style={{ height: '3rem' }}
-										/>
-									) : (
-										<IconButton
-											onClick={handleAddResume}
-											sx={{ '&:focus': { outline: 'none' } }}
-										>
-											<CheckIcon
-												sx={{
-													color: '#6499E9',
-													fontSize: 30,
-													cursor: 'pointer',
-												}}
-											/>
-										</IconButton>
-									)}
-								</>
-							) : (
-								<IconButton
-									onClick={() => setNewTextiField(true)}
-									sx={{ '&:focus': { outline: 'none' } }}
-								>
-									<AddBoxIcon
-										sx={{
-											color: '#6499E9',
-											fontSize: 50,
-											cursor: 'pointer',
-										}}
-									/>
-								</IconButton>
-							)}
-						</Paper>
-					</Grid>
+						))
+					}
 				</Grid>
-			</Box>
+			</Grid>
 		</Grow>
 	);
 };

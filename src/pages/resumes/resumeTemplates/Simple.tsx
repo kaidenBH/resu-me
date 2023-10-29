@@ -177,14 +177,13 @@ const Simple = () => {
 										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
 									<Grid item xs={9} container>
-										{field.links.map((link: object) => (
-											<>
-												<LinkTypography
-													onClick={() => window.open(link.url, '_blank')}
-												>
-													{link.webite_name}
-												</LinkTypography>
-											</>
+										{field.links.map((link: object, lindex) => (
+											<LinkTypography
+												key={lindex}
+												onClick={() => window.open(link.url, '_blank')}
+											>
+												{link.webite_name}
+											</LinkTypography>
 										))}
 									</Grid>
 								</>
@@ -198,7 +197,7 @@ const Simple = () => {
 										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
 									{field.skills.map((skill: object, sindex) => (
-										<>
+										<Box key={sindex}>
 											{sindex > 1 && sindex % 2 === 0 && (
 												<Grid item xs={3}></Grid>
 											)}
@@ -217,7 +216,7 @@ const Simple = () => {
 													{skillMarks[skill.level - 1]}
 												</TextTypography>
 											</Grid>
-										</>
+										</Box>
 									))}
 								</>
 							)}
@@ -230,7 +229,7 @@ const Simple = () => {
 										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
 									{field.languages.map((lng: object, linkdex) => (
-										<>
+										<Box key={linkdex}>
 											{linkdex > 1 && linkdex % 2 === 0 && (
 												<Grid item xs={3}></Grid>
 											)}
@@ -247,7 +246,7 @@ const Simple = () => {
 													{skillMarks[language.level - 1]}
 												</TextTypography>
 											</Grid>
-										</>
+										</Box>
 									))}
 								</>
 							)}

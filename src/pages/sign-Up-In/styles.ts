@@ -29,6 +29,7 @@ export const CustomPaper = styled(Paper)({
 	height: '30rem',
 	padding: '20px',
 	background: '#F9F9F9',
+	display: 'flex',
 });
 
 export const CustomSlidePaper = styled(Paper)({

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Container, IconButton } from '@mui/material';
-import { CustomTextField, CustomTypography, CustomPaper, LinkTypography } from './styles';
+import { CustomTextField, CustomTypography, CustomBox, LinkTypography } from './styles';
 import { useCourse } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
@@ -166,15 +166,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 
 	return (
 		<Container style={{ padding: 0 }} maxWidth="sm">
-			<CustomPaper
-				sx={{
-					borderRadius: '20px',
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					width: '35vw',
-				}}
-			>
+			<CustomBox>
 				<Grid container spacing={2}>
 					{editCourseField ? (
 						<Grid
@@ -186,6 +178,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 								fullWidth
 								label="Courses Field Name"
 								variant="filled"
+								color="secondary"
 								name="field_name"
 								value={courseData.field_name}
 								onChange={handleChange}
@@ -324,6 +317,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 												fullWidth
 												label="Course"
 												variant="filled"
+												color="secondary"
 												name={`course_name;-;${index}`}
 												value={course.course_name}
 												onChange={handleChange}
@@ -334,6 +328,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 												fullWidth
 												label="Institution"
 												variant="filled"
+												color="secondary"
 												name={`institution;-;${index}`}
 												value={course.institution}
 												onChange={handleChange}
@@ -362,6 +357,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 													<CustomTextField
 														fullWidth
 														variant="filled"
+														color="secondary"
 														label="Start date"
 													/>
 												}
@@ -390,6 +386,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 													<CustomTextField
 														fullWidth
 														variant="filled"
+														color="secondary"
 														label="Start date"
 													/>
 												}
@@ -400,6 +397,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 												fullWidth
 												label="Description"
 												variant="filled"
+												color="secondary"
 												name={`description;-;${index}`}
 												value={course.description}
 												onChange={handleChange}
@@ -422,7 +420,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 						</LinkTypography>
 					</Grid>
 				</Grid>
-			</CustomPaper>
+			</CustomBox>
 		</Container>
 	);
 };
