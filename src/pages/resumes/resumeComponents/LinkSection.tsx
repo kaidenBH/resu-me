@@ -166,7 +166,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 								fullWidth
 								label="Links Field Name"
 								variant="filled"
-							color="secondary"
+								color="secondary"
 								name="field_name"
 								value={linkData.field_name}
 								onChange={handleChange}
@@ -305,7 +305,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 												fullWidth
 												label="Website Name"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`webite_name;-;${index}`}
 												value={link.webite_name}
 												onChange={handleChange}
@@ -316,7 +316,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 												fullWidth
 												label="Link"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`url;-;${index}`}
 												value={link.url}
 												onChange={handleChange}

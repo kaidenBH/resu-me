@@ -179,7 +179,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 								fullWidth
 								label="Education Field Name"
 								variant="filled"
-							color="secondary"
+								color="secondary"
 								name="field_name"
 								value={schoolData.field_name}
 								onChange={handleChange}
@@ -318,7 +318,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 												fullWidth
 												label="School Name"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`school_name;-;${index}`}
 												value={school.school_name}
 												onChange={handleChange}
@@ -329,7 +329,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 												fullWidth
 												label="Degree"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`degree_title;-;${index}`}
 												value={school.degree_title}
 												onChange={handleChange}
@@ -358,7 +358,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 													<CustomTextField
 														fullWidth
 														variant="filled"
-							color="secondary"
+														color="secondary"
 														label="Start date"
 													/>
 												}
@@ -387,7 +387,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 													<CustomTextField
 														fullWidth
 														variant="filled"
-							color="secondary"
+														color="secondary"
 														label="Start date"
 													/>
 												}
@@ -398,7 +398,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 												fullWidth
 												label="City"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`city;-;${index}`}
 												value={school.city}
 												onChange={handleChange}
@@ -409,7 +409,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 												fullWidth
 												label="Description"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`description;-;${index}`}
 												value={school.description}
 												onChange={handleChange}

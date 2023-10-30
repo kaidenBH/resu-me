@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Grow, Paper, Typography, Button, Grid, Box, IconButton, TextField } from '@mui/material';
 import { useResume } from '../../components/context/ResumeContext';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import CheckIcon from '@mui/icons-material/Check';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { DeleteOutline } from '@mui/icons-material';
+import { Check, Edit, AddBox, ContentCopy, DeleteOutline } from '@mui/icons-material';
 import AlertDialog from './resumeComponents/Dialog';
 
 const ResumesPage: React.FC = () => {
-	const { allResumes, navigateResume, createResume, removeResume, duplicateResume } = useResume();
+	const { allResumes, navigateResume, createResume, removeResume, duplicateResume, updateResume } = useResume();
 	const [resumeTitle, setResumeTile] = useState('');
+	const [editResumeTitle, setEditResumeTtile] = useState('');
 	const [loadingNewResume, setLoadingNewResume] = useState(false);
 	const [deletionDialog, setDeletionDialog] = useState(false);
 	const [deletionIndex, setDeletionIndex] = useState(0);
 	const [resumeLoading, setResumeLoading] = useState(allResumes?.map(() => false) || [false]);
+	const [editingName, setEditingName] = useState(allResumes?.map(() => false) || [false]);
 
 	const toggleLoading = (index: number) => {
 		setResumeLoading((prevDetails) => {
@@ -22,11 +21,36 @@ const ResumesPage: React.FC = () => {
 			return newDetails;
 		});
 	};
+	const toggleEditing = (index: number) => {
+		setEditingName((prevDetails) => {
+			const newDetails = [...prevDetails];
+			newDetails[index] = !newDetails[index];
+			return newDetails;
+		});
+	};
 
 	const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { value } = e.target;
-		setResumeTile(value);
+		const { name, value } = e.target;
+		if (name === "newResume") setResumeTile(value);
+		if (name === "editResume") setEditResumeTtile(value);
 	};
+
+	const handleUpdateResumeTitle = async (resumeIndex: number) => {
+		if (allResumes && allResumes[resumeIndex]) {
+			toggleLoading(resumeIndex);
+			await updateResume(allResumes[resumeIndex]._id, {title: editResumeTitle});
+			toggleEditing(resumeIndex);
+			toggleLoading(resumeIndex);
+		}
+	}
+
+	const handleEditResume = (resumeIndex: number) => {
+		if (allResumes && allResumes[resumeIndex]) {
+			toggleEditing(resumeIndex);
+			setEditResumeTtile(allResumes[resumeIndex].title);
+		}
+	}
+
 	const handleAddResume = async () => {
 		setLoadingNewResume(true);
 		await createResume(resumeTitle);
@@ -78,6 +102,7 @@ const ResumesPage: React.FC = () => {
 									fullWidth
 									label="Resume Title"
 									variant="filled"
+									name="newResume"
 									color='secondary'
 									value={resumeTitle}
 									onChange={handleChangeTitle}
@@ -95,7 +120,7 @@ const ResumesPage: React.FC = () => {
 										sx={{ '&:focus': { outline: 'none' } }}
 										disabled={resumeTitle === ''}
 									>
-										<AddBoxIcon
+										<AddBox
 											sx={{
 												color: resumeTitle !== '' ? '#6499E9' : '#ccc',
 												fontSize: 50,
@@ -118,23 +143,57 @@ const ResumesPage: React.FC = () => {
 										</Grid>
 									) : (
 										<>
-											<Grid item xs={10} sx={{ cursor: 'pointer', '&:hover': { color: '#687EFF' } }} onClick={() => handleViewResume(resume._id)}>
-												<Typography variant="h6">{resume.title}</Typography>
-											</Grid>
-											{/*<Grid item xs={2}>
-												<IconButton
-													onClick={() => setEditCourseField(true)}
-													sx={{ '&:focus': { outline: 'none' } }}
-												>
-													<Edit
-														sx={{
-															color: '#6499E9',
-															fontSize: 20,
-															cursor: 'pointer',
-														}}
-													/>
-												</IconButton>
-											</Grid>*/}
+											{ editingName[index] ? (
+												<>
+													<Grid item xs={9}>
+														<TextField
+															fullWidth
+															label="Resume Title"
+															variant="filled"
+															name="editResume"
+															color='secondary'
+															value={editResumeTitle}
+															onChange={handleChangeTitle}
+															required
+														/>
+													</Grid>
+													<Grid item xs={3}>
+														<IconButton
+															onClick={() => handleUpdateResumeTitle(index)}
+															sx={{ '&:focus': { outline: 'none' } }}
+															disabled={editResumeTitle === ''}
+														>
+															<Check
+																sx={{
+																	color: editResumeTitle !== '' ? '#6499E9' : '#ccc',
+																	fontSize: 35,
+																	cursor: 'pointer',
+																}}
+															/>
+														</IconButton>
+													</Grid>
+												</>
+											) : (
+												<>
+													<Grid item xs={10} sx={{ cursor: 'pointer', '&:hover': { color: '#687EFF' } }} onClick={() => handleViewResume(resume._id)}>
+														<Typography variant="h6">{resume.title}</Typography>
+													</Grid>
+													<Grid item xs={2}>
+														<IconButton
+															onClick={() => handleEditResume(index)}
+															sx={{ '&:focus': { outline: 'none' } }}
+														>
+															<Edit
+																sx={{
+																	color: '#6499E9',
+																	fontSize: 20,
+																	cursor: 'pointer',
+																}}
+															/>
+														</IconButton>
+													</Grid>
+												</>
+											)}
 											<Grid item xs={12} sx={{ textAlign: 'left' }}>
 												<Box sx={{ display: 'flex', alignContent: 'center' }}>
 													<IconButton
@@ -164,7 +223,7 @@ const ResumesPage: React.FC = () => {
 														sx={{ padding: 0, '&:focus': { outline: 'none' } }}
 													>
 														Duplicate
-														<ContentCopyIcon
+														<ContentCopy
 															sx={{
 																color: '#687EFF',
 																fontSize: 20,

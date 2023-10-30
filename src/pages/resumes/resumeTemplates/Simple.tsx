@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Box, Grid, Divider } from '@mui/material';
+import { Button, Box, Grid, Container } from '@mui/material';
 import { useResume } from '../../../components/context/ResumeContext';
 import {
 	CustomPaper,
@@ -30,14 +30,7 @@ const Simple = () => {
 	};
 
 	return (
-		<Box
-			sx={{
-				overflow: 'auto',
-				position: 'relative',
-				margin: '2rem',
-				right: -470,
-			}}
-		>
+		<Box>
 			<Button
 				variant="contained"
 				color="primary"
@@ -197,7 +190,7 @@ const Simple = () => {
 										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
 									{field.skills.map((skill: object, sindex) => (
-										<Box key={sindex}>
+										<React.Fragment key={sindex}>
 											{sindex > 1 && sindex % 2 === 0 && (
 												<Grid item xs={3}></Grid>
 											)}
@@ -216,7 +209,7 @@ const Simple = () => {
 													{skillMarks[skill.level - 1]}
 												</TextTypography>
 											</Grid>
-										</Box>
+										</React.Fragment>
 									))}
 								</>
 							)}
@@ -229,7 +222,7 @@ const Simple = () => {
 										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
 									{field.languages.map((lng: object, linkdex) => (
-										<Box key={linkdex}>
+										<React.Fragment key={linkdex}>
 											{linkdex > 1 && linkdex % 2 === 0 && (
 												<Grid item xs={3}></Grid>
 											)}
@@ -243,10 +236,10 @@ const Simple = () => {
 											>
 												<PointTypography>{lng.language}</PointTypography>
 												<TextTypography sx={{ textAlign: 'right' }}>
-													{skillMarks[language.level - 1]}
+													{skillMarks[lng.level - 1]}
 												</TextTypography>
 											</Grid>
-										</Box>
+										</React.Fragment>
 									))}
 								</>
 							)}

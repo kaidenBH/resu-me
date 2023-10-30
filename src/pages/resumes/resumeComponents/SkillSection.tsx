@@ -200,7 +200,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
 								fullWidth
 								label="Skills Field Name"
 								variant="filled"
-							color="secondary"
+								color="secondary"
 								name="field_name"
 								value={skillData.field_name}
 								onChange={handleChange}
@@ -339,7 +339,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
 												fullWidth
 												label="Skill Name"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`skill_name;-;${index}`}
 												value={skill.skill_name}
 												onChange={handleChange}

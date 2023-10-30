@@ -235,7 +235,7 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 								fullWidth
 								label="Professional Summary"
 								variant="filled"
-							color="secondary"
+								color="secondary"
 								name="summary;-;0"
 								value={personalData.summary[0]}
 								onChange={handleChange}

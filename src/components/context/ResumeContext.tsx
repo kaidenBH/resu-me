@@ -22,6 +22,7 @@ interface ResumeContextType {
 	reOrderResume: (resumeId: string, originalIndex: number, targetIndex: number) => Promise<void>;
 	removeResume: (resumeId: string) => Promise<void>;
 	duplicateResume: (resumeId: string) => Promise<void>;
+	updateResume: (resumeId: string,  resumeData: object) => Promise<void>;
 }
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
@@ -73,6 +74,15 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 		}
 	};
 
+	const updateResume = async (resumeId: string, resumeData: object) => {
+		try {
+			await API.updateResume(resumeId, resumeData);
+			await getAllResumes();
+		} catch (error) {
+			console.error('Error getting resume in:', error);
+		}
+	};
+
 	const updatePersonalSection = async (resumeId: string, PeronalSectionData: object) => {
 		try {
 			const { data } = await API.updatePersonalSection(resumeId, PeronalSectionData);
@@ -116,6 +126,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 				reOrderResume,
 				removeResume,
 				duplicateResume,
+				updateResume,
 			}}
 		>
 			{children}

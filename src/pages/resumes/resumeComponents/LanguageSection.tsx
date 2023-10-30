@@ -191,7 +191,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 	}, [secondsArray, editingPhases]);
 
 	return (
-		<Container style={{ padding: 0 }} maxWidth="xs">
+		<Container style={{ padding: 0 }} maxWidth="sm">
 			<CustomBox>
 				<Grid container spacing={2}>
 					{editLanguageField ? (
@@ -204,7 +204,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 								fullWidth
 								label="Languages Field Name"
 								variant="filled"
-							color="secondary"
+								color="secondary"
 								name="field_name"
 								value={languageData.field_name}
 								onChange={handleChange}
@@ -343,7 +343,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 												fullWidth
 												label="Language"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`language;-;${index}`}
 												value={language.language}
 												onChange={handleChange}

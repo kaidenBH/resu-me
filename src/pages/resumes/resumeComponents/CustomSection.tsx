@@ -186,7 +186,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 								fullWidth
 								label="Custom Field Name"
 								variant="filled"
-							color="secondary"
+								color="secondary"
 								name="field_name"
 								value={customData.field_name}
 								onChange={handleChange}
@@ -325,7 +325,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 												fullWidth
 												label="Activity name, job title etc..."
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`activity_title;-;${index}`}
 												value={activity.activity_title}
 												onChange={handleChange}
@@ -336,7 +336,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 												fullWidth
 												label="City"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`city;-;${index}`}
 												value={activity.city}
 												onChange={handleChange}
@@ -365,7 +365,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 													<CustomTextField
 														fullWidth
 														variant="filled"
-							color="secondary"
+														color="secondary"
 														label="Start date"
 													/>
 												}
@@ -394,7 +394,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 													<CustomTextField
 														fullWidth
 														variant="filled"
-							color="secondary"
+														color="secondary"
 														label="Start date"
 													/>
 												}
@@ -405,7 +405,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 												fullWidth
 												label="Description"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`description;-;${index}`}
 												value={activity.description}
 												onChange={handleChange}

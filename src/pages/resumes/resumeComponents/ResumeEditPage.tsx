@@ -110,10 +110,6 @@ const ResumeEditPage: React.FC = () => {
 				sx={{
 					display: 'flex',
 					flexDirection: 'column',
-					position: 'fixed',
-					left: 0,
-					top: 0,
-					width: '50vw',
 					height: '100vh',
 					zIndex: '4',
 					overflowY: 'scroll',
@@ -132,7 +128,7 @@ const ResumeEditPage: React.FC = () => {
 						alignItems: 'center',
 						justifyContent: 'center',
 						background: 'white',
-						width: '50vw',
+						width: '49vw',
 						height: '9rem',
 						zIndex: '9',
 					}}

@@ -21,14 +21,33 @@ const Resume: React.FC = () => {
 
 	return (
 		<Grow in={true}>
-			{resumeLoading ? (
-				<img src={'/loading.svg'} alt="My SVG" style={{ height: '15rem' }} />
-			) : (
-				<Box sx={{ display: 'flex', padding: 0 }}>
-					{resume?.owner ? <ResumeEditPage /> : null}
-					{resume?.template === 'Simple' ? <Templates.Simple /> : null}
-				</Box>
-			)}
+			<Grid container >
+				{resumeLoading ? (
+					<Grid item xs={12} sx={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+						<img src={'/loading.svg'} alt="My SVG" style={{ height: '15rem' }} />
+					</Grid>
+				) : (
+					<>
+						{resume?.owner && 
+							<Grid item xs={12} sm={6}>
+								<ResumeEditPage />
+							</Grid>
+						}
+						{resume?.template === 'Simple' &&
+							<Grid item xs={12} sm={resume?.owner ? 6 :12} sx={{ 
+								height: '100vh', 
+								paddingLeft: '16px',
+								overflow: 'scroll',
+								'&::-webkit-scrollbar': {
+									width: '0 !important' /* Hide the scrollbar for WebKit */,
+								},
+								}}>
+								<Templates.Simple />
+							</Grid>
+						}
+					</>
+				)}
+			</Grid>
 		</Grow>
 	);
 };

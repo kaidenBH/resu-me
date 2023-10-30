@@ -17,6 +17,12 @@ type ApiOrderFunction = (
 	originalIndex?: number,
 	targetIndex?: number,
 ) => Promise<AxiosResponse<object>>;
+
+type ApiResumeUpdate = (
+	resumeId?: string,
+	ResumeData?: object,
+) =>Promise<AxiosResponse<object>>;
+
 type ApiResumeFunction = (
 	resumeId?: string,
 	fieldId?: string,
@@ -33,6 +39,7 @@ type ApiResumeFunction = (
 		course_section?: object;
 	}>
 >;
+
 type ApiCustomFunction = (
 	resumeId?: string,
 	fieldId?: string,
@@ -57,6 +64,7 @@ export const verifyEmail = (token: string) => API.get(`/user/verify/${token}`);
 // Resume Apis
 export const newResume = (ResumeData: object) => API.post('/resume/', ResumeData);
 export const get_resume: ApiResumeFunction = (resumeId) => API.get(`/resume/${resumeId}`);
+export const updateResume: ApiResumeUpdate = (resumeId, ResumeData) => API.patch(`/resume/${resumeId}`, ResumeData);
 export const getAllResumes: ApiResumeFunction = () => API.get('/resume/getAllResumes');
 export const removeResume: ApiResumeFunction = (resumeId) => API.patch(`/resume/removeResume/${resumeId}`, {});
 export const duplicateResume: ApiResumeFunction = (resumeId) =>

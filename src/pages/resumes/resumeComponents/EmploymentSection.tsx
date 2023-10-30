@@ -184,7 +184,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 								fullWidth
 								label="Employment Field Name"
 								variant="filled"
-							color="secondary"
+								color="secondary"
 								name="field_name"
 								value={employmentData.field_name}
 								onChange={handleChange}
@@ -323,7 +323,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 												fullWidth
 												label="Job Title"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`job_title;-;${index}`}
 												value={employment.job_title}
 												onChange={handleChange}
@@ -334,7 +334,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 												fullWidth
 												label="Employer Name"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`employer_name;-;${index}`}
 												value={employment.employer_name}
 												onChange={handleChange}
@@ -363,7 +363,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 													<CustomTextField
 														fullWidth
 														variant="filled"
-							color="secondary"
+														color="secondary"
 														label="Start date"
 													/>
 												}
@@ -392,7 +392,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 													<CustomTextField
 														fullWidth
 														variant="filled"
-							color="secondary"
+														color="secondary"
 														label="Start date"
 													/>
 												}
@@ -403,7 +403,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 												fullWidth
 												label="City"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`city;-;${index}`}
 												value={employment.city}
 												onChange={handleChange}
@@ -414,7 +414,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 												fullWidth
 												label="Description of the job"
 												variant="filled"
-							color="secondary"
+												color="secondary"
 												name={`description;-;${index}`}
 												value={employment.description}
 												onChange={handleChange}
