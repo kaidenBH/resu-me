@@ -11,7 +11,6 @@ export const CustomAvatar = styled(Avatar)(({ theme }) => ({
 export const CustomSideBar = styled(Box)({
 	height: '100vh',
 	padding: '2rem',
-	borderRadius: '0 20px',
 	background: '#F9F9F9',
 });
 

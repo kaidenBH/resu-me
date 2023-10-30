@@ -109,14 +109,18 @@ const Profile: React.FC = () => {
 			<CustomSideBar>
 				<Grid container spacing={2} justifyContent="center" alignItems="center">
 					<Grid item xs={12} sx={{ textAlign: 'right' }}>
-						<EditNoteIcon
-							sx={{
-								color: editDataActive ? '#FF5733' : '#6499E9',
-								fontSize: 40,
-								cursor: 'pointer',
-							}}
+						<IconButton
+							sx={{ padding: 0 }}
 							onClick={handleActiveEditData}
-						/>
+						>
+							<EditNoteIcon
+								sx={{
+									color: editDataActive ? '#FF5733' : '#6499E9',
+									fontSize: 40,
+									cursor: 'pointer',
+								}}
+							/>
+						</IconButton>
 					</Grid>
 					<Grid item xs={4} sx={{ textAlign: 'right' }}>
 						<CustomAvatar alt={user?.first_name} src={user?.image}>
@@ -127,6 +131,7 @@ const Profile: React.FC = () => {
 								aria-label="upload picture"
 								component="label"
 								sx={{ padding: 0 }}
+								onClick={handleActiveAddImage}
 							>
 								{imageChangeLoading ? (
 									<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
@@ -136,7 +141,6 @@ const Profile: React.FC = () => {
 											color: imageChangeActive ? '#FF5733' : '#6499E9',
 											transition: 'color 0.2s',
 										}}
-										onClick={handleActiveAddImage}
 									/>
 								)}
 								<div style={{ display: 'none' }}>
