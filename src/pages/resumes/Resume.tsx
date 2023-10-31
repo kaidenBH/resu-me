@@ -34,16 +34,18 @@ const Resume: React.FC = () => {
 							</Grid>
 						}
 						{resume?.template === 'Simple' &&
-							<Grid item xs={12} sm={resume?.owner ? 6 :12} sx={{ 
-								height: '100vh', 
-								paddingLeft: '16px',
-								overflow: 'scroll',
-								'&::-webkit-scrollbar': {
-									width: '0 !important' /* Hide the scrollbar for WebKit */,
-								},
-								}}>
-								<Templates.Simple />
-							</Grid>
+							<>
+								<Grid item xs={12} sm={resume?.owner ? 6 :12} sx={{
+									padding: '0 0 0 16px',
+									height: '100vh',
+									overflow: 'scroll',
+									'&::-webkit-scrollbar': {
+										width: '0 !important' /* Hide the scrollbar for WebKit */,
+									},
+									}}>
+									<Templates.Simple />
+								</Grid>
+							</>
 						}
 					</>
 				)}
