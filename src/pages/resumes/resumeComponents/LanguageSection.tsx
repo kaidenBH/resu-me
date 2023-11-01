@@ -54,7 +54,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 		});
 	};
 
-	const levelMarks = ['Novice', 'Beginner', 'Intermediate', 'Fluent', 'Expert / Native'];
+	const levelMarks = ['Basic', 'Conversional', 'Intermediate', 'Fluent', 'Expert / Native'];
 
 	const handleChangeLevel = (index: number, newValue: number) => {
 		setLanguageData((prevData) => {

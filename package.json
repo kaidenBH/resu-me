@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.14.12",
     "@mui/material": "^5.14.12",
     "@mui/styles": "^5.14.12",
+    "@react-pdf/renderer": "^3.1.14",
     "axios": "^1.5.1",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",

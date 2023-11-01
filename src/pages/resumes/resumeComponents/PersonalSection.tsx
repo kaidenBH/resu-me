@@ -62,9 +62,9 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 				...personalData,
 				[name]: value,
 			});
-			setEditingPhase(true);
-			setSeconds(2);
 		}
+		setEditingPhase(true);
+		setSeconds(2);
 	};
 
 	const personalSectionUpdate = async () => {

@@ -281,7 +281,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 												'&:hover': { color: '#687EFF' },
 											}}
 										>
-											{school.school_name}
+											{school.degree_title}
 											<IconButton sx={{ '&:focus': { outline: 'none' } }}>
 												{showDetails[index] ? (
 													<ExpandLess />
