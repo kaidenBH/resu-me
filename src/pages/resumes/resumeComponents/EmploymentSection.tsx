@@ -296,7 +296,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 											</IconButton>
 										</CustomTypography>
 									</Grid>
-									<Grid item xs={2}>
+									<Grid item xs={2} sx={{ textAlign: 'center' }}>
 										<IconButton
 											onClick={() => handleShowDialogRecord(index)}
 											sx={{ '&:focus': { outline: 'none' } }}

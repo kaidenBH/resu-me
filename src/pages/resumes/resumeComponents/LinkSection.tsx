@@ -278,7 +278,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 											</IconButton>
 										</CustomTypography>
 									</Grid>
-									<Grid item xs={2}>
+									<Grid item xs={2} sx={{ textAlign: 'center' }}>
 										<IconButton
 											onClick={() => handleShowDialogLink(index)}
 											sx={{ '&:focus': { outline: 'none' } }}

@@ -290,7 +290,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 											</IconButton>
 										</CustomTypography>
 									</Grid>
-									<Grid item xs={2}>
+									<Grid item xs={2} sx={{ textAlign: 'center' }}>
 										<IconButton
 											onClick={() => handleShowDialogCourse(index)}
 											sx={{ '&:focus': { outline: 'none' } }}
