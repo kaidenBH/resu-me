@@ -298,7 +298,7 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 											</IconButton>
 										</CustomTypography>
 									</Grid>
-									<Grid item xs={2}  sx={{ textAlign: 'center' }}>
+									<Grid item xs={2} sx={{ textAlign: 'center' }}>
 										<IconButton
 											onClick={() => handleShowDialogCustom(index)}
 											sx={{ '&:focus': { outline: 'none' } }}
