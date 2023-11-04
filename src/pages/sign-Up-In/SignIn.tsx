@@ -7,7 +7,7 @@ interface SignInProps {
 	onSubmit: (formData: SignInFormData) => void;
 }
 
-interface SignInFormData {
+export interface SignInFormData {
 	email: string;
 	password: string;
 }

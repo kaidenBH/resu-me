@@ -7,7 +7,7 @@ interface SignUpProps {
 	onSubmit: (formData: SignUpFormData) => void;
 }
 
-interface SignUpFormData {
+export interface SignUpFormData {
 	email: string;
 	password: string;
 	confirmPassword: string;
