@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Grid, Slide } from '@mui/material';
 import { useAuth } from '../../components/context/AuthContext';
 import SignUp, { SignUpFormData } from './SignUp';

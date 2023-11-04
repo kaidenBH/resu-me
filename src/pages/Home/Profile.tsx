@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Grid, Grow, IconButton, InputAdornment } from '@mui/material';
+import { Grid, Grow, IconButton, InputAdornment } from '@mui/material';
 import { useAuth } from '../../components/context/AuthContext';
 import FileBase from 'react-file-base64';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';

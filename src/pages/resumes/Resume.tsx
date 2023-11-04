@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grow, Paper, Typography, Button, Grid, Box } from '@mui/material';
+import { Grow, Button, Grid } from '@mui/material';
 import { useResume } from '../../components/context/ResumeContext';
 import { useParams } from 'react-router-dom';
 import ResumeEditPage from './resumeComponents/ResumeEditPage';
@@ -44,19 +44,20 @@ const Resume: React.FC = () => {
 								<Grid item xs={12} sm={resume?.owner ? 6 :12} sx={{
 									padding: '0 0 0 16px',
 									height: '100vh',
+									marginTop: '8px',
 									overflow: 'scroll',
 									'&::-webkit-scrollbar': {
 										width: '0 !important' /* Hide the scrollbar for WebKit */,
 									},
 								}}>
-									<Button
+									{/*<Button
 										variant="contained"
 										color="primary"
 										onClick={generatePDF}
 										sx={{ marginBottom: '32px' }}
 									>
 										Download as PDF
-									</Button>
+									</Button>*/}
 									<Templates.Simple />
 								</Grid>
 							</>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Grow, Paper, Typography, Button, Grid, Box, IconButton, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import { Grow, Paper, Typography, Grid, Box, IconButton, TextField } from '@mui/material';
 import { useResume } from '../../components/context/ResumeContext';
 import { Check, Edit, AddBox, ContentCopy, DeleteOutline } from '@mui/icons-material';
 import AlertDialog from './resumeComponents/Dialog';

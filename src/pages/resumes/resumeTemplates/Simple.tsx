@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Box, Grid, Container } from '@mui/material';
+import { Button, Box, Grid } from '@mui/material';
 import { useResume } from '../../../components/context/ResumeContext';
 import {
 	CustomPaper,
