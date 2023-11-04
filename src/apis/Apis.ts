@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 
 const API = axios.create({
-	baseURL: 'http://localhost:5000',
+	//baseURL: 'http://localhost:5000',
+	baseURL: 'https://resu-me.onrender.com',
 });
 
 API.interceptors.request.use((req) => {
