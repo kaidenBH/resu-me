@@ -22,7 +22,11 @@ type ApiOrderFunction = (
 type ApiResumeUpdate = (
 	resumeId?: string,
 	ResumeData?: object,
-) =>Promise<AxiosResponse<object>>;
+) =>Promise<AxiosResponse<{
+		data: object;
+		personal_section?: object;
+	}>
+>;
 
 type ApiResumeFunction = (
 	resumeId?: string,
@@ -74,7 +78,7 @@ export const reOrderResume: ApiOrderFunction = (resumeId, originalIndex, targetI
 	API.patch(`/resume/reOrder/${resumeId}`, { originalIndex, targetIndex });
 
 // Personal Apis
-export const updatePersonalSection: ApiResumeFunction = (resumeId, PeronalSectionData) =>
+export const updatePersonalSection: ApiResumeUpdate = (resumeId, PeronalSectionData) =>
 	API.patch(`/resume/updatePersonalSection/${resumeId}`, PeronalSectionData);
 
 // Employment Apis

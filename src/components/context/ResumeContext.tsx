@@ -11,8 +11,8 @@ interface Resume {
 }
 
 interface ResumeContextType {
-	resume: Resume | object | null;
-	allResumes: [Resume] | [object] | null;
+	resume: Resume | null;
+	allResumes: [Resume] | null;
 	activeTemplate: string | null;
 	getAllResumes: () => Promise<void>;
 	createResume: (title: string) => Promise<void>;
