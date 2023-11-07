@@ -6,30 +6,14 @@ import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-interface EmploymentSectionForm {
-	_id: string;
-	resumeId: string;
-	field_name: string;
-	employments: [
-		{
-			_id: string;
-			job_title: string;
-			employer_name: string;
-			start_date: string;
-			end_date: string;
-			city: string;
-			description: string;
-		},
-	];
-}
+import { Employment } from '../../../components/interfaces/ResumeInterfaces';
 
 interface EmploymentSectionProps {
-	employment_section: EmploymentSectionForm;
+	employment_section: Employment;
 }
 
 const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_section }) => {
-	const [employmentData, setEmploymentData] = useState<EmploymentSectionForm>({
+	const [employmentData, setEmploymentData] = useState<Employment>({
 		_id: employment_section._id,
 		resumeId: employment_section.resumeId || '',
 		field_name: employment_section.field_name || 'Employment History',

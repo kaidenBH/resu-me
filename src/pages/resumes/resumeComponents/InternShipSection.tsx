@@ -6,30 +6,14 @@ import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-interface InternShipSectionForm {
-	_id: string;
-	resumeId: string;
-	field_name: string;
-	internships: [
-		{
-			_id: string;
-			job_title: string;
-			employer_name: string;
-			start_date: string;
-			end_date: string;
-			city: string;
-			description: string;
-		},
-	];
-}
+import { InternShip } from '../../../components/interfaces/ResumeInterfaces';
 
 interface InternShipSectionProps {
-	internship_section: InternShipSectionForm;
+	internship_section: InternShip;
 }
 
 const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_section }) => {
-	const [internshipData, setInternShipData] = useState<InternShipSectionForm>({
+	const [internshipData, setInternShipData] = useState<InternShip>({
 		_id: internship_section._id,
 		resumeId: internship_section.resumeId || '',
 		field_name: internship_section.field_name || 'InternShip History',

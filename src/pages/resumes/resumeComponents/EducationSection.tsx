@@ -6,30 +6,14 @@ import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-interface EducationSectionForm {
-	_id: string;
-	resumeId: string;
-	field_name: string;
-	schools: [
-		{
-			_id: string;
-			school_name: string;
-			degree_title: string;
-			start_date: string;
-			end_date: string;
-			city: string;
-			description: string;
-		},
-	];
-}
+import { Education } from '../../../components/interfaces/ResumeInterfaces';
 
 interface EducationSectionProps {
-	education_section: EducationSectionForm;
+	education_section: Education;
 }
 
 const EducationSection: React.FC<EducationSectionProps> = ({ education_section }) => {
-	const [schoolData, setSchoolData] = useState<EducationSectionForm>({
+	const [schoolData, setSchoolData] = useState<Education>({
 		_id: education_section._id,
 		resumeId: education_section.resumeId || '',
 		field_name: education_section.field_name || 'Education',

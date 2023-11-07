@@ -3,23 +3,10 @@ import { Grid, Container, IconButton } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomBox } from './styles';
 import { useResume } from '../../../components/context/ResumeContext';
 import { Edit, Check } from '@mui/icons-material';
-
-interface personalSectionForm {
-	resumeId: string;
-	field_name: string;
-	job_title: string;
-	image: string;
-	first_name: string;
-	last_name: string;
-	email: string;
-	phone: string;
-	country: string;
-	city: string;
-	summary: [string, string];
-}
+import { PersonalDetails } from '../../../components/interfaces/ResumeInterfaces';
 
 interface PersonalSectionProps {
-	personal_section: personalSectionForm;
+	personal_section: PersonalDetails;
 }
 
 const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) => {
@@ -31,7 +18,8 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 	const [editingPhase, setEditingPhase] = useState(false);
 	const [seconds, setSeconds] = useState(2);
 
-	const [personalData, setPersonalData] = useState<personalSectionForm>({
+	const [personalData, setPersonalData] = useState<PersonalDetails>({
+		_id: personal_section._id || '',
 		resumeId: personal_section.resumeId || '',
 		field_name: personal_section.field_name || 'Personal Details',
 		job_title: personal_section.job_title || '',

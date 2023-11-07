@@ -10,26 +10,15 @@ import {
 import { useSkill } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
+import { Skill } from '../../../components/interfaces/ResumeInterfaces';
 
-interface SkillSectionForm {
-	_id: string;
-	resumeId: string;
-	field_name: string;
-	skills: [
-		{
-			_id: string;
-			skill_name: string;
-			level: number;
-		},
-	];
-}
 
 interface SkillSectionProps {
-	skill_section: SkillSectionForm;
+	skill_section: Skill;
 }
 
 const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
-	const [skillData, setSkillData] = useState<SkillSectionForm>({
+	const [skillData, setSkillData] = useState<Skill>({
 		_id: skill_section._id,
 		resumeId: skill_section.resumeId || '',
 		field_name: skill_section.field_name || 'Skills',

@@ -6,29 +6,14 @@ import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
-interface CustomSectionForm {
-	_id: string;
-	resumeId: string;
-	field_name: string;
-	activities: [
-		{
-			_id: string;
-			activity_title: string;
-			city: string;
-			start_date: string;
-			end_date: string;
-			description: string;
-		},
-	];
-}
+import { Custom } from '../../../components/interfaces/ResumeInterfaces';
 
 interface CustomSectionProps {
-	customActivity_section: CustomSectionForm;
+	customActivity_section: Custom;
 }
 
 const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section }) => {
-	const [customData, setCustomData] = useState<CustomSectionForm>({
+	const [customData, setCustomData] = useState<Custom>({
 		_id: customActivity_section._id,
 		resumeId: customActivity_section.resumeId || '',
 		field_name: customActivity_section.field_name || 'Untitled',

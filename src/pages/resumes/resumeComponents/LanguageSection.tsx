@@ -10,26 +10,14 @@ import {
 import { useLanguage } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
-
-interface LanguageSectionForm {
-	_id: string;
-	resumeId: string;
-	field_name: string;
-	languages: [
-		{
-			_id: string;
-			language: string;
-			level: number;
-		},
-	];
-}
+import { Language } from '../../../components/interfaces/ResumeInterfaces';
 
 interface LanguageSectionProps {
-	language_section: LanguageSectionForm;
+	language_section: Language;
 }
 
 const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) => {
-	const [languageData, setLanguageData] = useState<LanguageSectionForm>({
+	const [languageData, setLanguageData] = useState<Language>({
 		_id: language_section._id,
 		resumeId: language_section.resumeId || '',
 		field_name: language_section.field_name || 'Languages',

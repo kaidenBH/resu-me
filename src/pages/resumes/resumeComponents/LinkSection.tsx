@@ -4,26 +4,14 @@ import { CustomTextField, CustomTypography, CustomBox, LinkTypography } from './
 import { useLink } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
-
-interface LinkSectionForm {
-	_id: string;
-	resumeId: string;
-	field_name: string;
-	links: [
-		{
-			_id: string;
-			webite_name: string;
-			url: string;
-		},
-	];
-}
+import { Link } from '../../../components/interfaces/ResumeInterfaces';
 
 interface LinkSectionProps {
-	link_section: LinkSectionForm;
+	link_section: Link;
 }
 
 const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
-	const [linkData, setLinkData] = useState<LinkSectionForm>({
+	const [linkData, setLinkData] = useState<Link>({
 		_id: link_section._id,
 		resumeId: link_section.resumeId || '',
 		field_name: link_section.field_name || 'Websites & Links',
