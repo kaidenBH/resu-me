@@ -1,14 +1,7 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as API from '../../apis/Apis';
-
-interface Resume {
-	_id: string;
-	title: string;
-	template: string;
-	owner: boolean;
-	fields: [object];
-}
+import { Resume } from '../interfaces/ResumeInterfaces';
 
 interface ResumeContextType {
 	resume: Resume | null;
@@ -28,8 +21,8 @@ interface ResumeContextType {
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 
 export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-	const [resume, setResume] = useState<Resume | object | null>(null);
-	const [allResumes, setAllResumes] = useState<[Resume] | [object] | null>(null);
+	const [resume, setResume] = useState<Resume | null>(null);
+	const [allResumes, setAllResumes] = useState<[Resume] | null>(null);
 	const [activeTemplate, setActiveTemplate] = useState<string | null>('Simple');
 	const navigate = useNavigate();
 
