@@ -25,11 +25,20 @@ const Sign = () => {
 	};
 	return (
 		<Slide direction="right" in={true} timeout={600}>
-			<Grid container spacing={0} sx={{ display: 'felx', justifyContent: 'center', height: '100vh', alignItems: 'center' }}>
-				<Grid item >
+			<Grid
+				container
+				spacing={0}
+				sx={{
+					display: 'felx',
+					justifyContent: 'center',
+					height: '100vh',
+					alignItems: 'center',
+				}}
+			>
+				<Grid item>
 					<Slider onSubmit={() => SlideEffect()} haveAccount={haveAccount} />
 				</Grid>
-				<Grid item >
+				<Grid item>
 					{haveAccount ? (
 						<>
 							<SignIn onSubmit={SignInFormData} />

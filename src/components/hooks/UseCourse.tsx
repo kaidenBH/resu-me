@@ -1,13 +1,15 @@
 import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
+import { Course } from '../interfaces/ResumeInterfaces';
+
 interface UseCourseSection {
-	addCourse: (resumeId: string) => Promise<void | object>;
+	addCourse: (resumeId: string) => Promise<void | Course>;
 	updateCourse: (
 		resumeId: string,
 		courseId: string,
 		courseData: object,
-	) => Promise<void | object>;
-	deleteCourse: (resumeId: string, courseId: string) => Promise<void | object>;
+	) => Promise<void | Course>;
+	deleteCourse: (resumeId: string, courseId: string) => Promise<void | Course>;
 	deleteCourseSection: (resumeId: string) => Promise<void>;
 }
 
@@ -45,7 +47,7 @@ export const useCourse = (): UseCourseSection => {
 
 	const deleteCourseSection = async (resumeId: string) => {
 		try {
-			await API.deleteCourse(resumeId);
+			await API.deleteCourseSection(resumeId);
 			await getResume(resumeId);
 		} catch (error) {
 			console.error('Error Course in:', error);

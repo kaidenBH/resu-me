@@ -70,9 +70,7 @@ const Simple = () => {
 											<PointTypography>{field.summary[0]}</PointTypography>
 										</Grid>
 										<Grid item xs={9}>
-											<TextTypography>
-												{field.summary[1]}
-											</TextTypography>
+											<TextTypography>{field.summary[1]}</TextTypography>
 										</Grid>
 									</Grid>
 								</>

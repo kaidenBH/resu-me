@@ -1,9 +1,11 @@
 import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
+import { Link } from '../interfaces/ResumeInterfaces';
+
 interface UseLinkSection {
-	addLink: (resumeId: string) => Promise<void | object>;
-	updateLink: (resumeId: string, linkId: string, linkData: object) => Promise<void | object>;
-	deleteLink: (resumeId: string, linkId: string) => Promise<void | object>;
+	addLink: (resumeId: string) => Promise<void | Link>;
+	updateLink: (resumeId: string, linkId: string, linkData: object) => Promise<void | Link>;
+	deleteLink: (resumeId: string, linkId: string) => Promise<void | Link>;
 	deleteLinkSection: (resumeId: string) => Promise<void>;
 }
 

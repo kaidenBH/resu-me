@@ -8,7 +8,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Course } from '../../../components/interfaces/ResumeInterfaces';
 
-
 interface CourseSectionProps {
 	course_section: Course;
 }

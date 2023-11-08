@@ -1,19 +1,21 @@
 import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
+import { Custom } from '../interfaces/ResumeInterfaces';
+
 interface UseCustomSection {
-	createCustomActivity: (resumeId: string) => Promise<void | object>;
-	addCustomActivity: (resumeId: string, customId: string) => Promise<void | object>;
+	createCustomActivity: (resumeId: string) => Promise<void | Custom>;
+	addCustomActivity: (resumeId: string, customId: string) => Promise<void | Custom>;
 	updateCustomActivity: (
 		resumeId: string,
 		customId: string,
 		customActivityId: string,
 		customData: object,
-	) => Promise<void | object>;
+	) => Promise<void | Custom>;
 	deleteCustomActivity: (
 		resumeId: string,
 		customId: string,
 		customActivityId: string,
-	) => Promise<void | object>;
+	) => Promise<void | Custom>;
 	deleteCustom: (resumeId: string, customId: string) => Promise<void>;
 }
 

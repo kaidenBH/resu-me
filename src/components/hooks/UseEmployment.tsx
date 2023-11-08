@@ -1,13 +1,15 @@
 import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
+import { Employment } from '../interfaces/ResumeInterfaces';
+
 interface UseEmploymentSection {
-	addEmploymentRecord: (resumeId: string) => Promise<void | object>;
+	addEmploymentRecord: (resumeId: string) => Promise<void | Employment>;
 	updateEmploymentRecord: (
 		resumeId: string,
 		employmentId: string,
 		EmploymentData: object,
-	) => Promise<void | object>;
-	deleteEmploymentRecord: (resumeId: string, employmentId: string) => Promise<void | object>;
+	) => Promise<void | Employment>;
+	deleteEmploymentRecord: (resumeId: string, employmentId: string) => Promise<void | Employment>;
 	deleteEmployment: (resumeId: string) => Promise<void>;
 }
 

@@ -5,7 +5,14 @@ import { Check, Edit, AddBox, ContentCopy, DeleteOutline } from '@mui/icons-mate
 import AlertDialog from './resumeComponents/Dialog';
 
 const ResumesPage: React.FC = () => {
-	const { allResumes, navigateResume, createResume, removeResume, duplicateResume, updateResume } = useResume();
+	const {
+		allResumes,
+		navigateResume,
+		createResume,
+		removeResume,
+		duplicateResume,
+		updateResume,
+	} = useResume();
 	const [resumeTitle, setResumeTile] = useState('');
 	const [editResumeTitle, setEditResumeTtile] = useState('');
 	const [loadingNewResume, setLoadingNewResume] = useState(false);
@@ -31,25 +38,25 @@ const ResumesPage: React.FC = () => {
 
 	const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		if (name === "newResume") setResumeTile(value);
-		if (name === "editResume") setEditResumeTtile(value);
+		if (name === 'newResume') setResumeTile(value);
+		if (name === 'editResume') setEditResumeTtile(value);
 	};
 
 	const handleUpdateResumeTitle = async (resumeIndex: number) => {
 		if (allResumes && allResumes[resumeIndex]) {
 			toggleLoading(resumeIndex);
-			await updateResume(allResumes[resumeIndex]._id, {title: editResumeTitle});
+			await updateResume(allResumes[resumeIndex]._id, { title: editResumeTitle });
 			toggleEditing(resumeIndex);
 			toggleLoading(resumeIndex);
 		}
-	}
+	};
 
 	const handleEditResume = (resumeIndex: number) => {
 		if (allResumes && allResumes[resumeIndex]) {
 			toggleEditing(resumeIndex);
 			setEditResumeTtile(allResumes[resumeIndex].title);
 		}
-	}
+	};
 
 	const handleAddResume = async () => {
 		setLoadingNewResume(true);
@@ -59,7 +66,7 @@ const ResumesPage: React.FC = () => {
 	const popDialog = (index: number) => {
 		setDeletionDialog(true);
 		setDeletionIndex(index);
-	}
+	};
 
 	const handleDuplicating = async (resumeIndex: number) => {
 		if (allResumes && allResumes[resumeIndex]) {
@@ -67,7 +74,7 @@ const ResumesPage: React.FC = () => {
 			await duplicateResume(allResumes[resumeIndex]._id);
 			toggleLoading(resumeIndex);
 		}
-	}
+	};
 
 	const handleDeletion = async () => {
 		if (allResumes && allResumes[deletionIndex]) {
@@ -76,7 +83,7 @@ const ResumesPage: React.FC = () => {
 			await removeResume(allResumes[deletionIndex]._id);
 			toggleLoading(deletionIndex);
 		}
-	}
+	};
 
 	const handleViewResume = (resumeId: string) => {
 		navigateResume(resumeId);
@@ -86,24 +93,31 @@ const ResumesPage: React.FC = () => {
 		<Grow in={true}>
 			<Grid container spacing={6} sx={{ margin: '1rem' }}>
 				<Grid item xs={12}>
-					<Typography
-						variant="h4"
-						sx={{ color: 'white' }}
-					>
+					<Typography variant="h4" sx={{ color: 'white' }}>
 						My Resumes
 					</Typography>
 				</Grid>
 				<Grid item xs={12} container spacing={2} sx={{ marginRight: '5rem' }}>
 					<Grid item xs={6} sm={4} lg={3}>
 						<Paper style={{ padding: '8px' }}>
-							<Box sx={{ height: '13rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-								<Typography variant='h6' sx={{ marginBottom: '16px' }}>New Resume: </Typography>
+							<Box
+								sx={{
+									height: '13rem',
+									display: 'flex',
+									flexDirection: 'column',
+									justifyContent: 'center',
+									alignItems: 'center',
+								}}
+							>
+								<Typography variant="h6" sx={{ marginBottom: '16px' }}>
+									New Resume:{' '}
+								</Typography>
 								<TextField
 									fullWidth
 									label="Resume Title"
 									variant="filled"
 									name="newResume"
-									color='secondary'
+									color="secondary"
 									value={resumeTitle}
 									onChange={handleChangeTitle}
 									required
@@ -135,111 +149,163 @@ const ResumesPage: React.FC = () => {
 					{allResumes &&
 						allResumes.map((resume, index) => (
 							<Grid item key={resume._id} xs={6} sm={4} lg={3}>
-								<Paper style={{ padding: '16px' }} >
+								<Paper style={{ padding: '16px' }}>
 									<Grid container spacing={2} sx={{ height: '13rem' }}>
-									{resumeLoading[index] ? (
-										<Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-											<img src={'/loading.svg'} alt="My SVG" style={{ height: '6rem' }} />
-										</Grid>
-									) : (
-										<>
-											{ editingName[index] ? (
-												<>
-													<Grid item xs={9}>
-														<TextField
-															fullWidth
-															label="Resume Title"
-															variant="filled"
-															name="editResume"
-															color='secondary'
-															value={editResumeTitle}
-															onChange={handleChangeTitle}
-															required
-														/>
-													</Grid>
-													<Grid item xs={3}>
-														<IconButton
-															onClick={() => handleUpdateResumeTitle(index)}
-															sx={{ '&:focus': { outline: 'none' } }}
-															disabled={editResumeTitle === ''}
-														>
-															<Check
-																sx={{
-																	color: editResumeTitle !== '' ? '#6499E9' : '#ccc',
-																	fontSize: 35,
-																	cursor: 'pointer',
-																}}
+										{resumeLoading[index] ? (
+											<Grid
+												item
+												xs={12}
+												sx={{
+													display: 'flex',
+													justifyContent: 'center',
+													alignItems: 'center',
+												}}
+											>
+												<img
+													src={'/loading.svg'}
+													alt="My SVG"
+													style={{ height: '6rem' }}
+												/>
+											</Grid>
+										) : (
+											<>
+												{editingName[index] ? (
+													<>
+														<Grid item xs={9}>
+															<TextField
+																fullWidth
+																label="Resume Title"
+																variant="filled"
+																name="editResume"
+																color="secondary"
+																value={editResumeTitle}
+																onChange={handleChangeTitle}
+																required
 															/>
-														</IconButton>
-													</Grid>
-												</>
-											) : (
-												<>
-													<Grid item xs={10} sx={{ cursor: 'pointer', '&:hover': { color: '#687EFF' } }} onClick={() => handleViewResume(resume._id)}>
-														<Typography variant="h6">{resume.title}</Typography>
-													</Grid>
-													<Grid item xs={2}>
-														<IconButton
-															onClick={() => handleEditResume(index)}
-															sx={{ '&:focus': { outline: 'none' } }}
-														>
-															<Edit
+														</Grid>
+														<Grid item xs={3}>
+															<IconButton
+																onClick={() =>
+																	handleUpdateResumeTitle(index)
+																}
 																sx={{
-																	color: '#6499E9',
+																	'&:focus': { outline: 'none' },
+																}}
+																disabled={editResumeTitle === ''}
+															>
+																<Check
+																	sx={{
+																		color:
+																			editResumeTitle !== ''
+																				? '#6499E9'
+																				: '#ccc',
+																		fontSize: 35,
+																		cursor: 'pointer',
+																	}}
+																/>
+															</IconButton>
+														</Grid>
+													</>
+												) : (
+													<>
+														<Grid
+															item
+															xs={10}
+															sx={{
+																cursor: 'pointer',
+																'&:hover': { color: '#687EFF' },
+															}}
+															onClick={() =>
+																handleViewResume(resume._id)
+															}
+														>
+															<Typography variant="h6">
+																{resume.title}
+															</Typography>
+														</Grid>
+														<Grid item xs={2}>
+															<IconButton
+																onClick={() =>
+																	handleEditResume(index)
+																}
+																sx={{
+																	'&:focus': { outline: 'none' },
+																}}
+															>
+																<Edit
+																	sx={{
+																		color: '#6499E9',
+																		fontSize: 20,
+																		cursor: 'pointer',
+																	}}
+																/>
+															</IconButton>
+														</Grid>
+													</>
+												)}
+												<Grid item xs={12} sx={{ textAlign: 'left' }}>
+													<Box
+														sx={{
+															display: 'flex',
+															alignContent: 'center',
+														}}
+													>
+														<IconButton
+															onClick={() => popDialog(index)}
+															sx={{
+																padding: 0,
+																'&:focus': { outline: 'none' },
+															}}
+														>
+															Delete
+															<DeleteOutline
+																sx={{
+																	color: '#FF6969',
 																	fontSize: 20,
 																	cursor: 'pointer',
 																}}
 															/>
 														</IconButton>
-													</Grid>
-												</>
-											)}
-											<Grid item xs={12} sx={{ textAlign: 'left' }}>
-												<Box sx={{ display: 'flex', alignContent: 'center' }}>
-													<IconButton
-														onClick={() => popDialog(index)}
-														sx={{ padding: 0, '&:focus': { outline: 'none' } }}
-													>
-														Delete
-														<DeleteOutline
-															sx={{
-																color: '#FF6969',
-																fontSize: 20,
-																cursor: 'pointer',
-															}}
+														<AlertDialog
+															open={deletionDialog}
+															handleCloseDialog={() =>
+																setDeletionDialog(false)
+															}
+															handleAgreement={handleDeletion}
 														/>
-													</IconButton>
-													<AlertDialog
-														open={deletionDialog}
-														handleCloseDialog={() => setDeletionDialog(false)}
-														handleAgreement={handleDeletion}
-													/>
-												</Box>
-											</Grid>
-											<Grid item xs={12} sx={{ textAlign: 'left' }}>
-												<Box sx={{ display: 'flex', alignContent: 'center' }}>
-													<IconButton
-														onClick={() => handleDuplicating(index)}
-														sx={{ padding: 0, '&:focus': { outline: 'none' } }}
+													</Box>
+												</Grid>
+												<Grid item xs={12} sx={{ textAlign: 'left' }}>
+													<Box
+														sx={{
+															display: 'flex',
+															alignContent: 'center',
+														}}
 													>
-														Duplicate
-														<ContentCopy
+														<IconButton
+															onClick={() => handleDuplicating(index)}
 															sx={{
-																color: '#687EFF',
-																fontSize: 20,
-																cursor: 'pointer',
+																padding: 0,
+																'&:focus': { outline: 'none' },
 															}}
-														/>
-													</IconButton>
-												</Box>
-											</Grid>
-										</>
-									)}
+														>
+															Duplicate
+															<ContentCopy
+																sx={{
+																	color: '#687EFF',
+																	fontSize: 20,
+																	cursor: 'pointer',
+																}}
+															/>
+														</IconButton>
+													</Box>
+												</Grid>
+											</>
+										)}
 									</Grid>
 								</Paper>
 							</Grid>
-						))
-					}
+						))}
 				</Grid>
 			</Grid>
 		</Grow>

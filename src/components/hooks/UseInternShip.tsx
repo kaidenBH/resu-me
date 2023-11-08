@@ -1,13 +1,15 @@
 import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
+import { InternShip } from '../interfaces/ResumeInterfaces';
+
 interface UseInternShipSection {
-	addInternShipRecord: (resumeId: string) => Promise<void | object>;
+	addInternShipRecord: (resumeId: string) => Promise<void | InternShip>;
 	updateInternShipRecord: (
 		resumeId: string,
 		internshipId: string,
 		InternShipData: object,
-	) => Promise<void | object>;
-	deleteInternShipRecord: (resumeId: string, internshipId: string) => Promise<void | object>;
+	) => Promise<void | InternShip>;
+	deleteInternShipRecord: (resumeId: string, internshipId: string) => Promise<void | InternShip>;
 	deleteInternShip: (resumeId: string) => Promise<void>;
 }
 

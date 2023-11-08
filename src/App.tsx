@@ -11,15 +11,17 @@ const App: React.FC = () => {
 		<BrowserRouter>
 			<UserProvider>
 				<ResumeProvider>
-					<Box sx={{ 
-						width: '100vw',
-						height: '100vh',
-						position: 'fixed',
-						background: '#213547',
-						padding: 0,
-						top: 0,
-						left: 0
-					}}>
+					<Box
+						sx={{
+							width: '100vw',
+							height: '100vh',
+							position: 'fixed',
+							background: '#213547',
+							padding: 0,
+							top: 0,
+							left: 0,
+						}}
+					>
 						<Router />
 					</Box>
 				</ResumeProvider>

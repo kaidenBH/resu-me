@@ -109,10 +109,7 @@ const Profile: React.FC = () => {
 			<CustomSideBar>
 				<Grid container spacing={2} justifyContent="center" alignItems="center">
 					<Grid item xs={12} sx={{ textAlign: 'right' }}>
-						<IconButton
-							sx={{ padding: 0 }}
-							onClick={handleActiveEditData}
-						>
+						<IconButton sx={{ padding: 0 }} onClick={handleActiveEditData}>
 							<EditNoteIcon
 								sx={{
 									color: editDataActive ? '#FF5733' : '#6499E9',
@@ -134,7 +131,11 @@ const Profile: React.FC = () => {
 								onClick={handleActiveAddImage}
 							>
 								{imageChangeLoading ? (
-									<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
+									<img
+										src={'/loading.svg'}
+										alt="My SVG"
+										style={{ height: '3rem' }}
+									/>
 								) : (
 									<AddPhotoAlternateIcon
 										sx={{
@@ -255,7 +256,11 @@ const Profile: React.FC = () => {
 													onClick={handleClickShowPassword}
 													edge="end"
 												>
-													{showPassword ? <Visibility /> : <VisibilityOff />}
+													{showPassword ? (
+														<Visibility />
+													) : (
+														<VisibilityOff />
+													)}
 												</IconButton>
 											</InputAdornment>
 										),
@@ -268,12 +273,18 @@ const Profile: React.FC = () => {
 									sx={{ cursor: 'pointer' }}
 									onClick={() => setEditPassword(!editPassword)}
 								>
-									{!editPassword ? 'Change passowrd?' : 'Cancel changing passowrd?'}
+									{!editPassword
+										? 'Change passowrd?'
+										: 'Cancel changing passowrd?'}
 								</LinkTypography>
 							</Grid>
 							<Grid item xs={12} sx={{ textAlign: 'center' }}>
 								{userUpdateLoading ? (
-									<img src={'/loading.svg'} alt="My SVG" style={{ height: '5rem' }} />
+									<img
+										src={'/loading.svg'}
+										alt="My SVG"
+										style={{ height: '5rem' }}
+									/>
 								) : (
 									<ConfirmButton
 										variant="contained"
@@ -298,11 +309,9 @@ const Profile: React.FC = () => {
 						</>
 					)}
 					<Grid item xs={7} sx={{ textAlign: 'right' }}>
-						<CustomTypography variant="body2">
-							Account Type:{' '}
-						</CustomTypography>
+						<CustomTypography variant="body2">Account Type: </CustomTypography>
 					</Grid>
-					<Grid item xs={5} sx={{ textAlign: 'left' }}>	
+					<Grid item xs={5} sx={{ textAlign: 'left' }}>
 						{user?.account_type == 'Basic' ? (
 							<BasicType variant="body2">{user?.account_type}</BasicType>
 						) : user?.account_type == 'Plus' ? (

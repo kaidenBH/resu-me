@@ -20,8 +20,8 @@ const Slider: React.FC<SliderProps> = ({ onSubmit, haveAccount }) => {
 					<Grid item xs={12} sx={{ textAlign: 'center' }}>
 						<CustomSlidingTypography variant="h6">
 							{haveAccount
-							? 'Click here to Sign up a new account'
-							: 'Click here to Sign in to your account'}
+								? 'Click here to Sign up a new account'
+								: 'Click here to Sign in to your account'}
 						</CustomSlidingTypography>
 					</Grid>
 					<Grid item xs={12} sx={{ textAlign: 'center' }}>
@@ -35,7 +35,6 @@ const Slider: React.FC<SliderProps> = ({ onSubmit, haveAccount }) => {
 					</Grid>
 				</Grid>
 			</CustomSlidePaper>
-
 		</Container>
 	);
 };

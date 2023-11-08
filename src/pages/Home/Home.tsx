@@ -24,16 +24,16 @@ function Home() {
 		if (isSmScreen) return '50vw';
 		if (isXsScreen) return '80vw';
 		return '90vw'; // Default width (adjust as needed)
-	}
+	};
 
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
-  
+
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-	
+
 	useEffect(() => {
 		checkUser();
 		const ApiCall = async () => {
@@ -52,7 +52,7 @@ function Home() {
 				) : (
 					<Grid item md={4} lg={2.5}>
 						<IconButton onClick={handleClick}>
-							<MoreVertIcon 
+							<MoreVertIcon
 								sx={{
 									color: '#6499E9',
 									fontSize: 50,
@@ -60,16 +60,14 @@ function Home() {
 								}}
 							/>
 						</IconButton>
-						<Menu
-							anchorEl={anchorEl}
-							open={Boolean(anchorEl)}
-							onClose={handleClose}
-						>
-							<MenuItem sx={{ 
-								padding: 0, 
-								width: getWidth(),
-								position: 'fixed',
-							}}>
+						<Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+							<MenuItem
+								sx={{
+									padding: 0,
+									width: getWidth(),
+									position: 'fixed',
+								}}
+							>
 								<Profile />
 							</MenuItem>
 						</Menu>

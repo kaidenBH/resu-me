@@ -1,13 +1,15 @@
 import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
+import { Education } from '../interfaces/ResumeInterfaces';
+
 interface UseEducationSection {
-	addSchool: (resumeId: string) => Promise<void | object>;
+	addSchool: (resumeId: string) => Promise<void | Education>;
 	updateSchool: (
 		resumeId: string,
 		schoolId: string,
 		schoolData: object,
-	) => Promise<void | object>;
-	deleteSchool: (resumeId: string, schoolId: string) => Promise<void | object>;
+	) => Promise<void | Education>;
+	deleteSchool: (resumeId: string, schoolId: string) => Promise<void | Education>;
 	deleteEducation: (resumeId: string) => Promise<void>;
 }
 

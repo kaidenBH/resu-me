@@ -5,7 +5,7 @@ import { Resume } from '../interfaces/ResumeInterfaces';
 
 interface ResumeContextType {
 	resume: Resume | null;
-	allResumes: [Resume] | null;
+	allResumes: Resume[] | null;
 	activeTemplate: string | null;
 	getAllResumes: () => Promise<void>;
 	createResume: (title: string) => Promise<void>;
@@ -15,14 +15,14 @@ interface ResumeContextType {
 	reOrderResume: (resumeId: string, originalIndex: number, targetIndex: number) => Promise<void>;
 	removeResume: (resumeId: string) => Promise<void>;
 	duplicateResume: (resumeId: string) => Promise<void>;
-	updateResume: (resumeId: string,  resumeData: object) => Promise<void>;
+	updateResume: (resumeId: string, resumeData: object) => Promise<void>;
 }
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 
 export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 	const [resume, setResume] = useState<Resume | null>(null);
-	const [allResumes, setAllResumes] = useState<[Resume] | null>(null);
+	const [allResumes, setAllResumes] = useState<Resume[] | null>(null);
 	const [activeTemplate, setActiveTemplate] = useState<string | null>('Simple');
 	const navigate = useNavigate();
 
@@ -78,8 +78,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
 	const updatePersonalSection = async (resumeId: string, PeronalSectionData: object) => {
 		try {
-			const { data } = await API.updatePersonalSection(resumeId, PeronalSectionData);
-			console.log(data.personal_section);
+			await API.updatePersonalSection(resumeId, PeronalSectionData);
 			getResume(resumeId);
 		} catch (error) {
 			console.error('Error updating resume in:', error);
@@ -89,8 +88,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 	const reOrderResume = async (resumeId: string, originalIndex: number, targetIndex: number) => {
 		try {
 			await API.reOrderResume(resumeId, originalIndex, targetIndex);
-			const { data } = await API.get_resume(resumeId);
-			setResume(data);
+			getResume(resumeId);
 		} catch (error) {
 			console.error('Error updating resume order in:', error);
 		}

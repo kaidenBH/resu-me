@@ -1,13 +1,15 @@
 import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
+import { Language } from '../interfaces/ResumeInterfaces';
+
 interface UseLanguageSection {
-	addLanguage: (resumeId: string) => Promise<void | object>;
+	addLanguage: (resumeId: string) => Promise<void | Language>;
 	updateLanguage: (
 		resumeId: string,
 		languageId: string,
 		languageData: object,
-	) => Promise<void | object>;
-	deleteLanguage: (resumeId: string, languageId: string) => Promise<void | object>;
+	) => Promise<void | Language>;
+	deleteLanguage: (resumeId: string, languageId: string) => Promise<void | Language>;
 	deleteLanguageSection: (resumeId: string) => Promise<void>;
 }
 

@@ -1,9 +1,11 @@
 import * as API from '../../apis/Apis';
 import { useResume } from '../context/ResumeContext';
+import { Skill } from '../interfaces/ResumeInterfaces';
+
 interface UseSkillSection {
-	addSkill: (resumeId: string) => Promise<void | object>;
-	updateSkill: (resumeId: string, skillId: string, skillData: object) => Promise<void | object>;
-	deleteSkill: (resumeId: string, skillId: string) => Promise<void | object>;
+	addSkill: (resumeId: string) => Promise<void | Skill>;
+	updateSkill: (resumeId: string, skillId: string, skillData: object) => Promise<void | Skill>;
+	deleteSkill: (resumeId: string, skillId: string) => Promise<void | Skill>;
 	deleteSkillSection: (resumeId: string) => Promise<void>;
 }
 

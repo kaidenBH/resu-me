@@ -12,7 +12,6 @@ import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
 import { Skill } from '../../../components/interfaces/ResumeInterfaces';
 
-
 interface SkillSectionProps {
 	skill_section: Skill;
 }
