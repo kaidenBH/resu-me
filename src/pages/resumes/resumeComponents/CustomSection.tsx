@@ -14,6 +14,7 @@ interface CustomSectionProps {
 
 const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section }) => {
 	const [customData, setCustomData] = useState<Custom>({
+		type: customActivity_section.type || 'Custom',
 		_id: customActivity_section._id,
 		resumeId: customActivity_section.resumeId || '',
 		field_name: customActivity_section.field_name || 'Untitled',
@@ -75,6 +76,35 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 			});
 		}
 	};
+
+	const handleChangeDates = (target: {name: string, value: string}) => {
+		const { name, value } = target;
+		const [fieldName, indexStr] = name.split(';-;');
+		const index = parseInt(indexStr, 10);
+
+		setCustomData((prevData) => {
+			const updatedActivities = [...prevData.activities];
+			updatedActivities[index] = {
+				...updatedActivities[index],
+				[fieldName]: value,
+			};
+			return {
+				...prevData,
+				activities: updatedActivities,
+			};
+		});
+		setEditingPhases((prevPhases) => {
+			const updatedPhases = [...prevPhases];
+			updatedPhases[index] = true;
+			return updatedPhases;
+		});
+		setSecondsArray((prevSeconds) => {
+			const updatedSeconds = [...prevSeconds];
+			updatedSeconds[index] = 2;
+			return updatedSeconds;
+		});
+	};
+	
 
 	const customUpdate = async (index: number) => {
 		await updateCustomActivity(
@@ -338,11 +368,9 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 													const formattedDate = date
 														? date.toLocaleDateString('en-US')
 														: '';
-													handleChange({
-														target: {
-															name: `start_date;-;${index}`,
-															value: formattedDate,
-														},
+													handleChangeDates({
+														name: `start_date;-;${index}`,
+														value: formattedDate,
 													});
 												}}
 												dateFormat="MM/dd/yyyy"
@@ -367,11 +395,9 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 													const formattedDate = date
 														? date.toLocaleDateString('en-US')
 														: '';
-													handleChange({
-														target: {
-															name: `end_date;-;${index}`,
-															value: formattedDate,
-														},
+													handleChangeDates({
+														name: `end_date;-;${index}`,
+														value: formattedDate,
 													});
 												}}
 												dateFormat="MM/dd/yyyy"

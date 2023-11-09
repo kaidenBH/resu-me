@@ -14,6 +14,7 @@ interface InternShipSectionProps {
 
 const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_section }) => {
 	const [internshipData, setInternShipData] = useState<InternShip>({
+		type: internship_section.type || 'InternShip', 
 		_id: internship_section._id,
 		resumeId: internship_section.resumeId || '',
 		field_name: internship_section.field_name || 'InternShip History',
@@ -78,6 +79,33 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 				return updatedSeconds;
 			});
 		}
+	};
+
+	const handleChangeDates = (target: {name: string, value: string}) => {
+		const { name, value } = target;
+		const [fieldName, indexStr] = name.split(';-;');
+		const index = parseInt(indexStr, 10);
+		setInternShipData((prevData) => {
+			const updatedInternShips = [...prevData.internships];
+			updatedInternShips[index] = {
+				...updatedInternShips[index],
+				[fieldName]: value,
+			};
+			return {
+				...prevData,
+				internships: updatedInternShips,
+			};
+		});
+		setEditingPhases((prevPhases) => {
+			const updatedPhases = [...prevPhases];
+			updatedPhases[index] = true;
+			return updatedPhases;
+		});
+		setSecondsArray((prevSeconds) => {
+			const updatedSeconds = [...prevSeconds];
+			updatedSeconds[index] = 2;
+			return updatedSeconds;
+		});
 	};
 
 	const internshipRecordUpdate = async (index: number) => {
@@ -246,7 +274,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 							xs={12}
 							key={index}
 							sx={{
-								border: '1px solid #272829',
+								border: '1px solid #D8D9DA',
 								padding: '16px',
 								margin: '0 0 16px 16px',
 								borderRadius: '5px',
@@ -335,11 +363,9 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 													const formattedDate = date
 														? date.toLocaleDateString('en-US')
 														: '';
-													handleChange({
-														target: {
+													handleChangeDates({
 															name: `start_date;-;${index}`,
 															value: formattedDate,
-														},
 													});
 												}}
 												dateFormat="MM/dd/yyyy"
@@ -364,11 +390,9 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 													const formattedDate = date
 														? date.toLocaleDateString('en-US')
 														: '';
-													handleChange({
-														target: {
-															name: `end_date;-;${index}`,
-															value: formattedDate,
-														},
+													handleChangeDates({
+														name: `end_date;-;${index}`,
+														value: formattedDate,
 													});
 												}}
 												dateFormat="MM/dd/yyyy"

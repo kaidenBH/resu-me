@@ -24,7 +24,8 @@ import {
 	useCourse,
 	useCustom,
 } from '../../../components/hooks';
-
+import * as INTR from '../../../components/interfaces/ResumeInterfaces';
+  
 const ResumeEditPage: React.FC = () => {
 	const { addSchool } = useEducation();
 	const { addEmploymentRecord } = useEmployment();
@@ -44,47 +45,47 @@ const ResumeEditPage: React.FC = () => {
 		InternShip: false,
 		Course: false,
 	});
-
+	
 	const handleAddEducation = async () => {
-		await addSchool(resume?._id);
+		if (resume) await addSchool(resume._id);
 	};
 	const handleAddEmployment = async () => {
-		await addEmploymentRecord(resume?._id);
+		if (resume) await addEmploymentRecord(resume._id);
 	};
 	const handleAddLink = async () => {
-		await addLink(resume?._id);
+		if (resume) await addLink(resume._id);
 	};
 	const handleAddSkill = async () => {
-		await addSkill(resume?._id);
+		if (resume) await addSkill(resume._id);
 	};
 	const handleAddLanguage = async () => {
-		await addLanguage(resume?._id);
+		if (resume) await addLanguage(resume._id);
 	};
 	const handleAddInernShip = async () => {
-		await addInternShipRecord(resume?._id);
+		if (resume) await addInternShipRecord(resume._id);
 	};
 	const handleAddCourse = async () => {
-		await addCourse(resume?._id);
+		if (resume) await addCourse(resume._id);
 	};
 	const handleAddCustom = async () => {
-		await createCustomActivity(resume?._id);
+		if (resume) await createCustomActivity(resume._id);
 	};
 
-	const handleMoveUp = (index) => {
-		if (index > 0) {
+	const handleMoveUp = (index: number) => {
+		if (index > 0 && resume) {
 			reOrderResume(resume?._id, index, index - 1);
 		}
 	};
 
-	const handleMoveDown = (index) => {
-		if (index < resume.fields.length - 1) {
-			reOrderResume(resume?._id, index, index + 1);
+	const handleMoveDown = (index: number) => {
+		if (resume && index < resume.fields.length - 1) {
+			reOrderResume(resume._id, index, index + 1);
 		}
 	};
 
 	useEffect(() => {
 		if (resume) {
-			const updatedSections = {
+			const updatedSections: INTR.UpdatedSections = {
 				Education: false,
 				Employment: false,
 				Link: false,
@@ -190,55 +191,31 @@ const ResumeEditPage: React.FC = () => {
 									</IconButton>
 								</Box>
 								{field.type === 'Personal' && (
-									<>
-										<PersonalSection personal_section={field} />
-										{(sections.Personal = true)}
-									</>
+									<PersonalSection personal_section={field as INTR.PersonalDetails} />
 								)}
 								{field.type === 'Education' && (
-									<>
-										<EducationSection education_section={field} />
-										{(sections.Education = true)}
-									</>
+									<EducationSection education_section={field as INTR.Education} />
 								)}
 								{field.type === 'Employment' && (
-									<>
-										<EmploymentSection employment_section={field} />
-										{(sections.Employment = true)}
-									</>
+									<EmploymentSection employment_section={field as INTR.Employment} />
 								)}
 								{field.type === 'Link' && (
-									<>
-										<LinkSection link_section={field} />
-										{(sections.Link = true)}
-									</>
+									<LinkSection link_section={field as INTR.Link} />
 								)}
 								{field.type === 'Skill' && (
-									<>
-										<SkillSection skill_section={field} />
-										{(sections.Skill = true)}
-									</>
+									<SkillSection skill_section={field as INTR.Skill} />
 								)}
 								{field.type === 'Language' && (
-									<>
-										<LanguageSection language_section={field} />
-										{(sections.Language = true)}
-									</>
+									<LanguageSection language_section={field as INTR.Language} />
 								)}
 								{field.type === 'InternShip' && (
-									<>
-										<InternShipSection internship_section={field} />
-										{(sections.InternShip = true)}
-									</>
+									<InternShipSection internship_section={field as INTR.InternShip} />
 								)}
 								{field.type === 'Course' && (
-									<>
-										<CourseSection course_section={field} />
-										{(sections.Course = true)}
-									</>
+									<CourseSection course_section={field as INTR.Course} />
 								)}
 								{field.type === 'Custom' && (
-									<CustomSection customActivity_section={field} />
+									<CustomSection customActivity_section={field as INTR.Custom} />
 								)}
 							</Grid>
 						))}

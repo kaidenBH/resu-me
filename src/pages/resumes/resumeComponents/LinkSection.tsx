@@ -12,6 +12,7 @@ interface LinkSectionProps {
 
 const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 	const [linkData, setLinkData] = useState<Link>({
+		type: link_section.type || 'Link', 
 		_id: link_section._id,
 		resumeId: link_section.resumeId || '',
 		field_name: link_section.field_name || 'Websites & Links',

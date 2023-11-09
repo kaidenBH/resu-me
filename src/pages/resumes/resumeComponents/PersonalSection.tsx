@@ -11,14 +11,15 @@ interface PersonalSectionProps {
 
 const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) => {
 	const { updatePersonalSection } = useResume();
-	const [editPersonalField, setEditPersonalField] = useState(false);
-	const [PersonalFieldLoading, setPersonalFieldLoading] = useState(false);
+	//const [editPersonalField, setEditPersonalField] = useState(false);
+	//const [PersonalFieldLoading, setPersonalFieldLoading] = useState(false);
 	const [editSummaryField, setEditSummaryField] = useState(false);
 	const [summaryFieldLoading, setSummaryFieldLoading] = useState(false);
 	const [editingPhase, setEditingPhase] = useState(false);
 	const [seconds, setSeconds] = useState(2);
 
 	const [personalData, setPersonalData] = useState<PersonalDetails>({
+		type: personal_section.type || 'Personal', 
 		_id: personal_section._id || '',
 		resumeId: personal_section.resumeId || '',
 		field_name: personal_section.field_name || 'Personal Details',
@@ -40,9 +41,8 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 			setPersonalData({
 				...personalData,
 				summary: [
-					...personalData.summary.slice(0, index),
-					value,
-					...personalData.summary.slice(index + 1),
+					index === 0 ? value : personalData.summary[0],
+					index === 1 ? value : personalData.summary[1],
 				],
 			});
 		} else {

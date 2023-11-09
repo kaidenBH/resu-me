@@ -14,6 +14,7 @@ interface EmploymentSectionProps {
 
 const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_section }) => {
 	const [employmentData, setEmploymentData] = useState<Employment>({
+		type: employment_section.type || 'Employment', 
 		_id: employment_section._id,
 		resumeId: employment_section.resumeId || '',
 		field_name: employment_section.field_name || 'Employment History',
@@ -78,6 +79,33 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 				return updatedSeconds;
 			});
 		}
+	};
+
+	const handleChangeDates = (target: {name: string, value: string}) => {
+		const { name, value } = target;
+		const [fieldName, indexStr] = name.split(';-;');
+		const index = parseInt(indexStr, 10);
+		setEmploymentData((prevData) => {
+			const updatedEmployments = [...prevData.employments];
+			updatedEmployments[index] = {
+				...updatedEmployments[index],
+				[fieldName]: value,
+			};
+			return {
+				...prevData,
+				employments: updatedEmployments,
+			};
+		});
+		setEditingPhases((prevPhases) => {
+			const updatedPhases = [...prevPhases];
+			updatedPhases[index] = true;
+			return updatedPhases;
+		});
+		setSecondsArray((prevSeconds) => {
+			const updatedSeconds = [...prevSeconds];
+			updatedSeconds[index] = 2;
+			return updatedSeconds;
+		});
 	};
 
 	const employmentRecordUpdate = async (index: number) => {
@@ -335,11 +363,9 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 													const formattedDate = date
 														? date.toLocaleDateString('en-US')
 														: '';
-													handleChange({
-														target: {
-															name: `start_date;-;${index}`,
-															value: formattedDate,
-														},
+													handleChangeDates({
+														name: `start_date;-;${index}`,
+														value: formattedDate,
 													});
 												}}
 												dateFormat="MM/dd/yyyy"
@@ -364,11 +390,9 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 													const formattedDate = date
 														? date.toLocaleDateString('en-US')
 														: '';
-													handleChange({
-														target: {
-															name: `end_date;-;${index}`,
-															value: formattedDate,
-														},
+													handleChangeDates({
+														name: `end_date;-;${index}`,
+														value: formattedDate,
 													});
 												}}
 												dateFormat="MM/dd/yyyy"

@@ -18,6 +18,7 @@ interface LanguageSectionProps {
 
 const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) => {
 	const [languageData, setLanguageData] = useState<Language>({
+		type: language_section.type || 'Language', 
 		_id: language_section._id,
 		resumeId: language_section.resumeId || '',
 		field_name: language_section.field_name || 'Languages',
@@ -126,7 +127,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 
 	const handleAddLanguage = async () => {
 		const language_section = await addLanguage(languageData.resumeId);
-		setLanguageData(language_section);
+		setLanguageData(language_section!);
 		setShowDetails((prevDetails) => {
 			const updatedDetails = [...prevDetails];
 			updatedDetails[updatedDetails.length] = true;
@@ -144,7 +145,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 			languageData.resumeId,
 			languageData.languages[deletionIndex]._id,
 		);
-		setLanguageData(language_section);
+		setLanguageData(language_section!);
 		setShowDialogLanguage(false);
 	};
 
@@ -369,7 +370,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 												max={5}
 												marks={true}
 												onChange={(event, newValue) =>
-													handleChangeLevel(index, newValue)
+													handleChangeLevel(index, newValue as number)
 												}
 											/>
 										</Grid>

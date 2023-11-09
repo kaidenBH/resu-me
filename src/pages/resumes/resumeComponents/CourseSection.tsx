@@ -14,6 +14,7 @@ interface CourseSectionProps {
 
 const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 	const [courseData, setCourseData] = useState<Course>({
+		type: course_section.type || 'Course',
 		_id: course_section._id,
 		resumeId: course_section.resumeId || '',
 		field_name: course_section.field_name || 'Courses',
@@ -73,6 +74,36 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 				return updatedSeconds;
 			});
 		}
+	};
+	
+	const handleChangeDates = (target: {name: string, value: string}) => {
+		const { name, value } = target;
+		
+		const [fieldName, indexStr] = name.split(';-;');
+		const index = parseInt(indexStr, 10);
+
+		setCourseData((prevData) => {
+			const updatedCourses = [...prevData.courses];
+			updatedCourses[index] = {
+				...updatedCourses[index],
+				[fieldName]: value,
+			};
+			return {
+				...prevData,
+				courses: updatedCourses,
+			};
+		});
+		setEditingPhases((prevPhases) => {
+			const updatedPhases = [...prevPhases];
+			updatedPhases[index] = true;
+			return updatedPhases;
+		});
+		setSecondsArray((prevSeconds) => {
+			const updatedSeconds = [...prevSeconds];
+			updatedSeconds[index] = 2;
+			return updatedSeconds;
+		});
+		
 	};
 
 	const courseUpdate = async (index: number) => {
@@ -330,12 +361,10 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 													const formattedDate = date
 														? date.toLocaleDateString('en-US')
 														: '';
-													handleChange({
-														target: {
+													handleChangeDates({
 															name: `start_date;-;${index}`,
 															value: formattedDate,
-														},
-													});
+														});
 												}}
 												dateFormat="MM/dd/yyyy"
 												customInput={
@@ -359,12 +388,10 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 													const formattedDate = date
 														? date.toLocaleDateString('en-US')
 														: '';
-													handleChange({
-														target: {
+													handleChangeDates({
 															name: `end_date;-;${index}`,
 															value: formattedDate,
-														},
-													});
+														});
 												}}
 												dateFormat="MM/dd/yyyy"
 												customInput={

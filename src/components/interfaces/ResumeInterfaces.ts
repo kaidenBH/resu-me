@@ -1,4 +1,5 @@
 export interface PersonalDetails {
+    type: string;
 	_id: string;
 	resumeId: string;
 	field_name: string;
@@ -20,6 +21,7 @@ export interface Link_Section {
 	url: string;
 }
 export interface Link {
+    type: string;
 	_id: string;
 	resumeId: string;
 	field_name: string;
@@ -33,6 +35,7 @@ export interface Skill_Section {
 	level: number;
 }
 export interface Skill {
+    type: string;
 	_id: string;
 	resumeId: string;
 	field_name: string;
@@ -46,6 +49,7 @@ export interface Language_Section {
 	level: number;
 }
 export interface Language {
+    type: string;
 	_id: string;
 	resumeId: string;
 	field_name: string;
@@ -63,6 +67,7 @@ export interface InternShip_Section {
 	description: string;
 }
 export interface InternShip {
+    type: string;
 	_id: string;
 	resumeId: string;
 	field_name: string;
@@ -80,6 +85,7 @@ export interface Employment_Section {
 	description: string;
 }
 export interface Employment {
+    type: string;
 	_id: string;
 	resumeId: string;
 	field_name: string;
@@ -97,6 +103,7 @@ export interface Education_Section {
 	description: string;
 }
 export interface Education {
+    type: string;
 	_id: string;
 	resumeId: string;
 	field_name: string;
@@ -113,6 +120,7 @@ export interface Custom_Section {
 	description: string;
 }
 export interface Custom {
+    type: string;
 	_id: string;
 	resumeId: string;
 	field_name: string;
@@ -129,6 +137,7 @@ export interface Course_Section {
 	description: string;
 }
 export interface Course {
+    type: string;
 	_id: string;
 	resumeId: string;
 	field_name: string;
@@ -154,4 +163,15 @@ export interface Resume {
 	template: string;
 	owner: boolean;
 	fields: FieldSection[];
+}
+
+export interface UpdatedSections {
+	[key: string]: boolean;
+	Education: boolean;
+	Employment: boolean;
+	Link: boolean;
+	Skill: boolean;
+	Language: boolean;
+	InternShip: boolean;
+	Course: boolean;
 }

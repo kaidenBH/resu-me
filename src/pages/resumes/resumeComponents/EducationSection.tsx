@@ -14,6 +14,7 @@ interface EducationSectionProps {
 
 const EducationSection: React.FC<EducationSectionProps> = ({ education_section }) => {
 	const [schoolData, setSchoolData] = useState<Education>({
+		type: education_section.type || 'Education', 
 		_id: education_section._id,
 		resumeId: education_section.resumeId || '',
 		field_name: education_section.field_name || 'Education',
@@ -75,6 +76,33 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 		}
 	};
 
+	const handleChangeDates = (target: {name: string, value: string}) => {
+		const { name, value } = target;
+		const [fieldName, indexStr] = name.split(';-;');
+		const index = parseInt(indexStr, 10);
+		setSchoolData((prevData) => {
+			const updatedSchools = [...prevData.schools];
+			updatedSchools[index] = {
+				...updatedSchools[index],
+				[fieldName]: value,
+			};
+			return {
+				...prevData,
+				schools: updatedSchools,
+			};
+		});
+		setEditingPhases((prevPhases) => {
+			const updatedPhases = [...prevPhases];
+			updatedPhases[index] = true;
+			return updatedPhases;
+		});
+		setSecondsArray((prevSeconds) => {
+			const updatedSeconds = [...prevSeconds];
+			updatedSeconds[index] = 2;
+			return updatedSeconds;
+		});
+	};
+
 	const schoolUpdate = async (index: number) => {
 		await updateSchool(
 			schoolData.resumeId,
@@ -97,7 +125,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 
 	const handleAddSchool = async () => {
 		const education_section = await addSchool(schoolData.resumeId);
-		setSchoolData(education_section);
+		setSchoolData(education_section!);
 		setShowDetails((prevDetails) => {
 			const updatedDetails = [...prevDetails];
 			updatedDetails[updatedDetails.length] = true;
@@ -115,7 +143,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 			schoolData.resumeId,
 			schoolData.schools[deletionIndex]._id,
 		);
-		setSchoolData(education_section);
+		setSchoolData(education_section!);
 		setShowDialogSchool(false);
 	};
 
@@ -330,11 +358,9 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 													const formattedDate = date
 														? date.toLocaleDateString('en-US')
 														: '';
-													handleChange({
-														target: {
-															name: `start_date;-;${index}`,
-															value: formattedDate,
-														},
+													handleChangeDates({
+														name: `start_date;-;${index}`,
+														value: formattedDate,
 													});
 												}}
 												dateFormat="MM/dd/yyyy"
@@ -359,11 +385,9 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 													const formattedDate = date
 														? date.toLocaleDateString('en-US')
 														: '';
-													handleChange({
-														target: {
-															name: `end_date;-;${index}`,
-															value: formattedDate,
-														},
+													handleChangeDates({
+														name: `end_date;-;${index}`,
+														value: formattedDate,
 													});
 												}}
 												dateFormat="MM/dd/yyyy"

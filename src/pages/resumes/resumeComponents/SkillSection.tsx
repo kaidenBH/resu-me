@@ -18,6 +18,7 @@ interface SkillSectionProps {
 
 const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
 	const [skillData, setSkillData] = useState<Skill>({
+		type: skill_section.type || 'Skill',
 		_id: skill_section._id,
 		resumeId: skill_section.resumeId || '',
 		field_name: skill_section.field_name || 'Skills',
@@ -122,7 +123,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
 
 	const handleAddSkill = async () => {
 		const skill_section = await addSkill(skillData.resumeId);
-		setSkillData(skill_section);
+		setSkillData(skill_section!);
 		setShowDetails((prevDetails) => {
 			const updatedDetails = [...prevDetails];
 			updatedDetails[updatedDetails.length] = true;
@@ -140,7 +141,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
 			skillData.resumeId,
 			skillData.skills[deletionIndex]._id,
 		);
-		setSkillData(skill_section);
+		setSkillData(skill_section!);
 		setShowDialogSkill(false);
 	};
 
@@ -365,7 +366,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
 												max={5}
 												marks={true}
 												onChange={(event, newValue) =>
-													handleChangeLevel(index, newValue)
+													handleChangeLevel(index, newValue as number)
 												}
 											/>
 										</Grid>
