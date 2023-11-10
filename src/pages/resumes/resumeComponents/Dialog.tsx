@@ -24,7 +24,7 @@ const AlertDialog: React.FC<AlertDialogProps> = ({ open, handleCloseDialog, hand
 				aria-describedby="alert-dialog-description"
 			>
 				<DialogTitle id="alert-dialog-title">
-					{"Use Google's location service?"}
+					Alert!
 				</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description">
