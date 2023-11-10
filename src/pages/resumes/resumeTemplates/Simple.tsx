@@ -14,7 +14,6 @@ const Simple = () => {
 	const { resume } = useResume();
 	const skillMarks = ['Novice', 'Beginner', 'Skillful', 'Experienced', 'Expert'];
 	const languageMarks = ['Basic', 'Conversional', 'Intermediate', 'Fluent', 'Expert / Native'];
-	let fieldType = null;
 
 	return (
 		<Box>
@@ -22,48 +21,46 @@ const Simple = () => {
 				<Grid container spacing={1}>
 					{resume?.fields.map((field, index: number) => (
 						<Grid item container xs={12} key={index} spacing={2}>
-							{field.type === 'Personal' && (
+							{field.type === 'Personal'  && (
 								<>
-									{fieldType = field as INTR.PersonalDetails}
 									<Grid item xs={12}>
 										<TitleTypography>
-											{fieldType.first_name} {fieldType.last_name}, {fieldType.job_title}
+											{field.first_name} {field.last_name}, {field.job_title}
 										</TitleTypography>
 									</Grid>
 									<Grid item xs={6}>
-										<PointTypography>{fieldType.email}</PointTypography>
+										<PointTypography>{field.email}</PointTypography>
 									</Grid>
 									<Grid item xs={6}>
 										<PointTypography sx={{ textAlign: 'right' }}>
-											{fieldType.city}, {fieldType.country}
+											{field.city}, {field.country}
 										</PointTypography>
 									</Grid>
 									<Grid item xs={12}>
-										<PointTypography>{fieldType.phone}</PointTypography>
+										<PointTypography>{field.phone}</PointTypography>
 									</Grid>
 									<Grid item xs={12}>
 										<Box borderBottom={1} sx={{ borderColor: '#B2B2B2' }} />
 									</Grid>
 									<Grid item xs={12} container spacing={1}>
 										<Grid item xs={3}>
-											<PointTypography>{fieldType.summary[0]}</PointTypography>
+											<PointTypography>{field.summary[0]}</PointTypography>
 										</Grid>
 										<Grid item xs={9}>
-											<TextTypography>{fieldType.summary[1]}</TextTypography>
+											<TextTypography>{field.summary[1]}</TextTypography>
 										</Grid>
 									</Grid>
 								</>
 							)}
 							{field.type === 'Education' && (
 								<>
-									{fieldType = field as INTR.Education}
 									<Grid item xs={12}>
 										<Box borderBottom={1} sx={{ borderColor: '#B2B2B2' }} />
 									</Grid>
 									<Grid item xs={12}>
-										<PointTypography>{fieldType.field_name}</PointTypography>
+										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
-									{fieldType.schools.map((school: INTR.Education_Section, sindex: number) => (
+									{field.schools.map((school: INTR.Education_Section, sindex: number) => (
 										<Grid item xs={12} container spacing={1} key={sindex}>
 											<Grid item xs={3}>
 												{school.start_date && (
@@ -106,14 +103,13 @@ const Simple = () => {
 							)}
 							{field.type === 'Employment' && (
 								<>
-									{fieldType = field as INTR.Employment}
 									<Grid item xs={12}>
 										<Box borderBottom={1} sx={{ borderColor: '#B2B2B2' }} />
 									</Grid>
 									<Grid item xs={12}>
-										<PointTypography>{fieldType.field_name}</PointTypography>
+										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
-									{fieldType.employments.map((record: INTR.Employment_Section, eindex: number) => (
+									{field.employments.map((record: INTR.Employment_Section, eindex: number) => (
 										<Grid item xs={12} container spacing={1} key={eindex}>
 											<Grid item xs={3}>
 												{record.start_date && (
@@ -156,15 +152,14 @@ const Simple = () => {
 							)}
 							{field.type === 'Link' && (
 								<>
-									{fieldType = field as INTR.Link}
 									<Grid item xs={12}>
 										<Box borderBottom={1} sx={{ borderColor: '#B2B2B2' }} />
 									</Grid>
 									<Grid item xs={3}>
-										<PointTypography>{fieldType.field_name}</PointTypography>
+										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
 									<Grid item xs={9} container>
-										{fieldType.links.map((link: INTR.Link_Section, lindex: number) => (
+										{field.links.map((link: INTR.Link_Section, lindex: number) => (
 											<LinkTypography
 												key={lindex}
 												onClick={() => window.open(link.url, '_blank')}
@@ -177,14 +172,13 @@ const Simple = () => {
 							)}
 							{field.type === 'Skill' && (
 								<>
-									{fieldType = field as INTR.Skill}
 									<Grid item xs={12}>
 										<Box borderBottom={1} sx={{ borderColor: '#B2B2B2' }} />
 									</Grid>
 									<Grid item xs={3}>
-										<PointTypography>{fieldType.field_name}</PointTypography>
+										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
-									{fieldType.skills.map((skill: INTR.Skill_Section, sindex: number) => (
+									{field.skills.map((skill: INTR.Skill_Section, sindex: number) => (
 										<React.Fragment key={sindex}>
 											{sindex > 1 && sindex % 2 === 0 && (
 												<Grid item xs={3}></Grid>
@@ -210,14 +204,13 @@ const Simple = () => {
 							)}
 							{field.type === 'Language' && (
 								<>
-									{fieldType = field as INTR.Language}
 									<Grid item xs={12}>
 										<Box borderBottom={1} sx={{ borderColor: '#B2B2B2' }} />
 									</Grid>
 									<Grid item xs={3}>
-										<PointTypography>{fieldType.field_name}</PointTypography>
+										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
-									{fieldType.languages.map((lng: INTR.Language_Section, linkdex: number) => (
+									{field.languages.map((lng: INTR.Language_Section, linkdex: number) => (
 										<React.Fragment key={linkdex}>
 											{linkdex > 1 && linkdex % 2 === 0 && (
 												<Grid item xs={3}></Grid>
@@ -241,14 +234,13 @@ const Simple = () => {
 							)}
 							{field.type === 'InternShip' && (
 								<>
-									{fieldType = field as INTR.InternShip}
 									<Grid item xs={12}>
 										<Box borderBottom={1} sx={{ borderColor: '#B2B2B2' }} />
 									</Grid>
 									<Grid item xs={12}>
-										<PointTypography>{fieldType.field_name}</PointTypography>
+										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
-									{fieldType.internships.map((record: INTR.InternShip_Section, nindex: number) => (
+									{field.internships.map((record: INTR.InternShip_Section, nindex: number) => (
 										<Grid item xs={12} container spacing={1} key={nindex}>
 											<Grid item xs={3}>
 												{record.start_date && (
@@ -291,14 +283,13 @@ const Simple = () => {
 							)}
 							{field.type === 'Course' && (
 								<>
-									{fieldType = field as INTR.Course}
 									<Grid item xs={12}>
 										<Box borderBottom={1} sx={{ borderColor: '#B2B2B2' }} />
 									</Grid>
 									<Grid item xs={12}>
-										<PointTypography>{fieldType.field_name}</PointTypography>
+										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
-									{fieldType.courses.map((course: INTR.Course_Section, cindex: number) => (
+									{field.courses.map((course: INTR.Course_Section, cindex: number) => (
 										<Grid item xs={12} container spacing={1} key={cindex}>
 											<Grid item xs={3}>
 												{course.start_date && (
@@ -336,14 +327,13 @@ const Simple = () => {
 							)}
 							{field.type === 'Custom' && (
 								<>
-									{fieldType = field as INTR.Custom}
 									<Grid item xs={12}>
 										<Box borderBottom={1} sx={{ borderColor: '#B2B2B2' }} />
 									</Grid>
 									<Grid item xs={12}>
-										<PointTypography>{fieldType.field_name}</PointTypography>
+										<PointTypography>{field.field_name}</PointTypography>
 									</Grid>
-									{fieldType.activities.map((activity: INTR.Custom_Section, aindex: number) => (
+									{field.activities.map((activity: INTR.Custom_Section, aindex: number) => (
 										<Grid item xs={12} container spacing={1} key={aindex}>
 											<Grid item xs={3}>
 												{activity.start_date && (
