@@ -9,7 +9,7 @@ const Resume: React.FC = () => {
 	const { resume, getResume } = useResume();
 	const [resumeLoading, setResumeLoading] = useState(false);
 	const { resumeId } = useParams();
-	const [editResume, setEditResume] = useState(true);
+	
 	useEffect(() => {
 		const ApiCall = async () => {
 			setResumeLoading(true);

@@ -159,7 +159,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 	};
 
 	useEffect(() => {
-		const intervals = secondsArray.map((seconds, index) => {
+		const intervals = secondsArray.map((_, index) => {
 			return setInterval(() => {
 				setSecondsArray((prevSeconds) => {
 					const updatedSeconds = [...prevSeconds];

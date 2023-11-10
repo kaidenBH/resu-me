@@ -158,7 +158,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 	};
 
 	useEffect(() => {
-		const intervals = secondsArray.map((seconds, index) => {
+		const intervals = secondsArray.map((_, index) => {
 			return setInterval(() => {
 				setSecondsArray((prevSeconds) => {
 					const updatedSeconds = [...prevSeconds];
@@ -369,7 +369,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 												min={1}
 												max={5}
 												marks={true}
-												onChange={(event, newValue) =>
+												onChange={(_, newValue) =>
 													handleChangeLevel(index, newValue as number)
 												}
 											/>

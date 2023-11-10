@@ -34,7 +34,7 @@ export const LinkTypography = styled(Typography)(({ theme }) => ({
 	},
 }));
 
-export const CustomSlider = styled(Slider)(({ theme, value }) => ({
+export const CustomSlider = styled(Slider)(({ value }) => ({
 	'.MuiSlider-rail': {
 		color: '#ccc',
 	},

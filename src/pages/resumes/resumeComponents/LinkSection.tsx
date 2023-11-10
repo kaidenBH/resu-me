@@ -120,7 +120,7 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 	};
 
 	useEffect(() => {
-		const intervals = secondsArray.map((seconds, index) => {
+		const intervals = secondsArray.map((_, index) => {
 			return setInterval(() => {
 				setSecondsArray((prevSeconds) => {
 					const updatedSeconds = [...prevSeconds];

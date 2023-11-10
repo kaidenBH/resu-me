@@ -161,7 +161,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 	};
 
 	useEffect(() => {
-		const intervals = secondsArray.map((seconds, index) => {
+		const intervals = secondsArray.map((_, index) => {
 			return setInterval(() => {
 				setSecondsArray((prevSeconds) => {
 					const updatedSeconds = [...prevSeconds];
