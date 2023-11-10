@@ -3,7 +3,7 @@ import { Typography, Paper } from '@mui/material';
 
 export const CustomPaper = styled(Paper)({
 	width: '216mm', // A4 width in millimeters
-	height: '279mm', // A4 height in millimeters
+	//height: '279mm', // A4 height in millimeters
 	padding: '12mm',
 	borderRadius: 0,
 });

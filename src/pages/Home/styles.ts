@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Avatar, Box, Button, Typography, TextField, Paper } from '@mui/material';
+import { Avatar, Box, Button, Typography, TextField } from '@mui/material';
 
 export const CustomAvatar = styled(Avatar)(({ theme }) => ({
 	color: theme.palette.getContrastText('#363062'),
