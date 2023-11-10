@@ -401,7 +401,7 @@ const InternShipSection: React.FC<InternShipSectionProps> = ({ internship_sectio
 														fullWidth
 														variant="filled"
 														color="secondary"
-														label="Start date"
+														label="End date"
 													/>
 												}
 											/>

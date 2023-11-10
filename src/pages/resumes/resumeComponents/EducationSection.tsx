@@ -396,7 +396,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 														fullWidth
 														variant="filled"
 														color="secondary"
-														label="Start date"
+														label="End date"
 													/>
 												}
 											/>

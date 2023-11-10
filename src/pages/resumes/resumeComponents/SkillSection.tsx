@@ -55,17 +55,7 @@ const SkillSection: React.FC<SkillSectionProps> = ({ skill_section }) => {
 				skills: updatedSkills,
 			};
 		});
-		setEditingPhases((prevPhases) => {
-			const updatedPhases = [...prevPhases];
-			updatedPhases[index] = true;
-			return updatedPhases;
-		});
-
-		setSecondsArray((prevSeconds) => {
-			const updatedSeconds = [...prevSeconds];
-			updatedSeconds[index] = 2;
-			return updatedSeconds;
-		});
+		skillUpdate(index);
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

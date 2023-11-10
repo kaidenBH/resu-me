@@ -55,17 +55,7 @@ const LanguageSection: React.FC<LanguageSectionProps> = ({ language_section }) =
 				languages: updatedLanguages,
 			};
 		});
-		setEditingPhases((prevPhases) => {
-			const updatedPhases = [...prevPhases];
-			updatedPhases[index] = true;
-			return updatedPhases;
-		});
-
-		setSecondsArray((prevSeconds) => {
-			const updatedSeconds = [...prevSeconds];
-			updatedSeconds[index] = 2;
-			return updatedSeconds;
-		});
+		languageUpdate(index);
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

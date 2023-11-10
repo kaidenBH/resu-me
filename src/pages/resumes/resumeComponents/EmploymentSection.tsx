@@ -401,7 +401,7 @@ const EmploymentSection: React.FC<EmploymentSectionProps> = ({ employment_sectio
 														fullWidth
 														variant="filled"
 														color="secondary"
-														label="Start date"
+														label="End date"
 													/>
 												}
 											/>

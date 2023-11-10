@@ -399,7 +399,7 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 														fullWidth
 														variant="filled"
 														color="secondary"
-														label="Start date"
+														label="End date"
 													/>
 												}
 											/>
