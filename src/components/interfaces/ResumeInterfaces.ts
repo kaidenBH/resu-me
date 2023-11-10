@@ -1,3 +1,12 @@
+export interface User {
+	first_name: string;
+	last_name: string;
+	email: string;
+	image?: string | null;
+	account_type: string;
+	token: string;
+}
+
 export interface PersonalDetails {
     type: string;
 	_id: string;

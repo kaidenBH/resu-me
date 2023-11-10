@@ -11,7 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 function Home() {
 	const { checkUser } = useAuth();
 	const { getAllResumes } = useResume();
-	const [anchorEl, setAnchorEl] = useState(null);
+	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
 	const dorpMenu = useMediaQuery('(max-width:900px)');
 
@@ -26,7 +26,7 @@ function Home() {
 		return '90vw'; // Default width (adjust as needed)
 	};
 
-	const handleClick = (event) => {
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
 

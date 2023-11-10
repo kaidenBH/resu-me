@@ -13,7 +13,7 @@ API.interceptors.request.use((req) => {
 	return req;
 });
 
-type ApiFunction = (userData?: object | string) => Promise<AxiosResponse<object>>;
+type ApiFunction = (userData?: object | string) => Promise<AxiosResponse<INTR.User>>;
 
 // User Apis
 export const signIn: ApiFunction = (userData) => API.post('/user/signin', userData);

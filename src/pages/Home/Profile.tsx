@@ -68,12 +68,12 @@ const Profile: React.FC = () => {
 	const handleActiveEditData = () => {
 		if (!editData) {
 			setFormData({
-				email: user?.email,
+				email: user?.email || '',
 				oldPassword: '',
 				newPassword: '',
 				confirmsNewPassword: '',
-				first_name: user?.first_name,
-				last_name: user?.last_name,
+				first_name: user?.first_name || '',
+				last_name: user?.last_name || '',
 			});
 		} else {
 			setEditPassword(false);
@@ -120,7 +120,7 @@ const Profile: React.FC = () => {
 						</IconButton>
 					</Grid>
 					<Grid item xs={4} sx={{ textAlign: 'right' }}>
-						<CustomAvatar alt={user?.first_name} src={user?.image}>
+						<CustomAvatar alt={user?.first_name} src={user?.image || undefined}>
 							{user?.first_name.charAt(0)}
 						</CustomAvatar>
 						{editData ? (

@@ -2,31 +2,23 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { useLocalStorage } from '../hooks';
 import { useNavigate } from 'react-router-dom';
 import * as API from '../../apis/Apis';
-
-interface User {
-	first_name: string;
-	last_name: string;
-	email: string;
-	image?: string | null;
-	account_type: string;
-	token: string;
-}
+import { User } from '../interfaces/ResumeInterfaces';
 
 interface UserContextType {
-	user: User | object | null;
+	user: User | null;
 	signIn: (userData: object) => Promise<void>;
 	signUp: (userData: object) => Promise<void>;
 	updateUserImage: (userData: object) => Promise<void>;
 	updateUser: (userData: object) => Promise<void>;
 	signOut: () => void;
 	checkUser: () => void;
-	refreshUserToken: (newUser: object) => void;
+	refreshUserToken: (newUser: User) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-	const [user, setUser] = useState<User | object | null>(null);
+	const [user, setUser] = useState<User | null>(null);
 	const { getItem, setItem, removeItem } = useLocalStorage();
 	const navigate = useNavigate();
 
@@ -82,7 +74,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 			navigate('/auth');
 		}
 	};
-	const refreshUserToken = (newUser: object) => {
+	const refreshUserToken = (newUser: User) => {
 		setUser(newUser);
 		setItem('user', JSON.stringify(newUser));
 		navigate('/');
