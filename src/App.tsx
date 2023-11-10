@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Box } from '@mui/material';
 import Router from './pages/Router';
 import { UserProvider } from './components/context/AuthContext';
 import { ResumeProvider } from './components/context/ResumeContext';
-//import './App.css';
 
 const App: React.FC = () => {
 	return (
