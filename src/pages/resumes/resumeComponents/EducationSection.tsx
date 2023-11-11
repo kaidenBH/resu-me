@@ -4,7 +4,7 @@ import { CustomTextField, CustomTypography, CustomBox, LinkTypography } from './
 import { useEducation } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
-import DatePicker from 'react-datepicker';
+import CustomDatePicker from './CustomDatePicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Education } from '../../../components/interfaces/ResumeInterfaces';
 
@@ -348,57 +348,29 @@ const EducationSection: React.FC<EducationSectionProps> = ({ education_section }
 											/>
 										</Grid>
 										<Grid item xs={3}>
-											<DatePicker
-												selected={
-													school.start_date
-														? new Date(school.start_date)
-														: null
-												}
-												onChange={(date: Date) => {
-													const formattedDate = date
-														? date.toLocaleDateString('en-US')
-														: '';
+											<CustomDatePicker
+												selectedDate={school.start_date ? new Date(school.start_date) : null}
+												label='Start Date'
+												onChange={(date: Date | null) => {
+													const formattedDate = date ? date.toLocaleDateString('en-US') : '';
 													handleChangeDates({
-														name: `start_date;-;${index}`,
-														value: formattedDate,
+													name: `start_date;-;${index}`,
+													value: formattedDate,
 													});
 												}}
-												dateFormat="MM/dd/yyyy"
-												customInput={
-													<CustomTextField
-														fullWidth
-														variant="filled"
-														color="secondary"
-														label="Start date"
-													/>
-												}
 											/>
 										</Grid>
 										<Grid item xs={3}>
-											<DatePicker
-												selected={
-													school.end_date
-														? new Date(school.end_date)
-														: null
-												}
-												onChange={(date: Date) => {
-													const formattedDate = date
-														? date.toLocaleDateString('en-US')
-														: '';
+											<CustomDatePicker
+												selectedDate={school.end_date ? new Date(school.end_date) : null}
+												label='End Date'
+												onChange={(date: Date | null) => {
+													const formattedDate = date ? date.toLocaleDateString('en-US') : '';
 													handleChangeDates({
-														name: `end_date;-;${index}`,
-														value: formattedDate,
+													name: `end_date;-;${index}`,
+													value: formattedDate,
 													});
 												}}
-												dateFormat="MM/dd/yyyy"
-												customInput={
-													<CustomTextField
-														fullWidth
-														variant="filled"
-														color="secondary"
-														label="End date"
-													/>
-												}
 											/>
 										</Grid>
 										<Grid item xs={6}>

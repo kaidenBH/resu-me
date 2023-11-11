@@ -4,9 +4,9 @@ import { CustomTextField, CustomTypography, CustomBox, LinkTypography } from './
 import { useCustom } from '../../../components/hooks';
 import AlertDialog from './Dialog';
 import { Edit, Check, ExpandMore, ExpandLess, Delete, DeleteOutline } from '@mui/icons-material';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Custom } from '../../../components/interfaces/ResumeInterfaces';
+import CustomDatePicker from './CustomDatePicker';
 
 interface CustomSectionProps {
 	customActivity_section: Custom;
@@ -358,57 +358,29 @@ const CustomSection: React.FC<CustomSectionProps> = ({ customActivity_section })
 											/>
 										</Grid>
 										<Grid item xs={3}>
-											<DatePicker
-												selected={
-													activity.start_date
-														? new Date(activity.start_date)
-														: null
-												}
-												onChange={(date: Date) => {
-													const formattedDate = date
-														? date.toLocaleDateString('en-US')
-														: '';
+											<CustomDatePicker
+												selectedDate={activity.start_date ? new Date(activity.start_date) : null}
+												label='Start Date'
+												onChange={(date: Date | null) => {
+													const formattedDate = date ? date.toLocaleDateString('en-US') : '';
 													handleChangeDates({
-														name: `start_date;-;${index}`,
-														value: formattedDate,
+													name: `start_date;-;${index}`,
+													value: formattedDate,
 													});
 												}}
-												dateFormat="MM/dd/yyyy"
-												customInput={
-													<CustomTextField
-														fullWidth
-														variant="filled"
-														color="secondary"
-														label="Start date"
-													/>
-												}
 											/>
 										</Grid>
 										<Grid item xs={3}>
-											<DatePicker
-												selected={
-													activity.end_date
-														? new Date(activity.end_date)
-														: null
-												}
-												onChange={(date: Date) => {
-													const formattedDate = date
-														? date.toLocaleDateString('en-US')
-														: '';
+											<CustomDatePicker
+												selectedDate={activity.end_date ? new Date(activity.end_date) : null}
+												label='End Date'
+												onChange={(date: Date | null) => {
+													const formattedDate = date ? date.toLocaleDateString('en-US') : '';
 													handleChangeDates({
-														name: `end_date;-;${index}`,
-														value: formattedDate,
+													name: `end_date;-;${index}`,
+													value: formattedDate,
 													});
 												}}
-												dateFormat="MM/dd/yyyy"
-												customInput={
-													<CustomTextField
-														fullWidth
-														variant="filled"
-														color="secondary"
-														label="End date"
-													/>
-												}
 											/>
 										</Grid>
 										<Grid item xs={12} style={{ zIndex: 0 }}>
