@@ -2,6 +2,8 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as API from '../../apis/Apis';
 import { Resume } from '../interfaces/ResumeInterfaces';
+import { Snackbar } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 
 interface ResumeContextType {
 	resume: Resume | null;
@@ -18,6 +20,19 @@ interface ResumeContextType {
 	updateResume: (resumeId: string, resumeData: object) => Promise<void>;
 }
 
+interface CustomAlert {
+	message: string;
+	severity: 'error' | 'warning' | 'info' | 'success';
+}
+ 
+interface ApiError {
+	response: {
+		data: {
+			message: string;
+		};
+	};
+}
+
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 
 export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -25,13 +40,27 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 	const [allResumes, setAllResumes] = useState<Resume[] | null>(null);
 	const [activeTemplate, setActiveTemplate] = useState<string | null>('Simple');
 	const navigate = useNavigate();
+	const [errorAlert, setErrorAlert] = useState<CustomAlert | null>(null);
+
+	const handleCloseErrorAlert = () => {
+		setErrorAlert(null);
+	};
+
+	const showErrorAlert = (message: string, severity: 'error' | 'warning' | 'info' | 'success') => {
+		setErrorAlert({ message, severity });
+		setTimeout(() => {
+			handleCloseErrorAlert();
+		}, 5000);
+	};
 
 	const getAllResumes = async () => {
 		try {
 			const { data } = await API.getAllResumes();
 			setAllResumes(data.resumes);
 		} catch (error) {
-			console.error('Error getting all resumes in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'error');
 		}
 	};
 
@@ -40,7 +69,9 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			await API.newResume({ title: title });
 			await getAllResumes();
 		} catch (error) {
-			console.error('Error making new resumes in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'error');
 		}
 	};
 
@@ -49,7 +80,9 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			await API.duplicateResume(resumeId);
 			await getAllResumes();
 		} catch (error) {
-			console.error('Error making new resumes in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'error');
 		}
 	};
 
@@ -63,7 +96,9 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			setResume(data);
 			setActiveTemplate(data.template);
 		} catch (error) {
-			console.error('Error getting resume in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'error');
 		}
 	};
 
@@ -72,7 +107,9 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			await API.updateResume(resumeId, resumeData);
 			await getAllResumes();
 		} catch (error) {
-			console.error('Error getting resume in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'error');
 		}
 	};
 
@@ -81,7 +118,9 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			await API.updatePersonalSection(resumeId, PeronalSectionData);
 			getResume(resumeId);
 		} catch (error) {
-			console.error('Error updating resume in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'error');
 		}
 	};
 
@@ -90,7 +129,9 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			await API.reOrderResume(resumeId, originalIndex, targetIndex);
 			getResume(resumeId);
 		} catch (error) {
-			console.error('Error updating resume order in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'error');
 		}
 	};
 
@@ -99,29 +140,48 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 			await API.removeResume(resumeId);
 			await getAllResumes();
 		} catch (error) {
-			console.error('Error deleting resume order in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'error');
 		}
 	};
 
 	return (
-		<ResumeContext.Provider
-			value={{
-				resume,
-				allResumes,
-				getResume,
-				createResume,
-				getAllResumes,
-				navigateResume,
-				activeTemplate,
-				updatePersonalSection,
-				reOrderResume,
-				removeResume,
-				duplicateResume,
-				updateResume,
-			}}
-		>
-			{children}
-		</ResumeContext.Provider>
+		<>
+			<Snackbar
+					open={!!errorAlert}
+					autoHideDuration={6000}
+					onClose={handleCloseErrorAlert}
+					anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+				>
+					<MuiAlert
+						elevation={6}
+						variant="filled"
+						onClose={handleCloseErrorAlert}
+						severity={errorAlert?.severity || 'error'}
+					>
+						{errorAlert?.message || ''}
+					</MuiAlert>
+			</Snackbar>
+			<ResumeContext.Provider
+				value={{
+					resume,
+					allResumes,
+					getResume,
+					createResume,
+					getAllResumes,
+					navigateResume,
+					activeTemplate,
+					updatePersonalSection,
+					reOrderResume,
+					removeResume,
+					duplicateResume,
+					updateResume,
+				}}
+			>
+				{children}
+			</ResumeContext.Provider>
+		</>
 	);
 };
 
