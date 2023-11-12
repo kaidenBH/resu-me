@@ -21,7 +21,6 @@ const Sign = () => {
 	};
 	const SlideEffect = () => {
 		setHaveAccount(!haveAccount);
-		console.log('Button clicked', haveAccount);
 	};
 	return (
 		<Slide direction="right" in={true} timeout={600}>

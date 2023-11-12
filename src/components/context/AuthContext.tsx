@@ -1,8 +1,10 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { useLocalStorage } from '../hooks';
 import { useNavigate } from 'react-router-dom';
 import * as API from '../../apis/Apis';
 import { User } from '../interfaces/ResumeInterfaces';
+import { Snackbar } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 
 interface UserContextType {
 	user: User | null;
@@ -14,20 +16,46 @@ interface UserContextType {
 	checkUser: () => void;
 	refreshUserToken: (newUser: User) => void;
 }
-
+interface CustomAlert {
+	message: string;
+	severity: 'error' | 'warning' | 'info' | 'success';
+}
+ 
+interface ApiError {
+	response: {
+		data: {
+			message: string;
+		};
+	};
+}
+  
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 	const [user, setUser] = useState<User | null>(null);
 	const { getItem, setItem, removeItem } = useLocalStorage();
 	const navigate = useNavigate();
+	const [errorAlert, setErrorAlert] = useState<CustomAlert | null>(null);
+
+	const handleCloseErrorAlert = () => {
+		setErrorAlert(null);
+	};
+
+	const showErrorAlert = (message: string, severity: 'error' | 'warning' | 'info' | 'success') => {
+		setErrorAlert({ message, severity });
+		setTimeout(() => {
+			handleCloseErrorAlert();
+		}, 5000);
+	};
 
 	const signIn = async (userData: object) => {
 		try {
 			const { data } = await API.signIn(userData);
 			refreshUserToken(data);
 		} catch (error) {
-			console.error('Error signing in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'error');
 		}
 	};
 
@@ -36,7 +64,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 			const { data } = await API.signUp(userData);
 			refreshUserToken(data);
 		} catch (error) {
-			console.error('Error signing in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'warning');
 		}
 	};
 
@@ -54,7 +84,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 			const { data } = await API.updateUser(userData);
 			refreshUserToken(data);
 		} catch (error) {
-			console.error('Error signing in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'error');
 		}
 	};
 
@@ -80,20 +112,37 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 		navigate('/');
 	};
 	return (
-		<UserContext.Provider
-			value={{
-				user,
-				checkUser,
-				signIn,
-				signUp,
-				signOut,
-				refreshUserToken,
-				updateUserImage,
-				updateUser,
-			}}
-		>
-			{children}
-		</UserContext.Provider>
+		<>
+			<Snackbar
+				open={!!errorAlert}
+				autoHideDuration={6000}
+				onClose={handleCloseErrorAlert}
+				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+			>
+				<MuiAlert
+					elevation={6}
+					variant="filled"
+					onClose={handleCloseErrorAlert}
+					severity={errorAlert?.severity || 'error'}
+				>
+					{errorAlert?.message || ''}
+				</MuiAlert>
+			</Snackbar>
+			<UserContext.Provider
+				value={{
+					user,
+					checkUser,
+					signIn,
+					signUp,
+					signOut,
+					refreshUserToken,
+					updateUserImage,
+					updateUser,
+				}}
+			>
+				{children}
+			</UserContext.Provider>
+		</>
 	);
 };
 

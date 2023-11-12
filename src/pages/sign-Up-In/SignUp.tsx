@@ -17,8 +17,8 @@ export interface SignUpFormData {
 
 const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 	const [showPassword, setShowPassword] = useState(false);
+	const [singLoading, setSingLoading] = useState(false);
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
-
 	const [formData, setFormData] = useState<SignUpFormData>({
 		email: '',
 		password: '',
