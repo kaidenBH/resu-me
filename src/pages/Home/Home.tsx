@@ -35,11 +35,13 @@ function Home() {
 	};
 
 	useEffect(() => {
-		checkUser();
-		const ApiCall = async () => {
-			await getAllResumes();
-		};
-		ApiCall();
+		const userExists = checkUser();
+		if (userExists) {
+			const ApiCall = async () => {
+				await getAllResumes();
+			};
+			ApiCall();
+		}
 	}, []);
 
 	return (

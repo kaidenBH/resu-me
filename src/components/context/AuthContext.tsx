@@ -13,7 +13,7 @@ interface UserContextType {
 	updateUserImage: (userData: object) => Promise<void>;
 	updateUser: (userData: object) => Promise<void>;
 	signOut: () => void;
-	checkUser: () => void;
+	checkUser: () => boolean;
 	refreshUserToken: (newUser: User) => void;
 }
 interface CustomAlert {
@@ -75,7 +75,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 			const { data } = await API.updateUserImage(userData);
 			refreshUserToken(data);
 		} catch (error) {
-			console.error('Error signing in:', error);
+			const apiError = error as ApiError;
+			const errorMessage = apiError.response.data.message;
+			showErrorAlert(errorMessage, 'error');
 		}
 	};
 
@@ -102,8 +104,10 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 			const parsedUser = JSON.parse(existUser);
 			setUser(parsedUser);
 			navigate('/');
+			return true;
 		} else {
 			navigate('/auth');
+			return false;
 		}
 	};
 	const refreshUserToken = (newUser: User) => {
