@@ -8,6 +8,7 @@ interface SignInProps {
 }
 
 export interface SignInFormData {
+	setLoadingSign: (loading: boolean) => void;
 	email: string;
 	password: string;
 }
@@ -15,8 +16,9 @@ export interface SignInFormData {
 const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
 	const [showPassword, setShowPassword] = useState(false);
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
-
+	const [loagingSign, setLoadingSign] = useState(false);
 	const [formData, setFormData] = useState<SignInFormData>({
+		setLoadingSign: setLoadingSign,
 		email: '',
 		password: '',
 	});
@@ -78,13 +80,21 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
 							/>
 						</Grid>
 						<Grid item xs={12}>
-							<MainButton
-								variant="contained"
-								type="submit"
-								sx={{ margin: '0 0 1rem 0' }}
-							>
-								Sign In
-							</MainButton>
+							{loagingSign ? (
+								<iframe
+									title="Loading Dots"
+									src={`./loadingDots.html`}
+									style={{ border: 'none' }} 
+								/>
+							):(
+								<MainButton
+									variant="contained"
+									type="submit"
+									sx={{ margin: '0 0 1rem 0' }}
+								>
+									Sign In
+								</MainButton>
+							)}
 						</Grid>
 					</Grid>
 				</form>

@@ -8,6 +8,7 @@ interface SignUpProps {
 }
 
 export interface SignUpFormData {
+	setLoadingSign: (loading: boolean) => void;
 	email: string;
 	password: string;
 	confirmPassword: string;
@@ -18,13 +19,17 @@ export interface SignUpFormData {
 const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 	const [showPassword, setShowPassword] = useState(false);
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
+	const [loagingSign, setLoadingSign] = useState(false);
 	const [formData, setFormData] = useState<SignUpFormData>({
+		setLoadingSign: setLoadingSign,
 		email: '',
 		password: '',
 		confirmPassword: '',
 		first_name: '',
 		last_name: '',
 	});
+	const [isPasswordFieldFocused, setIsPasswordFieldFocused] = useState(false);
+	const isStrongPassword = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(formData.password);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -87,8 +92,17 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 								type={showPassword ? 'text' : 'password'}
 								name="password"
 								value={formData.password}
+								onFocus={() => setIsPasswordFieldFocused(true)}
+								onBlur={() => setIsPasswordFieldFocused(false)}
 								onChange={handleChange}
 								required
+								error={!isStrongPassword && isPasswordFieldFocused}
+								helperText={
+									!isStrongPassword && isPasswordFieldFocused && (
+										<span style={{ color: '#EC8F5E' }}>
+											Password must be at least 6 characters long and include lowercase, uppercase.
+										</span>
+								)}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position="end">
@@ -117,13 +131,21 @@ const SignUp: React.FC<SignUpProps> = ({ onSubmit }) => {
 							/>
 						</Grid>
 						<Grid item xs={12}>
-							<MainButton
-								variant="contained"
-								type="submit"
-								sx={{ margin: '0 0 1rem 0' }}
-							>
-								Sign Up
-							</MainButton>
+							{loagingSign ? (
+								<iframe
+									title="Loading Dots"
+									src={`./loadingDots.html`}
+									style={{ border: 'none' }}
+								/>
+							):(
+								<MainButton
+									variant="contained"
+									type="submit"
+									sx={{ margin: '0 0 1rem 0' }}
+								>
+									Sign Up
+								</MainButton>
+							)}
 						</Grid>
 					</Grid>
 				</form>

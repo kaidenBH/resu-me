@@ -14,10 +14,16 @@ const Sign = () => {
 	}, []);
 
 	const SignUpFormData = async (formData: SignUpFormData) => {
-		await signUp(formData);
+		const { setLoadingSign, ...signUpData } = formData;
+		setLoadingSign(true);
+		await signUp(signUpData);
+		setLoadingSign(false);
 	};
 	const SignInFormData = async (formData: SignInFormData) => {
-		await signIn(formData);
+		const { setLoadingSign, ...signInData } = formData;
+		setLoadingSign(true);
+		await signIn(signInData);
+		setLoadingSign(false);
 	};
 	const SlideEffect = () => {
 		setHaveAccount(!haveAccount);
