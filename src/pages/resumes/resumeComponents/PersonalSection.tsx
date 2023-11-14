@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Container, IconButton } from '@mui/material';
+import { Grid, Container, IconButton, Tooltip } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomBox } from './styles';
 import { useResume } from '../../../components/context/ResumeContext';
 import { Edit, Check } from '@mui/icons-material';
@@ -231,18 +231,20 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							{summaryFieldLoading ? (
 								<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
 							) : (
-								<IconButton
-									onClick={handleChangeSummaryName}
-									sx={{ '&:focus': { outline: 'none' } }}
-								>
-									<Check
-										sx={{
-											color: '#6499E9',
-											fontSize: 40,
-											cursor: 'pointer',
-										}}
-									/>
-								</IconButton>
+								<Tooltip title="Confirm field name" arrow>
+									<IconButton
+										onClick={handleChangeSummaryName}
+										sx={{ '&:focus': { outline: 'none' } }}
+									>
+										<Check
+											sx={{
+												color: '#6499E9',
+												fontSize: 40,
+												cursor: 'pointer',
+											}}
+										/>
+									</IconButton>
+								</Tooltip>
 							)}
 						</Grid>
 					) : (
@@ -254,18 +256,20 @@ const PersonalSection: React.FC<PersonalSectionProps> = ({ personal_section }) =
 							<CustomTypography variant="h6" sx={{ marginLeft: 0 }}>
 								{personalData.summary[0]}
 							</CustomTypography>
-							<IconButton
-								onClick={() => setEditSummaryField(true)}
-								sx={{ '&:focus': { outline: 'none' } }}
-							>
-								<Edit
-									sx={{
-										color: '#6499E9',
-										fontSize: 20,
-										cursor: 'pointer',
-									}}
-								/>
-							</IconButton>
+							<Tooltip title="Change field name" arrow>
+								<IconButton
+									onClick={() => setEditSummaryField(true)}
+									sx={{ '&:focus': { outline: 'none' } }}
+								>
+									<Edit
+										sx={{
+											color: '#6499E9',
+											fontSize: 20,
+											cursor: 'pointer',
+										}}
+									/>
+								</IconButton>
+							</Tooltip>
 						</Grid>
 					)}
 					<Grid item xs={12}>

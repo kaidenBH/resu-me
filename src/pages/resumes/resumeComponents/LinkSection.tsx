@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Container, IconButton } from '@mui/material';
+import { Grid, Container, IconButton, Tooltip } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomBox, LinkTypography } from './styles';
 import { useLink } from '../../../components/hooks';
 import AlertDialog from './Dialog';
@@ -164,30 +164,34 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 								<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
 							) : (
 								<>
-									<IconButton
-										onClick={handleChangeFieldName}
-										sx={{ '&:focus': { outline: 'none' } }}
-									>
-										<Check
-											sx={{
-												color: '#6499E9',
-												fontSize: 30,
-												cursor: 'pointer',
-											}}
-										/>
-									</IconButton>
-									<IconButton
-										onClick={handleShowDialogLinkSection}
-										sx={{ '&:focus': { outline: 'none' } }}
-									>
-										<Delete
-											sx={{
-												color: '#D71313',
-												fontSize: 20,
-												cursor: 'pointer',
-											}}
-										/>
-									</IconButton>
+									<Tooltip title="Confirm field name" arrow>
+										<IconButton
+											onClick={handleChangeFieldName}
+											sx={{ '&:focus': { outline: 'none' } }}
+										>
+											<Check
+												sx={{
+													color: '#6499E9',
+													fontSize: 30,
+													cursor: 'pointer',
+												}}
+											/>
+										</IconButton>
+									</Tooltip>
+									<Tooltip title="Delete link section" arrow>
+										<IconButton
+											onClick={handleShowDialogLinkSection}
+											sx={{ '&:focus': { outline: 'none' } }}
+										>
+											<Delete
+												sx={{
+													color: '#D71313',
+													fontSize: 20,
+													cursor: 'pointer',
+												}}
+											/>
+										</IconButton>
+									</Tooltip>
 								</>
 							)}
 						</Grid>
@@ -196,30 +200,34 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 							<CustomTypography variant="h6" sx={{ marginLeft: 0 }}>
 								{linkData.field_name}
 							</CustomTypography>
-							<IconButton
-								onClick={() => setEditLinkField(true)}
-								sx={{ '&:focus': { outline: 'none' } }}
-							>
-								<Edit
-									sx={{
-										color: '#6499E9',
-										fontSize: 20,
-										cursor: 'pointer',
-									}}
-								/>
-							</IconButton>
-							<IconButton
-								onClick={handleShowDialogLinkSection}
-								sx={{ '&:focus': { outline: 'none' } }}
-							>
-								<Delete
-									sx={{
-										color: '#D71313',
-										fontSize: 20,
-										cursor: 'pointer',
-									}}
-								/>
-							</IconButton>
+							<Tooltip title="Change field name" arrow>
+								<IconButton
+									onClick={() => setEditLinkField(true)}
+									sx={{ '&:focus': { outline: 'none' } }}
+								>
+									<Edit
+										sx={{
+											color: '#6499E9',
+											fontSize: 20,
+											cursor: 'pointer',
+										}}
+									/>
+								</IconButton>
+							</Tooltip>
+							<Tooltip title="Delete link section" arrow>
+								<IconButton
+									onClick={handleShowDialogLinkSection}
+									sx={{ '&:focus': { outline: 'none' } }}
+								>
+									<Delete
+										sx={{
+											color: '#D71313',
+											fontSize: 20,
+											cursor: 'pointer',
+										}}
+									/>
+								</IconButton>
+							</Tooltip>
 							<AlertDialog
 								open={showDialogLinkSection}
 								handleCloseDialog={handleShowDialogLinkSection}
@@ -258,28 +266,32 @@ const LinkSection: React.FC<LinkSectionProps> = ({ link_section }) => {
 											}}
 										>
 											{link.webite_name}
-											<IconButton sx={{ '&:focus': { outline: 'none' } }}>
-												{showDetails[index] ? (
-													<ExpandLess />
-												) : (
-													<ExpandMore />
-												)}
-											</IconButton>
+											<Tooltip title={showDetails[index] ? "Hide details" : "Show details"} arrow>
+												<IconButton sx={{ '&:focus': { outline: 'none' } }}>
+													{showDetails[index] ? (
+														<ExpandLess />
+													) : (
+														<ExpandMore />
+													)}
+												</IconButton>
+											</Tooltip>
 										</CustomTypography>
 									</Grid>
 									<Grid item xs={2} sx={{ textAlign: 'center' }}>
-										<IconButton
-											onClick={() => handleShowDialogLink(index)}
-											sx={{ '&:focus': { outline: 'none' } }}
-										>
-											<DeleteOutline
-												sx={{
-													color: '#FF6969',
-													fontSize: 20,
-													cursor: 'pointer',
-												}}
-											/>
-										</IconButton>
+										<Tooltip title="Delete this link" arrow> 
+											<IconButton
+												onClick={() => handleShowDialogLink(index)}
+												sx={{ '&:focus': { outline: 'none' } }}
+											>
+												<DeleteOutline
+													sx={{
+														color: '#FF6969',
+														fontSize: 20,
+														cursor: 'pointer',
+													}}
+												/>
+											</IconButton>
+										</Tooltip>
 									</Grid>
 									<AlertDialog
 										open={showDialogLink}

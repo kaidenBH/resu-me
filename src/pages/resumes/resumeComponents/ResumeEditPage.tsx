@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Grow, Grid, Paper, Typography, IconButton, Box } from '@mui/material';
+import { Grow, Grid, Paper, Typography, IconButton, Box, Tooltip  } from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PersonalSection from './PersonalSection';
 import EmploymentSection from './EmploymentSection';
 import EducationSection from './EducationSection';
@@ -14,6 +14,7 @@ import CourseSection from './CourseSection';
 import CustomSection from './CustomSection';
 import { useResume } from '../../../components/context/ResumeContext';
 import { CustomTypography, LinkTypography } from './styles';
+import { useNavigate } from 'react-router-dom';
 import {
 	useEducation,
 	useEmployment,
@@ -27,6 +28,7 @@ import {
 import * as INTR from '../../../components/interfaces/ResumeInterfaces';
   
 const ResumeEditPage: React.FC = () => {
+	const navigate = useNavigate();
 	const { addSchool } = useEducation();
 	const { addEmploymentRecord } = useEmployment();
 	const { addLink } = useLink();
@@ -134,6 +136,14 @@ const ResumeEditPage: React.FC = () => {
 						zIndex: '9',
 					}}
 				>
+					<Tooltip title="Go back to main page" arrow>
+						<IconButton
+							onClick={() => navigate('/')}
+							sx={{ color: '#687EFF', '&:focus': { outline: 'none' } }}
+						>
+							<ArrowBackIcon fontSize="large" />
+						</IconButton>
+					</Tooltip>
 					{resume?.title}
 					<span
 						style={{
@@ -168,27 +178,31 @@ const ResumeEditPage: React.FC = () => {
 										justifyContent: 'space-evenly',
 									}}
 								>
-									<IconButton
-										disabled={
-											field.type === resume.fields[1].type ||
-											field.type === 'Personal'
-										}
-										onClick={() => handleMoveUp(index)}
-										sx={{ color: '#687EFF', '&:focus': { outline: 'none' } }}
-									>
-										<ExpandLessIcon fontSize="large" />
-									</IconButton>
-									<IconButton
-										disabled={
-											field.type ===
-												resume.fields[resume.fields.length - 1].type ||
-											field.type === 'Personal'
-										}
-										onClick={() => handleMoveDown(index)}
-										sx={{ color: '#687EFF', '&:focus': { outline: 'none' } }}
-									>
-										<ExpandMoreIcon fontSize="large" />
-									</IconButton>
+									<Tooltip title="Move this section up" arrow>
+										<IconButton
+											disabled={
+												field.type === resume.fields[1].type ||
+												field.type === 'Personal'
+											}
+											onClick={() => handleMoveUp(index)}
+											sx={{ color: '#687EFF', '&:focus': { outline: 'none' } }}
+										>
+											<ExpandLessIcon fontSize="large" />
+										</IconButton>
+									</Tooltip>
+									<Tooltip title="Move this section down" arrow>
+										<IconButton
+											disabled={
+												field.type ===
+													resume.fields[resume.fields.length - 1].type ||
+												field.type === 'Personal'
+											}
+											onClick={() => handleMoveDown(index)}
+											sx={{ color: '#687EFF', '&:focus': { outline: 'none' } }}
+										>
+											<ExpandMoreIcon fontSize="large" />
+										</IconButton>
+									</Tooltip>
 								</Box>
 								{field.type === 'Personal' && (
 									<PersonalSection personal_section={field as INTR.PersonalDetails} />

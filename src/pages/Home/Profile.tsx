@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Grow, IconButton, InputAdornment } from '@mui/material';
+import { Grid, Grow, IconButton, InputAdornment, Tooltip } from '@mui/material';
 import { useAuth } from '../../components/context/AuthContext';
 import FileBase from 'react-file-base64';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
@@ -109,51 +109,55 @@ const Profile: React.FC = () => {
 			<CustomSideBar>
 				<Grid container spacing={2} justifyContent="center" alignItems="center">
 					<Grid item xs={12} sx={{ textAlign: 'right' }}>
-						<IconButton sx={{ padding: 0 }} onClick={handleActiveEditData}>
-							<EditNoteIcon
-								sx={{
-									color: editDataActive ? '#FF5733' : '#6499E9',
-									fontSize: 40,
-									cursor: 'pointer',
-								}}
-							/>
-						</IconButton>
+						<Tooltip title={editData? "Cancel editing" : "Edit your profile"} arrow>
+							<IconButton sx={{ padding: 0 }} onClick={handleActiveEditData}>
+								<EditNoteIcon
+									sx={{
+										color: editDataActive ? '#FF5733' : '#6499E9',
+										fontSize: 40,
+										cursor: 'pointer',
+									}}
+								/>
+							</IconButton>
+						</Tooltip>
 					</Grid>
 					<Grid item xs={4} sx={{ textAlign: 'right' }}>
 						<CustomAvatar alt={user?.first_name} src={user?.image || undefined}>
 							{user?.first_name.charAt(0)}
 						</CustomAvatar>
 						{editData ? (
-							<IconButton
-								aria-label="upload picture"
-								component="label"
-								sx={{ padding: 0 }}
-								onClick={handleActiveAddImage}
-							>
-								{imageChangeLoading ? (
-									<img
-										src={'/loading.svg'}
-										alt="My SVG"
-										style={{ height: '3rem' }}
-									/>
-								) : (
-									<AddPhotoAlternateIcon
-										sx={{
-											color: imageChangeActive ? '#FF5733' : '#6499E9',
-											transition: 'color 0.2s',
-										}}
-									/>
-								)}
-								<div style={{ display: 'none' }}>
-									<FileBase
-										type="file"
-										multiple={false}
-										onDone={({ base64 }: { base64: string }) =>
-											setProfileImage(base64)
-										}
-									/>
-								</div>
-							</IconButton>
+							<Tooltip title="Update your profile picture" arrow>
+								<IconButton
+									aria-label="upload picture"
+									component="label"
+									sx={{ padding: 0 }}
+									onClick={handleActiveAddImage}
+								>
+									{imageChangeLoading ? (
+										<img
+											src={'/loading.svg'}
+											alt="My SVG"
+											style={{ height: '3rem' }}
+										/>
+									) : (
+										<AddPhotoAlternateIcon
+											sx={{
+												color: imageChangeActive ? '#FF5733' : '#6499E9',
+												transition: 'color 0.2s',
+											}}
+										/>
+									)}
+									<div style={{ display: 'none' }}>
+										<FileBase
+											type="file"
+											multiple={false}
+											onDone={({ base64 }: { base64: string }) =>
+												setProfileImage(base64)
+											}
+										/>
+									</div>
+								</IconButton>
+							</Tooltip>
 						) : null}
 					</Grid>
 					{editData ? (

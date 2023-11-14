@@ -3,7 +3,7 @@ import Profile from './Profile';
 import ResumesPage from '../resumes/ResumesPage';
 import { useAuth } from '../../components/context/AuthContext';
 import { useResume } from '../../components/context/ResumeContext';
-import { Box, Grid, Menu, MenuItem, IconButton } from '@mui/material';
+import { Box, Grid, Menu, MenuItem, IconButton, Tooltip } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -53,15 +53,17 @@ function Home() {
 					</Grid>
 				) : (
 					<Grid item md={4} lg={2.5}>
-						<IconButton onClick={handleClick}>
-							<MoreVertIcon
-								sx={{
-									color: '#6499E9',
-									fontSize: 50,
-									cursor: 'pointer',
-								}}
-							/>
-						</IconButton>
+						<Tooltip title="Show profile details" arrow>
+							<IconButton onClick={handleClick}>
+								<MoreVertIcon
+									sx={{
+										color: '#6499E9',
+										fontSize: 50,
+										cursor: 'pointer',
+									}}
+								/>
+							</IconButton>
+						</Tooltip>
 						<Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
 							<MenuItem
 								sx={{

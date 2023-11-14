@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grow, Paper, Typography, Grid, Box, IconButton, TextField } from '@mui/material';
+import { Grow, Paper, Typography, Grid, Box, IconButton, TextField, Tooltip } from '@mui/material';
 import { useResume } from '../../components/context/ResumeContext';
 import { Check, Edit, AddBox, ContentCopy, DeleteOutline } from '@mui/icons-material';
 import AlertDialog from './resumeComponents/Dialog';
@@ -129,19 +129,21 @@ const ResumesPage: React.FC = () => {
 										style={{ height: '5rem' }}
 									/>
 								) : (
-									<IconButton
-										onClick={handleAddResume}
-										sx={{ '&:focus': { outline: 'none' } }}
-										disabled={resumeTitle === ''}
-									>
-										<AddBox
-											sx={{
-												color: resumeTitle !== '' ? '#6499E9' : '#ccc',
-												fontSize: 50,
-												cursor: 'pointer',
-											}}
-										/>
-									</IconButton>
+									<Tooltip title="Create new resume" arrow>
+										<IconButton
+											onClick={handleAddResume}
+											sx={{ '&:focus': { outline: 'none' } }}
+											disabled={resumeTitle === ''}
+										>
+											<AddBox
+												sx={{
+													color: resumeTitle !== '' ? '#6499E9' : '#ccc',
+													fontSize: 50,
+													cursor: 'pointer',
+												}}
+											/>
+										</IconButton>
+									</Tooltip>
 								)}
 							</Box>
 						</Paper>
@@ -184,26 +186,28 @@ const ResumesPage: React.FC = () => {
 															/>
 														</Grid>
 														<Grid item xs={3}>
-															<IconButton
-																onClick={() =>
-																	handleUpdateResumeTitle(index)
-																}
-																sx={{
-																	'&:focus': { outline: 'none' },
-																}}
-																disabled={editResumeTitle === ''}
-															>
-																<Check
+															<Tooltip title="Confirm title" arrow>
+																<IconButton
+																	onClick={() =>
+																		handleUpdateResumeTitle(index)
+																	}
 																	sx={{
-																		color:
-																			editResumeTitle !== ''
-																				? '#6499E9'
-																				: '#ccc',
-																		fontSize: 35,
-																		cursor: 'pointer',
+																		'&:focus': { outline: 'none' },
 																	}}
-																/>
-															</IconButton>
+																	disabled={editResumeTitle === ''}
+																>
+																	<Check
+																		sx={{
+																			color:
+																				editResumeTitle !== ''
+																					? '#6499E9'
+																					: '#ccc',
+																			fontSize: 35,
+																			cursor: 'pointer',
+																		}}
+																	/>
+																</IconButton>
+															</Tooltip>
 														</Grid>
 													</>
 												) : (
@@ -224,22 +228,24 @@ const ResumesPage: React.FC = () => {
 															</Typography>
 														</Grid>
 														<Grid item xs={2}>
-															<IconButton
-																onClick={() =>
-																	handleEditResume(index)
-																}
-																sx={{
-																	'&:focus': { outline: 'none' },
-																}}
-															>
-																<Edit
+															<Tooltip title="Edit resume's title" arrow>
+																<IconButton
+																	onClick={() =>
+																		handleEditResume(index)
+																	}
 																	sx={{
-																		color: '#6499E9',
-																		fontSize: 20,
-																		cursor: 'pointer',
+																		'&:focus': { outline: 'none' },
 																	}}
-																/>
-															</IconButton>
+																>
+																	<Edit
+																		sx={{
+																			color: '#6499E9',
+																			fontSize: 20,
+																			cursor: 'pointer',
+																		}}
+																	/>
+																</IconButton>
+															</Tooltip>
 														</Grid>
 													</>
 												)}

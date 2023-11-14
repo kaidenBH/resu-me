@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Container, IconButton } from '@mui/material';
+import { Grid, Container, IconButton, Tooltip } from '@mui/material';
 import { CustomTextField, CustomTypography, CustomBox, LinkTypography } from './styles';
 import { useCourse } from '../../../components/hooks';
 import AlertDialog from './Dialog';
@@ -203,30 +203,34 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 								<img src={'/loading.svg'} alt="My SVG" style={{ height: '3rem' }} />
 							) : (
 								<>
-									<IconButton
-										onClick={handleChangeFieldName}
-										sx={{ '&:focus': { outline: 'none' } }}
-									>
-										<Check
-											sx={{
-												color: '#6499E9',
-												fontSize: 30,
-												cursor: 'pointer',
-											}}
-										/>
-									</IconButton>
-									<IconButton
-										onClick={handleShowDialogCourseSection}
-										sx={{ '&:focus': { outline: 'none' } }}
-									>
-										<Delete
-											sx={{
-												color: '#D71313',
-												fontSize: 20,
-												cursor: 'pointer',
-											}}
-										/>
-									</IconButton>
+									<Tooltip title="Confirm field name" arrow>
+										<IconButton
+											onClick={handleChangeFieldName}
+											sx={{ '&:focus': { outline: 'none' } }}
+										>
+											<Check
+												sx={{
+													color: '#6499E9',
+													fontSize: 30,
+													cursor: 'pointer',
+												}}
+											/>
+										</IconButton>
+									</Tooltip>
+									<Tooltip title="Delete course section" arrow>
+										<IconButton
+											onClick={handleShowDialogCourseSection}
+											sx={{ '&:focus': { outline: 'none' } }}
+										>
+											<Delete
+												sx={{
+													color: '#D71313',
+													fontSize: 20,
+													cursor: 'pointer',
+												}}
+											/>
+										</IconButton>
+									</Tooltip>
 								</>
 							)}
 						</Grid>
@@ -235,30 +239,34 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 							<CustomTypography variant="h6" sx={{ marginLeft: 0 }}>
 								{courseData.field_name}
 							</CustomTypography>
-							<IconButton
-								onClick={() => setEditCourseField(true)}
-								sx={{ '&:focus': { outline: 'none' } }}
-							>
-								<Edit
-									sx={{
-										color: '#6499E9',
-										fontSize: 20,
-										cursor: 'pointer',
-									}}
-								/>
-							</IconButton>
-							<IconButton
-								onClick={handleShowDialogCourseSection}
-								sx={{ '&:focus': { outline: 'none' } }}
-							>
-								<Delete
-									sx={{
-										color: '#D71313',
-										fontSize: 20,
-										cursor: 'pointer',
-									}}
-								/>
-							</IconButton>
+							<Tooltip title="Change field name" arrow>
+								<IconButton
+									onClick={() => setEditCourseField(true)}
+									sx={{ '&:focus': { outline: 'none' } }}
+								>
+									<Edit
+										sx={{
+											color: '#6499E9',
+											fontSize: 20,
+											cursor: 'pointer',
+										}}
+									/>
+								</IconButton>
+							</Tooltip>
+							<Tooltip title="Delete the course section" arrow>
+								<IconButton
+									onClick={handleShowDialogCourseSection}
+									sx={{ '&:focus': { outline: 'none' } }}
+								>
+									<Delete
+										sx={{
+											color: '#D71313',
+											fontSize: 20,
+											cursor: 'pointer',
+										}}
+									/>
+								</IconButton>
+							</Tooltip>
 							<AlertDialog
 								open={showDialogCourseSection}
 								handleCloseDialog={handleShowDialogCourseSection}
@@ -297,28 +305,32 @@ const CourseSection: React.FC<CourseSectionProps> = ({ course_section }) => {
 											}}
 										>
 											{course.course_name}
-											<IconButton sx={{ '&:focus': { outline: 'none' } }}>
-												{showDetails[index] ? (
-													<ExpandLess />
-												) : (
-													<ExpandMore />
-												)}
-											</IconButton>
+											<Tooltip title={showDetails[index] ? "Hide details" : "Show details"} arrow>
+												<IconButton sx={{ '&:focus': { outline: 'none' } }}>
+													{showDetails[index] ? (
+														<ExpandLess />
+													) : (
+														<ExpandMore />
+													)}
+												</IconButton>
+											</Tooltip>
 										</CustomTypography>
 									</Grid>
 									<Grid item xs={2} sx={{ textAlign: 'center' }}>
-										<IconButton
-											onClick={() => handleShowDialogCourse(index)}
-											sx={{ '&:focus': { outline: 'none' } }}
-										>
-											<DeleteOutline
-												sx={{
-													color: '#FF6969',
-													fontSize: 20,
-													cursor: 'pointer',
-												}}
-											/>
-										</IconButton>
+										<Tooltip title="Delete this course" arrow>
+											<IconButton
+												onClick={() => handleShowDialogCourse(index)}
+												sx={{ '&:focus': { outline: 'none' } }}
+											>
+												<DeleteOutline
+													sx={{
+														color: '#FF6969',
+														fontSize: 20,
+														cursor: 'pointer',
+													}}
+												/>
+											</IconButton>
+										</Tooltip>
 									</Grid>
 									<AlertDialog
 										open={showDialogCourse}
