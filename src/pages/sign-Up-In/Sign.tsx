@@ -4,6 +4,7 @@ import { useAuth } from '../../components/context/AuthContext';
 import SignUp, { SignUpFormData } from './SignUp';
 import SignIn, { SignInFormData } from './SignIn';
 import Slider from './Slider';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Sign = () => {
 	const { signIn, signUp, checkUser } = useAuth();
@@ -28,6 +29,7 @@ const Sign = () => {
 	const SlideEffect = () => {
 		setHaveAccount(!haveAccount);
 	};
+	
 	return (
 		<Slide direction="right" in={true} timeout={600}>
 			<Grid
@@ -38,9 +40,13 @@ const Sign = () => {
 					justifyContent: 'center',
 					height: '100vh',
 					alignItems: 'center',
+					overflow: 'auto',
+					'&::-webkit-scrollbar': {
+						width: '0 !important' /* Hide the scrollbar for WebKit */,
+					},
 				}}
 			>
-				<Grid item>
+				<Grid item sx={{  }}>
 					<Slider onSubmit={() => SlideEffect()} haveAccount={haveAccount} />
 				</Grid>
 				<Grid item>
