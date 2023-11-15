@@ -4,7 +4,6 @@ import { useAuth } from '../../components/context/AuthContext';
 import SignUp, { SignUpFormData } from './SignUp';
 import SignIn, { SignInFormData } from './SignIn';
 import Slider from './Slider';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Sign = () => {
 	const { signIn, signUp, checkUser } = useAuth();
