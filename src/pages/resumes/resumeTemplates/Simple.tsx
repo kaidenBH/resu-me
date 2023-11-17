@@ -130,11 +130,13 @@ const Simple = () => {
 													</TextTypography>
 												)}
 											</Grid>
-											<Grid item xs={6}>
-												<PointTypography>
-													{school.degree_title}, {school.school_name}
-												</PointTypography>
-											</Grid>
+											{school.degree_title !== "" && school.school_name !== "" &&
+												<Grid item xs={6}>
+													<PointTypography>
+														{school.degree_title}, {school.school_name}
+													</PointTypography>
+												</Grid>
+											}
 											<Grid item xs={3}>
 												<PointTypography sx={{ textAlign: 'right' }}>
 													{school.city}
@@ -179,11 +181,13 @@ const Simple = () => {
 													</TextTypography>
 												)}
 											</Grid>
-											<Grid item xs={6}>
-												<PointTypography>
-													{record.job_title}, {record.employer_name}
-												</PointTypography>
-											</Grid>
+											{record.job_title !== "" && record.employer_name !== "" && 
+												<Grid item xs={6}>
+													<PointTypography>
+														{record.job_title}, {record.employer_name}
+													</PointTypography>
+												</Grid>
+											}
 											<Grid item xs={3}>
 												<PointTypography sx={{ textAlign: 'right' }}>
 													{record.city}
@@ -232,21 +236,23 @@ const Simple = () => {
 											{sindex > 1 && sindex % 2 === 0 && (
 												<Grid item xs={3}></Grid>
 											)}
-											<Grid
-												item
-												xs={4.5}
-												sx={{
-													display: 'flex',
-													justifyContent: 'space-between',
-												}}
-											>
-												<PointTypography>
-													{skill.skill_name}
-												</PointTypography>
-												<TextTypography sx={{ textAlign: 'right' }}>
-													{skillMarks[skill.level - 1]}
-												</TextTypography>
-											</Grid>
+											{skill.skill_name !== "" &&
+												<Grid
+													item
+													xs={4.5}
+													sx={{
+														display: 'flex',
+														justifyContent: 'space-between',
+													}}
+												>
+													<PointTypography>
+														{skill.skill_name}
+													</PointTypography>
+													<TextTypography sx={{ textAlign: 'right' }}>
+														{skillMarks[skill.level - 1]}
+													</TextTypography>
+												</Grid>
+											}
 										</React.Fragment>
 									))}
 								</>
@@ -264,19 +270,21 @@ const Simple = () => {
 											{linkdex > 1 && linkdex % 2 === 0 && (
 												<Grid item xs={3}></Grid>
 											)}
-											<Grid
-												item
-												xs={4.5}
-												sx={{
-													display: 'flex',
-													justifyContent: 'space-between',
-												}}
-											>
-												<PointTypography>{lng.language}</PointTypography>
-												<TextTypography sx={{ textAlign: 'right' }}>
-													{languageMarks[lng.level - 1]}
-												</TextTypography>
-											</Grid>
+											{lng.language !== "" &&
+												<Grid
+													item
+													xs={4.5}
+													sx={{
+														display: 'flex',
+														justifyContent: 'space-between',
+													}}
+												>
+													<PointTypography>{lng.language}</PointTypography>
+													<TextTypography sx={{ textAlign: 'right' }}>
+														{languageMarks[lng.level - 1]}
+													</TextTypography>
+												</Grid>
+											}
 										</React.Fragment>
 									))}
 								</>
@@ -310,11 +318,13 @@ const Simple = () => {
 													</TextTypography>
 												)}
 											</Grid>
-											<Grid item xs={6}>
-												<PointTypography>
-													{record.job_title}, {record.employer_name}
-												</PointTypography>
-											</Grid>
+											{record.job_title !== "" && record.employer_name !== "" &&
+												<Grid item xs={6}>
+													<PointTypography>
+														{record.job_title}, {record.employer_name}
+													</PointTypography>
+												</Grid>
+											}
 											<Grid item xs={3}>
 												<PointTypography sx={{ textAlign: 'right' }}>
 													{record.city}
@@ -359,11 +369,13 @@ const Simple = () => {
 													</TextTypography>
 												)}
 											</Grid>
-											<Grid item xs={9}>
-												<PointTypography>
-													{course.course_name}, {course.institution}
-												</PointTypography>
-											</Grid>
+											{course.course_name !== "" && course.institution !== "" &&
+												<Grid item xs={9}>
+													<PointTypography>
+														{course.course_name}, {course.institution}
+													</PointTypography>
+												</Grid>
+											}
 											<Grid item xs={3}></Grid>
 											<Grid item xs={9}>
 												<TextTypography>
